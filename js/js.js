@@ -46,27 +46,21 @@ function displayFishCarousel(fishes) {
 
   // Duplicer indhold for uendelig scroll
   const items = container.innerHTML;
-  container.innerHTML = items + items;
+  container.innerHTML = items + items; // Duplicer alt indhold
 
   // Start i midten af det duplicerede indhold
-  const containerParent = document.querySelector(
-    "#fiskekarrusel-items"
-  ).parentElement;
-  if (containerParent) {
-    setTimeout(() => {
-      container.scrollLeft = container.scrollWidth / 4;
-    }, 100);
-  }
+  setTimeout(() => {
+    container.scrollLeft = container.scrollWidth / 4;
+  }, 100);
 }
 
-// #4: Karrusel navigation
+// #4: Karrusel navigation - forbedret uendelig scroll
 function scrollKarrusel(direction) {
   const container = document.getElementById("fiskekarrusel-items");
-  const itemWidth = 270; // Billede bredde + gap
-  const scrollAmount = itemWidth * 2; // Scroller 2 billeder ad gangen
-  const halfWidth = container.scrollWidth / 2;
+  const itemWidth = 240; // Justeret billede bredde + gap
+  const scrollAmount = itemWidth * 1; // Scroll 1 billede ad gangen for bedre kontrol
 
-  // Tjek direction string og konverter til nummer
+  // Konverter direction string til nummer
   const scrollDirection = direction === "højre" ? 1 : -1;
 
   /* Normal scroll */
@@ -75,32 +69,32 @@ function scrollKarrusel(direction) {
     behavior: "smooth",
   });
 
-  /* karrusellen kører uendeligt */
+  /* Forbedret uendelig reset */
   setTimeout(() => {
-    if (scrollDirection === 1 && container.scrollLeft >= halfWidth) {
-      // Reset til start uden animation
+    const maxScroll = container.scrollWidth / 2;
+    const currentScroll = container.scrollLeft;
+
+    // Højre reset - når vi når til enden af dupliceret indhold
+    if (scrollDirection === 1 && currentScroll >= maxScroll - 50) {
       container.style.scrollBehavior = "auto";
-      container.scrollLeft = container.scrollLeft - halfWidth;
-      container.style.scrollBehavior = "smooth";
-    } else if (scrollDirection === -1 && container.scrollLeft <= 0) {
-      // Reset til midten uden animation
-      container.style.scrollBehavior = "auto";
-      container.scrollLeft = halfWidth;
-      container.style.scrollBehavior = "smooth";
+      container.scrollLeft = currentScroll - maxScroll;
+
+      // Kort pause før genaktivering af smooth scroll
+      setTimeout(() => {
+        container.style.scrollBehavior = "smooth";
+      }, 50);
     }
-  }, 500);
-}
+    // Venstre reset - når vi når til starten
+    else if (scrollDirection === -1 && currentScroll <= 50) {
+      container.style.scrollBehavior = "auto";
+      container.scrollLeft = currentScroll + maxScroll;
 
-// Funktion til hjørne-knappen
-function cornerButtonClick() {
-  // Tilføj en sjov animation før navigation
-  const button = document.querySelector(".corner-button");
-  button.style.transform = "scale(1.3) rotate(360deg)";
-
-  // Naviger til fiskhjem.html efter animation
-  setTimeout(() => {
-    window.location.href = "fiskhjem.html";
-  }, 600);
+      // Kort pause før genaktivering af smooth scroll
+      setTimeout(() => {
+        container.style.scrollBehavior = "smooth";
+      }, 50);
+    }
+  }, 400); // Kortere timeout for hurtigere respons
 }
 
 // Håndter mouse scroll for uendelig scroll
@@ -119,6 +113,38 @@ function handleMouseScroll() {
     container.scrollLeft = halfWidth;
     container.style.scrollBehavior = "smooth";
   }
+}
+
+// Initialiser karrusel position og duplicer indhold
+document.addEventListener("DOMContentLoaded", function () {
+  // Vent på at fiskene er loadet før vi sætter karrusellen op
+  setTimeout(() => {
+    const container = document.getElementById("fiskekarrusel-items");
+    if (container && container.children.length > 0) {
+      const items = container.innerHTML;
+
+      // Duplicer alt indhold for uendelig scroll
+      container.innerHTML = items + items;
+
+      // Start i midten af det duplicerede indhold
+      container.scrollLeft = container.scrollWidth / 4;
+
+      // Tilføj mouse scroll event listener
+      container.addEventListener("scroll", handleMouseScroll);
+    }
+  }, 500); // Vent lidt på at JSON data er loaded
+});
+
+// Funktion til hjørne-knappen
+function cornerButtonClick() {
+  // Tilføj en sjov animation før navigation
+  const button = document.querySelector(".corner-button");
+  button.style.transform = "scale(1.3) rotate(360deg)";
+
+  // Naviger til fiskhjem.html efter animation
+  setTimeout(() => {
+    window.location.href = "fiskhjem.html";
+  }, 600);
 }
 
 // ======== DIALOG FUNKTIONER ========
@@ -166,9 +192,15 @@ function openModal(fishId) {
         </h4>
         
         <div class="fish-color-tags">
-          ${Array.isArray(fish.color) 
-            ? fish.color.map(color => `<span class="fish-dialog-color-tag" data-color="${color}">${color}</span>`).join('')
-            : `<span class="fish-dialog-color-tag" data-color="${fish.color}">${fish.color}</span>`
+          ${
+            Array.isArray(fish.color)
+              ? fish.color
+                  .map(
+                    (color) =>
+                      `<span class="fish-dialog-color-tag" data-color="${color}">${color}</span>`
+                  )
+                  .join("")
+              : `<span class="fish-dialog-color-tag" data-color="${fish.color}">${fish.color}</span>`
           }
         </div>
       </div>

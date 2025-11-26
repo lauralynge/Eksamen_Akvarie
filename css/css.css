@@ -23,7 +23,7 @@
   --bg-card: #f1f1f1; /* Skift */
   --bg-image-main: url("../images/baggrund.svg"); /* Skift? */
 
-  /* Bobler */      /* BRUGER JEG OVERHOEVET DISSE? */
+  /* Bobler */ /* BRUGER JEG OVERHOEVET DISSE? */
   --bubble-big: url("../images/boble1.svg");
   --bubble-medium: url("../images/boble2.svg");
   --bubble-small: url("../images/boble3.svg");
@@ -54,7 +54,7 @@
   font-style: normal;
 }
 
-/* Til brødtekst og mindre tekster / 16–18 px / brødtekst */
+/* Til brødtekst og mindre tekster / brødtekst */
 .poppins-regular {
   font-family: "Poppins", sans-serif;
   font-optical-sizing: auto;
@@ -382,7 +382,7 @@ h4 {
   width: 100%;
   overflow: hidden;
   margin: 0 auto;
-  padding: 80px 0 20px 0; /* Meget mere luft i toppen */
+  padding: 150px 0 20px 0; /* Meget mere luft i toppen */
 }
 
 /* karrusel wrapper med pilknapper */
@@ -400,7 +400,7 @@ h4 {
   gap: 20px;
   overflow-x: auto;
   scroll-behavior: smooth;
-  width: 80%;
+  width: 90%;
   padding: 20px 0;
 }
 
@@ -470,10 +470,10 @@ h4 {
   border-radius: var(--radius);
   box-shadow: var(--shadow-lg);
   padding: 0;
-  width: 1000px;        /* Fast bredde */
-  height: 700px;       /* Fast højde */
-  max-width: 90vw;     /* Responsive på små skærme */
-  max-height: 90vh;    /* Responsive på små skærme */
+  width: 1000px; /* Fast bredde */
+  height: 700px; /* Fast højde */
+  max-width: 90vw; /* Responsive på små skærme */
+  max-height: 90vh; /* Responsive på små skærme */
   background: transparent;
 }
 
@@ -487,10 +487,10 @@ h4 {
   padding: 20px;
   position: relative;
   margin: 0;
-  width: 100%;         /* Fylder hele dialog bredde */
-  height: 100%;        /* Fylder hele dialog højde */
+  width: 100%; /* Fylder hele dialog bredde */
+  height: 100%; /* Fylder hele dialog højde */
   box-sizing: border-box;
-  overflow-y: auto;    /* Scroll hvis indhold er for stort */
+  overflow-y: auto; /* Scroll hvis indhold er for stort */
 }
 
 /* Luk knap i dialog */
@@ -531,11 +531,11 @@ h4 {
 
 .fish-dialog-image {
   max-width: 100%;
-  max-height: 200px;     /* Begrænset højde så der er plads til tekst */
+  max-height: 200px; /* Begrænset højde så der er plads til tekst */
   height: auto;
   border-radius: var(--radius);
   margin-bottom: 15px;
-  object-fit: contain;   /* Bevarer billedeforhold */
+  object-fit: contain; /* Bevarer billedeforhold */
 }
 
 .fish-dialog-title {
@@ -579,16 +579,38 @@ h4 {
 }
 
 /* Farve-specifikke styles */
-.fish-dialog-color-tag[data-color="orange"] { background: #ff6b35; }
-.fish-dialog-color-tag[data-color="hvid"] { background: #f8f8f8; color: #333; }
-.fish-dialog-color-tag[data-color="sort"] { background: #2c2c2c; }
-.fish-dialog-color-tag[data-color="blue"] { background: #4a90e2; }
-.fish-dialog-color-tag[data-color="yellow"] { background: #f5d347; color: #333; }
-.fish-dialog-color-tag[data-color="brown"] { background: #8b4513; }
-.fish-dialog-color-tag[data-color="green"] { background: #4caf50; }
-.fish-dialog-color-tag[data-color="red"] { background: #f44336; }
-.fish-dialog-color-tag[data-color="pink"] { background: #e91e63; }
-.fish-dialog-color-tag[data-color="purple"] { background: #9c27b0; }
+.fish-dialog-color-tag[data-color="orange"] {
+  background: #ff6b35;
+}
+.fish-dialog-color-tag[data-color="hvid"] {
+  background: #f8f8f8;
+  color: #333;
+}
+.fish-dialog-color-tag[data-color="sort"] {
+  background: #2c2c2c;
+}
+.fish-dialog-color-tag[data-color="blue"] {
+  background: #4a90e2;
+}
+.fish-dialog-color-tag[data-color="yellow"] {
+  background: #f5d347;
+  color: #333;
+}
+.fish-dialog-color-tag[data-color="brown"] {
+  background: #8b4513;
+}
+.fish-dialog-color-tag[data-color="green"] {
+  background: #4caf50;
+}
+.fish-dialog-color-tag[data-color="red"] {
+  background: #f44336;
+}
+.fish-dialog-color-tag[data-color="pink"] {
+  background: #e91e63;
+}
+.fish-dialog-color-tag[data-color="purple"] {
+  background: #9c27b0;
+}
 
 /* Modal baggrund */
 .modal {

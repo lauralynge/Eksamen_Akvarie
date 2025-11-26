@@ -13,7 +13,7 @@
     {
       "id": 2,
       "name": "Blå Chromis",
-      "color": "blue",
+      "color": ["Blå"],
       "latinName": "Chromis cyanea",
       "description": "En lille, hurtig blå fisk, der lever i store stimer.",
       "image": "./images/krabbe.png",
@@ -23,7 +23,7 @@
     {
       "id": 3,
       "name": "Rævefisk",
-      "color": "yellow",
+      "color": ["Gul", "Blå", "Hvid", "Sort"],
       "latinName": "Siganus vulpinus",
       "description": "En gul og sort fisk med en lang snude, der ligner et lille ræveansigt.",
       "image": "./images/krabbe_arm.png",
@@ -33,7 +33,7 @@
     {
       "id": 4,
       "name": "Pindsvinefisk",
-      "color": "brown",
+      "color": ["Brun"],
       "latinName": "Diodon holocanthus",
       "description": "En rund fisk med pigge, der kan puste sig op, når den bliver forskrækket.",
       "image": "./images/krabbe.png",
