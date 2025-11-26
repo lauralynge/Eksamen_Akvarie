@@ -14,7 +14,7 @@
 :root {
   /* Colors */
   --primary-color: #f7f7f7; /* Skift */
-  --secondary-color: #2ecc71; /* Skift */
+  --secondary-color: #121312; /* Skift */
   --primary-light: #fafafa; /* Skift */
   --secondary-light: #3c4043; /* Skift */
 
@@ -23,7 +23,7 @@
   --bg-card: #f1f1f1; /* Skift */
   --bg-image-main: url("../images/baggrund.svg"); /* Skift? */
 
-  /* Bobler */
+  /* Bobler */      /* BRUGER JEG OVERHOEVET DISSE? */
   --bubble-big: url("../images/boble1.svg");
   --bubble-medium: url("../images/boble2.svg");
   --bubble-small: url("../images/boble3.svg");
@@ -82,7 +82,7 @@ body {
   margin: 0;
   padding: 0;
   min-height: 100vh;
-  overflow: hidden;
+  overflow-x: hidden; /* Skjul horisontal scroll */
 }
 
 h1 {
@@ -247,7 +247,7 @@ h4 {
   transform: translate(-50%, -50%);
   color: var(--primary-color);
   text-align: center;
-  margin : 0;
+  margin: 0;
   pointer-events: none; /* Gør teksten klikbar gennem til boblen */
 }
 
@@ -345,18 +345,328 @@ h4 {
   }
 }
 
+/* Krabbe i spil med os */
+.krabbe-spil {
+  position: absolute;
+  bottom: 10px;
+  z-index: 10;
+}
+
+.krabbe-spil img {
+  width: 700px;
+  height: auto;
+  display: block;
+}
+
+/* Taleboble er ikke tilføjet endnu i images */
+.talebobble-spil {
+  position: absolute;
+  bottom: 300px;
+  left: 60px;
+  z-index: 10;
+}
+
+.talebobble-spil img {
+  width: 270px;
+  height: auto;
+  display: block;
+}
+
 /* ========================
     LÆR OM OS-SIDE STYLING
    ======================== */
 
+/* hovedcontainer (med knapper) */
+.fiskekarrusel-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  margin: 0 auto;
+  padding: 80px 0 20px 0; /* Meget mere luft i toppen */
+}
+
+/* karrusel wrapper med pilknapper */
+.fiskekarrusel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+/* scrollbar container for fiskene (uden knapper) */
+.fiskekarrusel-items {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  width: 80%;
+  padding: 20px 0;
+}
+
+.fiskekarrusel-items::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hvert enkelt fiskekort */
+.fiskekort {
+  flex: 0 0 auto;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 20px 20px;
+  text-align: center;
+  width: 200px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Fiskekort billeder */
+.fiskekort img {
+  width: 200px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
+/* Fiskekort hover effekt */
+.fiskekort:hover {
+  box-shadow: var(--shadow-lg);
+  transform: scale(1.05);
+}
+
+/* Karrusel navigationsknapper */
+.karrusel-knap {
+  background: rgba(255, 255, 255, 0.3);
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow);
+  transition: all 0.3s ease;
+}
+
+.karrusel-knap:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+.karrusel-knap img {
+  width: 30px;
+  height: 30px;
+}
+
 /* ========================
-    MODAL OVERLAY STYLING
+    DIALOG STYLING
    ======================== */
+
+/* Dialog element */
+#fish-dialog {
+  border: none;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  padding: 0;
+  width: 1000px;        /* Fast bredde */
+  height: 700px;       /* Fast højde */
+  max-width: 90vw;     /* Responsive på små skærme */
+  max-height: 90vh;    /* Responsive på små skærme */
+  background: transparent;
+}
+
+#fish-dialog::backdrop {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+#fish-dialog form {
+  background: white;
+  border-radius: var(--radius);
+  padding: 20px;
+  position: relative;
+  margin: 0;
+  width: 100%;         /* Fylder hele dialog bredde */
+  height: 100%;        /* Fylder hele dialog højde */
+  box-sizing: border-box;
+  overflow-y: auto;    /* Scroll hvis indhold er for stort */
+}
+
+/* Luk knap i dialog */
+#close-dialog {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #666;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+}
+
+#close-dialog:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+#dialog-content {
+  padding-top: 40px; /* Plads til luk-knappen */
+}
+
+/* Dialog indhold styling */
+.fish-dialog-container {
+  text-align: center;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.fish-dialog-image {
+  max-width: 100%;
+  max-height: 200px;     /* Begrænset højde så der er plads til tekst */
+  height: auto;
+  border-radius: var(--radius);
+  margin-bottom: 15px;
+  object-fit: contain;   /* Bevarer billedeforhold */
+}
+
+.fish-dialog-title {
+  color: var(--secondary-color);
+  margin-bottom: 10px;
+}
+
+.fish-dialog-latin {
+  font-style: italic;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.fish-dialog-info {
+  text-align: left;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.fish-dialog-paragraph {
+  margin-bottom: 15px;
+}
+
+.fish-color-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.fish-dialog-color-tag {
+  display: inline-block;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: capitalize;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Farve-specifikke styles */
+.fish-dialog-color-tag[data-color="orange"] { background: #ff6b35; }
+.fish-dialog-color-tag[data-color="hvid"] { background: #f8f8f8; color: #333; }
+.fish-dialog-color-tag[data-color="sort"] { background: #2c2c2c; }
+.fish-dialog-color-tag[data-color="blue"] { background: #4a90e2; }
+.fish-dialog-color-tag[data-color="yellow"] { background: #f5d347; color: #333; }
+.fish-dialog-color-tag[data-color="brown"] { background: #8b4513; }
+.fish-dialog-color-tag[data-color="green"] { background: #4caf50; }
+.fish-dialog-color-tag[data-color="red"] { background: #f44336; }
+.fish-dialog-color-tag[data-color="pink"] { background: #e91e63; }
+.fish-dialog-color-tag[data-color="purple"] { background: #9c27b0; }
+
+/* Modal baggrund */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Modal indhold */
+.modal-content {
+  position: relative;
+  background: white;
+  border-radius: var(--radius);
+  padding: 20px;
+  max-width: 80%;
+  max-height: 80%;
+  overflow: auto;
+  box-shadow: var(--shadow-lg);
+}
+
+/* Modal billede */
+.modal-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+}
+
+/* Luk knap */
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+.close-btn img {
+  width: 30px;
+  height: 30px;
+}
+
+/* VDVM logo i modal */
+.vdvm-logo {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 60px;
+  height: auto;
+}
+
+/* Højtaler knap */
+.speaker-btn {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+.speaker-btn img {
+  width: 30px;
+  height: 30px;
+}
 
 /* ========================
     VENDESPIL STYLING
    ======================== */
-
 
 /* ========================
     KNAPPER STYLING
@@ -364,69 +674,39 @@ h4 {
 
 /* Hjem-knapper */
 .hjem-knap {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    display: inline-block;
-    margin: 0;
-    text-decoration: none;
-    border-radius: 25px;
-    transition: transform 0.3s ease;
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  display: inline-block;
+  margin: 0;
+  text-decoration: none;
+  border-radius: 25px;
+  transition: transform 0.3s ease;
+  width: 80px;
+  height: 80px;
+  z-index: 100; /* Højere z-index så den ligger over alt andet */
 }
 
 .hjem-knap img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 80px;
-    height: auto;
-}
-
-.hjem-knap img[alt="Hjem-knap"] {
-    z-index: 2; /* Ligger øverst */
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(0.6);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .hjem-knap img[alt="Bobble-hjem"] {
-    z-index: 1; /* Ligger nederst */
-}
-/* Tilbage knapper */
-.tilbage-knap {
-  display: inline-block;
-  background: #4CAF50;
-  color: white;
-  padding: 15px 30px;
-  text-decoration: none;
-  border-radius: 25px;
-  font-family: 'DynaPuff', cursive;
-  font-size: 18px;
-  transition: background 0.3s ease;
+  z-index: 1; /* Ligger nederst */
+  width: 80px;
+  height: auto;
 }
 
-.tilbage-knap:hover {
-  background: #45a049;
+.hjem-knap img[alt="Hjem-knap"] {
+  z-index: 2; /* Ligger øverst */
+  width: 50px;
+  height: auto;
+  top: 45%; /* Flyttet lidt op fra 50% */
 }
 
-.tilbage-knap-bobbler {
-    cursor: pointer;
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    z-index: 10;
-    transition: transform 0.3s ease;
-}
-
-.tilbage-knap-bobbler img {
-    width: 50px; /* Størrelsen på billedet */
-    height: 50px;
-    display: block;
-}
-
-.tilbage-knap-bobbler:hover {
+.hjem-knap:hover {
   transform: scale(1.1); /* Gør boblen lidt større når man hover */
 }
-
-
-

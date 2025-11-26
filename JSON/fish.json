@@ -1,0 +1,44 @@
+{
+  "fish": [
+    {
+      "id": 1,
+      "name": "Klovnfisk",
+      "color": ["orange", "hvid", "sort"],
+      "latinName": "Amphiprion ocellaris",
+      "description": "En lille orange fisk med hvide striber, der bor i søanemoner.",
+      "image": "./images/krabbe_enarmet.png",
+      "livesIn": "Tropiske koralrev",
+      "funFact": "Den bor sammen med sine venner og kan være meget nysgerrig."
+    },
+    {
+      "id": 2,
+      "name": "Blå Chromis",
+      "color": "blue",
+      "latinName": "Chromis cyanea",
+      "description": "En lille, hurtig blå fisk, der lever i store stimer.",
+      "image": "./images/krabbe.png",
+      "livesIn": "Koralrev i Caribien",
+      "funFact": "Den svømmer tit op og ned over korallerne."
+    },
+    {
+      "id": 3,
+      "name": "Rævefisk",
+      "color": "yellow",
+      "latinName": "Siganus vulpinus",
+      "description": "En gul og sort fisk med en lang snude, der ligner et lille ræveansigt.",
+      "image": "./images/krabbe_arm.png",
+      "livesIn": "Koralrev i det vestlige Stillehav",
+      "funFact": "Den har giftige pigge, men den er meget fredelig."
+    },
+    {
+      "id": 4,
+      "name": "Pindsvinefisk",
+      "color": "brown",
+      "latinName": "Diodon holocanthus",
+      "description": "En rund fisk med pigge, der kan puste sig op, når den bliver forskrækket.",
+      "image": "./images/krabbe.png",
+      "livesIn": "Koralrev i tropiske have",
+      "funFact": "Når den puster sig op, stritter piggene ud som et pindsvin."
+    }
+  ]
+}

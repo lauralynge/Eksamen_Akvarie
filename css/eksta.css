@@ -1,9 +1,6 @@
-
-
 /* ========================
-    LÆR OM OS-SIDE STYLING
+    LÆR OM OS-SIDE STYLING ??
    ======================== */
-
 
 /* Content Container til de nye sider */
 .content-container {
@@ -20,7 +17,7 @@
 }
 
 .content-container h1 {
-  font-family: 'DynaPuff', cursive;
+  font-family: "DynaPuff", cursive;
   font-size: 48px;
   color: #333;
   margin-bottom: 20px;
@@ -32,4 +29,42 @@
   margin-bottom: 30px;
 }
 
+/* ========================
+    KNAPPER STYLING
+   ======================== */
 
+/* Tilbage knapper */
+.tilbage-knap {
+  display: inline-block;
+  background: #4caf50;
+  color: white;
+  padding: 15px 30px;
+  text-decoration: none;
+  border-radius: 25px;
+  font-family: "DynaPuff", cursive;
+  font-size: 18px;
+  transition: background 0.3s ease;
+}
+
+.tilbage-knap:hover {
+  background: #45a049;
+}
+
+.tilbage-knap-bobbler {
+  cursor: pointer;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 10;
+  transition: transform 0.3s ease;
+}
+
+.tilbage-knap-bobbler img {
+  width: 50px; /* Størrelsen på billedet */
+  height: 50px;
+  display: block;
+}
+
+.tilbage-knap-bobbler:hover {
+  transform: scale(1.1); /* Gør boblen lidt større når man hover */
+}

@@ -6,5 +6,42 @@
     <title>Lær om os</title>
     <link rel="stylesheet" href="css/css.css" />
   </head>
-  <body></body>
+  <body>
+    <!------ TILBAGEKNAP ------>
+    <a href="index.html" class="hjem-knap">
+      <img src="images/bobble.svg" alt="Bobble-hjem" />
+      <img src="images/hjem-knap.svg" alt="Hjem-knap" />
+    </a>
+
+    <!----- FISKE KARRUSEL ----->      <!-- drop pilene? -->
+    <div class="fiskekarrusel-container">
+      <div class="fiskekarrusel">
+        <button class="karrusel-knap venstre" onclick="scrollKarrusel('venstre')">
+          <img src="images/pil-venstre.svg" alt="Pil venstre" />
+        </button>
+
+        <div class="fiskekarrusel-items" id="fiskekarrusel-items">
+          <!-- Fiskekort indsættes her via JavaScript -->
+        </div>
+
+        <button class="karrusel-knap højre" onclick="scrollKarrusel('højre')">
+          <img src="images/pil-hoejre.svg" alt="Pil højre" />
+        </button>
+      </div>
+
+
+
+
+    <!----- INFO DIALOG MODAL ----->
+ <dialog id="fish-dialog">
+      <form method="dialog">
+        <button id="close-dialog" aria-label="Close">✕</button>
+        <div id="dialog-content">
+          <!-- Fiske detaljer indsættes her via JavaScript -->
+        </div>
+      </form>
+    </dialog>
+
+    <script src="js/js.js"></script>
+  </body>
 </html>
