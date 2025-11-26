@@ -1,0 +1,35 @@
+
+
+/* ========================
+    LÆR OM OS-SIDE STYLING
+   ======================== */
+
+
+/* Content Container til de nye sider */
+.content-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 40px;
+  border-radius: 20px;
+  max-width: 600px;
+}
+
+.content-container h1 {
+  font-family: 'DynaPuff', cursive;
+  font-size: 48px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.content-container p {
+  font-size: 20px;
+  color: #666;
+  margin-bottom: 30px;
+}
+
+

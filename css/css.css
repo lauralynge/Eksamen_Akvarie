@@ -1,0 +1,432 @@
+/* ======================
+    IMPORTERING AF GOOGLE FONTS
+   ====================== */
+/* Importering af DynPuff font */
+@import url("https://fonts.googleapis.com/css2?family=DynaPuff:wght@400..700&display=swap");
+
+/* Importering af Poppins font */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap");
+
+/* ===============
+    CSS VARIABLES
+   =============== */
+
+:root {
+  /* Colors */
+  --primary-color: #f7f7f7; /* Skift */
+  --secondary-color: #2ecc71; /* Skift */
+  --primary-light: #fafafa; /* Skift */
+  --secondary-light: #3c4043; /* Skift */
+
+  /* Backgrounds */
+  --bg: #fafafa; /* Skift */
+  --bg-card: #f1f1f1; /* Skift */
+  --bg-image-main: url("../images/baggrund.svg"); /* Skift? */
+
+  /* Bobler */
+  --bubble-big: url("../images/boble1.svg");
+  --bubble-medium: url("../images/boble2.svg");
+  --bubble-small: url("../images/boble3.svg");
+
+  /* Effects */ /* ret? */
+  --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.3);
+  --shadow-lg: 0 8px 25px rgba(0, 0, 0, 0.3);
+  --radius: 1rem;
+  --transition: transform 0.2s ease;
+  --transform: translateX(120px) scale(0);
+}
+
+/* ===========
+    CSS FONTS
+   =========== */
+
+/* Til H1–H2 / 48–56 px / overskrift og titler */
+.dynaPuff-medium {
+  font-family: "DynaPuff";
+  font-weight: 500;
+  font-style: normal;
+}
+
+/* Til H3–H4 eller callouts / 32–36 px / Brødtekst */
+.dynaPuff-regular {
+  font-family: "DynaPuff";
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* Til brødtekst og mindre tekster / 16–18 px / brødtekst */
+.poppins-regular {
+  font-family: "Poppins", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.poppins-medium {
+  font-family: "Poppins", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+
+/* ========================
+    GLOBAL STYLES (LAYOUT)
+   ======================== */
+
+body {
+  background-image: var(--bg-image-main);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+h1 {
+  font-family: "DynaPuff";
+  font-weight: 500;
+  font-size: 56px;
+  color: var(--primary-color);
+}
+
+h2 {
+  font-family: "DynaPuff";
+  font-weight: 400;
+  font-size: 48px;
+  color: var(--primary-color);
+}
+
+h3 {
+  font-family: "Poppins";
+  font-weight: 500;
+  font-size: 36px;
+  color: var(--secondary-color);
+}
+
+h4 {
+  font-family: "Poppins";
+  font-weight: 400;
+  font-size: 32px;
+  color: var(--secondary-color);
+}
+
+/* ========================
+    INDEX STYLING
+   ======================== */
+
+.velkomst {
+  text-align: center;
+  width: 100%;
+  margin: 100px auto;
+  position: relative;
+  line-height: 1.5;
+}
+
+/* Tryk her ikon styling */ /* SKIFT PLACERING? */
+.tryk-her {
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  position: fixed;
+  top: 300px;
+  left: 50%;
+}
+
+.tryk-her img {
+  max-width: 100px;
+  height: auto;
+  animation: tryk-her 2s ease-in-out infinite 2s;
+}
+
+@keyframes tryk-her {
+  0%,
+  100% {
+    transform: translateX(-50%) scale(1);
+  }
+  50% {
+    transform: translateX(-50%) scale(1.1);
+  }
+}
+
+/* Krabbe styling */
+.krabbe-index {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 900px;
+  height: auto;
+}
+
+.krabbe-arm {
+  position: fixed;
+  bottom: 165px;
+  left: 1100px;
+  max-width: 315px;
+  height: auto;
+  animation: wave 1s ease-in-out infinite 2s;
+  transform-origin: center bottom;
+  pointer-events: none;
+}
+
+/* Animation af krabbe-arm */
+@keyframes wave {
+  0%,
+  100% {
+    transform: translateX(-50%) rotate(0deg);
+  }
+  10% {
+    transform: translateX(-50%) rotate(-2deg);
+  }
+  20% {
+    transform: translateX(-50%) rotate(-5deg);
+  }
+  30% {
+    transform: translateX(-50%) rotate(-8deg);
+  }
+  40% {
+    transform: translateX(-50%) rotate(-5deg);
+  }
+  50% {
+    transform: translateX(-50%) rotate(0deg);
+  }
+  60% {
+    transform: translateX(-50%) rotate(5deg);
+  }
+  70% {
+    transform: translateX(-50%) rotate(8deg);
+  }
+  80% {
+    transform: translateX(-50%) rotate(5deg);
+  }
+  90% {
+    transform: translateX(-50%) rotate(2deg);
+  }
+}
+
+/* ========================
+    INTRO-SIDE STYLING
+   ======================== */
+
+/* Placering og styling af bobble-container (begge bobler)*/
+.bobble-container {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  display: flex;
+  gap: 250px; /* Afstand mellem bobblerne */
+  justify-content: center;
+  align-items: center;
+}
+/* bobble-item styling (boble + tekst) */
+.bobble-item {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: floatIndex 3s ease-in-out infinite;
+}
+
+/* bobble-item billeder styling*/
+.bobble-item img {
+  width: 500px;
+  height: auto;
+}
+
+/* Bobble Text */
+.bobble-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--primary-color);
+  text-align: center;
+  margin : 0;
+  pointer-events: none; /* Gør teksten klikbar gennem til boblen */
+}
+
+/* Bobble Links */
+.bobble-link {
+  text-decoration: none; /* Fjerner understreget link */
+  transition: transform 0.3s ease; /* Smooth animation */
+}
+
+.bobble-link:hover {
+  transform: scale(1.1); /* Gør boblen lidt større når man hover */
+}
+
+/* CSS Animation til Index.html bobbler */
+@keyframes floatIndex {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-15px) rotate(-5deg);
+  }
+}
+
+/* ========================
+    SPIL MED OS-SIDE STYLING
+   ======================== */
+
+/* Bobler Container til spil-med-os siden (2 bobler top) */
+.bobble-container-top {
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  display: flex;
+  gap: 200px;
+  justify-content: center;
+  align-items: center;
+  max-width: 100vw;
+}
+
+/* Bobler Container til spil-med-os siden (2 bobler bund) */
+.bobble-container-bund {
+  position: absolute;
+  top: 75%;
+  left: 70%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  display: flex;
+  gap: 200px;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Mindre bobler til 2-bobbel layoutet top */
+.bobble-container-top .bobble-item-top {
+  animation: floatTop 4s ease-in-out infinite;
+}
+
+.bobble-container-top .bobble-item-top img {
+  width: 300px;
+  height: auto;
+}
+
+/* Mindre bobler til 2-bobbel layoutet bund */
+.bobble-container-bund .bobble-item-bund {
+  animation: floatBottom 3s ease-in-out infinite;
+}
+
+.bobble-container-bund .bobble-item-bund img {
+  width: 300px;
+  height: auto;
+}
+
+/* CSS Animation til svævende bobbler - Top */
+@keyframes floatTop {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-15px) rotate(5deg);
+  }
+}
+
+/* CSS Animation til svævende bobbler - Bund */
+@keyframes floatBottom {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-15px) rotate(-5deg);
+  }
+}
+
+/* ========================
+    LÆR OM OS-SIDE STYLING
+   ======================== */
+
+/* ========================
+    MODAL OVERLAY STYLING
+   ======================== */
+
+/* ========================
+    VENDESPIL STYLING
+   ======================== */
+
+
+/* ========================
+    KNAPPER STYLING
+   ======================== */
+
+/* Hjem-knapper */
+.hjem-knap {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    display: inline-block;
+    margin: 0;
+    text-decoration: none;
+    border-radius: 25px;
+    transition: transform 0.3s ease;
+}
+
+.hjem-knap img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 80px;
+    height: auto;
+}
+
+.hjem-knap img[alt="Hjem-knap"] {
+    z-index: 2; /* Ligger øverst */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.6);
+}
+
+.hjem-knap img[alt="Bobble-hjem"] {
+    z-index: 1; /* Ligger nederst */
+}
+/* Tilbage knapper */
+.tilbage-knap {
+  display: inline-block;
+  background: #4CAF50;
+  color: white;
+  padding: 15px 30px;
+  text-decoration: none;
+  border-radius: 25px;
+  font-family: 'DynaPuff', cursive;
+  font-size: 18px;
+  transition: background 0.3s ease;
+}
+
+.tilbage-knap:hover {
+  background: #45a049;
+}
+
+.tilbage-knap-bobbler {
+    cursor: pointer;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 10;
+    transition: transform 0.3s ease;
+}
+
+.tilbage-knap-bobbler img {
+    width: 50px; /* Størrelsen på billedet */
+    height: 50px;
+    display: block;
+}
+
+.tilbage-knap-bobbler:hover {
+  transform: scale(1.1); /* Gør boblen lidt større når man hover */
+}
+
+
+
