@@ -15,12 +15,12 @@
   /* Colors */
   --primary-color: #f7f7f7; /* Skift */
   --secondary-color: #121312; /* Skift */
-  --primary-light: #fafafa; /* Skift */
-  --secondary-light: #3c4043; /* Skift */
+  --primary-blue: #077789; /* Skift */
+  --secondary-blue: #0099cc; /* Skift */
 
   /* Backgrounds */
   --bg: #fafafa; /* Skift */
-  --bg-card: #f1f1f1; /* Skift */
+  --bg-dialog: #f7f7f7; /* Skift */
   --bg-image-main: url("../images/baggrund.svg"); /* Skift? */
 
   /* Bobler */ /* BRUGER JEG OVERHOEVET DISSE? */
@@ -29,6 +29,7 @@
   --bubble-small: url("../images/boble3.svg");
 
   /* Effects */ /* ret? */
+  --backdrop: rgba(0, 0, 0, 0.5) blur(8px);
   --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.3);
   --shadow-lg: 0 8px 25px rgba(0, 0, 0, 0.3);
   --radius: 1rem;
@@ -82,7 +83,7 @@ body {
   margin: 0;
   padding: 0;
   min-height: 100vh;
-  overflow-x: hidden; /* Skjul horisontal scroll */
+  overflow: hidden; /* Skjul al scroll på siden */
 }
 
 h1 {
@@ -293,7 +294,7 @@ h4 {
 /* Bobler Container til spil-med-os siden (2 bobler bund) */
 .bobble-container-bund {
   position: absolute;
-  top: 75%;
+  top: 65%;
   left: 70%;
   transform: translate(-50%, -50%);
   z-index: 10;
@@ -380,7 +381,6 @@ h4 {
 .fiskekarrusel-container {
   position: relative;
   width: 100%;
-  overflow: hidden;
   margin: 0 auto;
   padding: 150px 0 20px 0; /* Meget mere luft i toppen */
 }
@@ -571,14 +571,14 @@ h4 {
   display: inline-block;
   color: white;
   padding: 5px 10px;
-  border-radius: 15px;
+  border-radius: var(--radius);
   font-size: 14px;
   font-weight: 500;
   text-transform: capitalize;
   border: 2px solid rgba(255, 255, 255, 0.3);
 }
 
-/* Farve-specifikke styles */
+/* Farve-specifikke styles */ /* DROP DETTE */
 .fish-dialog-color-tag[data-color="orange"] {
   background: #ff6b35;
 }
@@ -690,11 +690,161 @@ h4 {
     VENDESPIL STYLING
    ======================== */
 
+#vendespilsbrikker {
+  display: grid;
+  grid-template-columns: repeat(4, 200px);
+  row-gap: 75px; /* afstand mellem rækkerne */
+  column-gap: 75px; /* afstand mellem kolonnerne */
+  justify-content: center; /* centrerer brikkerne inde i gridd’et */
+}
+
+/* Wrapper til vertikal og horisontal centrering af vendespillet */
+.vendespil-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* stil for hver brik */
+.brik img {
+  width: 200px;
+  height: 250px;
+  cursor: pointer;
+}
+/* container for brikken */
+.brik {
+  position: relative;
+  width: 200px;
+  height: 250px;
+  perspective: 1000px; /* 3D dybde */
+}
+
+/* det indre “kort” der roteres */
+.brik .kort {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 480ms cubic-bezier(0.2, 0.7, 0.2, 1); /* smooth easing */
+  will-change: transform; /* hint til browseren */
+}
+
+/* begge sider fylder hele kortet */
+.brik .forside,
+.brik .bagside {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  backface-visibility: hidden; /* skjul bagsiden når væk */
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+/* vend forside 180° fra start, så den kommer frem ved flip */
+.brik .forside {
+  transform: rotateY(180deg);
+}
+
+/* når brikken er vendt, roter hele kortet */
+.brik.vendt .kort {
+  transform: rotateY(180deg);
+}
+
+/* valgfrit: lidt “snap” følelse */
+.brik:active .kort {
+  transition-duration: 360ms;
+}
+
+/* matcher/fundet: slå klik fra og giv visuel status */
+.brik.fundet {
+  pointer-events: none;
+  filter: saturate(0.8) brightness(0.95);
+  opacity: 0.9;
+}
+
+/* respekt for brugere der ikke ønsker animationer */ /* SLET ???? */
+@media (prefers-reduced-motion: reduce) {
+  .brik .kort {
+    transition: none;
+  }
+}
+
+/* VENDESPIL DIALOG STYLING */
+
+/* Overlay */
+
+/* indholdet og layout i dialogen */
+.match-dialog-content {
+  padding: 20px;
+  text-align: center;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+}
+
+/* rammen omkring dialogen */
+#matchDialog {
+  background: var(--bg-dialog);
+  border: none;
+  border-radius: var(--radius);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  width: 1000px;
+  height: 700px;
+}
+
+#matchDialog::backdrop {
+  background: var(--backdrop);
+}
+
+#matchDialog h1,
+h2 {
+  color: var(--primary-blue);
+  line-height: 0.5;
+}
+
+#dialogImage {
+  background: none;
+  width: 500px;
+  height: auto;
+  border-radius: var(--radius);
+  margin-bottom: 1rem;
+}
+#closeDialogBtn {
+  background: var(--secondary-blue);
+  color: #fff;
+  border: none !important;
+  border-radius: var(--radius);
+  padding: 0.7rem 2rem;
+  font-size: 1.1rem;
+  cursor: pointer;
+  margin-top: 1.5rem;
+  transition: background 0.2s;
+}
+#closeDialogBtn:hover {
+  background: var(--primary-blue);
+}
+
+/* Stik område */
+#matchArea {
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+  min-height: 60px;
+}
+
 /* ========================
     KNAPPER STYLING
    ======================== */
 
-/* Hjem-knapper */
+/* HJEM-KNAPPER */
 .hjem-knap {
   position: fixed;
   top: 20px;
@@ -729,6 +879,46 @@ h4 {
   top: 45%; /* Flyttet lidt op fra 50% */
 }
 
-.hjem-knap:hover {
+/* LUK-KNAPPER */
+.luk-knap {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  display: inline-block;
+  margin: 0;
+  text-decoration: none;
+  border-radius: 25px;
+  transition: transform 0.3s ease;
+  width: 80px;
+  height: 80px;
+  z-index: 2;
+}
+
+.luk-knap img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1; /* Ligger nederst */
+  width: 80px;
+  height: auto;
+}
+
+.luk-knap-tekst {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--primary-color);
+  text-align: center;
+  margin: 0;
+  z-index: 2; /* Ligger øverst */
+  font-family: "DynaPuff", cursive;
+  font-size: 32px;
+  color: var(--primary-color);
+  pointer-events: none; /* Gør teksten ikke klikbar */
+}
+
+.luk-knap:hover {
   transform: scale(1.1); /* Gør boblen lidt større når man hover */
 }

@@ -8,7 +8,12 @@
       "description": "En lille orange fisk med hvide striber, der bor i søanemoner.",
       "image": "./images/krabbe_enarmet.png",
       "livesIn": "Tropiske koralrev",
-      "funFact": "Den bor sammen med sine venner og kan være meget nysgerrig."
+      "funFact": "Den bor sammen med sine venner og kan være meget nysgerrig.",
+      "vendespil": true,
+      "card": {
+        "forside": "images/testbrik-forside.png",
+        "bagside": "images/testbrik-bagside.png"
+      }
     },
     {
       "id": 2,
@@ -18,7 +23,12 @@
       "description": "En lille, hurtig blå fisk, der lever i store stimer.",
       "image": "./images/krabbe.png",
       "livesIn": "Koralrev i Caribien",
-      "funFact": "Den svømmer tit op og ned over korallerne."
+      "funFact": "Den svømmer tit op og ned over korallerne.",
+      "vendespil": true,
+      "card": {
+        "forside": "images/testbrik-forside.png",
+        "bagside": "images/testbrik-bagside.png"
+      }
     },
     {
       "id": 3,
@@ -28,7 +38,12 @@
       "description": "En gul og sort fisk med en lang snude, der ligner et lille ræveansigt.",
       "image": "./images/krabbe_arm.png",
       "livesIn": "Koralrev i det vestlige Stillehav",
-      "funFact": "Den har giftige pigge, men den er meget fredelig."
+      "funFact": "Den har giftige pigge, men den er meget fredelig.",
+      "vendespil": true,
+      "card": {
+        "forside": "images/testbrik-forside.png",
+        "bagside": "images/testbrik-bagside.png"
+      }
     },
     {
       "id": 4,
@@ -38,7 +53,12 @@
       "description": "En rund fisk med pigge, der kan puste sig op, når den bliver forskrækket.",
       "image": "./images/krabbe.png",
       "livesIn": "Koralrev i tropiske have",
-      "funFact": "Når den puster sig op, stritter piggene ud som et pindsvin."
+      "funFact": "Når den puster sig op, stritter piggene ud som et pindsvin.",
+      "vendespil": true,
+      "card": {
+        "forside": "images/testbrik-forside.png",
+        "bagside": "images/testbrik-bagside.png"
+      }
     }
   ]
 }

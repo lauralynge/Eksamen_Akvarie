@@ -30,6 +30,7 @@ async function getFish() {
 // #3: Vis fisk i karrusellen
 function displayFishCarousel(fishes) {
   const container = document.getElementById("fiskekarrusel-items");
+  if (!container) return; // Stop hvis elementet ikke findes
 
   // Ryd containerens indhold
   container.innerHTML = "";
@@ -234,3 +235,151 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 });
+
+// ======== VENDESPIL ========
+
+// Dynamisk opbygning af vendespilsbrikker fra JSON
+
+// opbygning og visning af brikker
+
+const vendespilsbrikker = document.querySelector("#vendespilsbrikker"); // Container til alle brikker
+
+// Bland et array tilfældigt (Fisher-Yates)
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+// Hent kun de fisk fra JSON, der skal bruges til vendespil
+function vendespilFisk() {
+  return allFish.filter((fisk) => fisk.vendespil);
+}
+
+let brikker = []; // Array med alle brikker til vendespil
+
+// # Opbyg brikker-array ud fra fiskene
+function opbygBrikker() {
+  brikker = [];
+  vendespilFisk().forEach((fisk) => {
+    // Tilføj to brikker af hver fisk (for at kunne matche)
+    brikker.push({
+      id: fisk.id,
+      forside: fisk.card.forside,
+      bagside: fisk.card.bagside,
+    });
+    brikker.push({
+      id: fisk.id,
+      forside: fisk.card.forside,
+      bagside: fisk.card.bagside,
+    });
+  });
+  brikker = shuffle(brikker); // Bland brikkerne
+}
+
+// # Byg HTML for alle brikker og vis dem på siden
+function visBrikker() {
+  vendespilsbrikker.innerHTML = "";
+  for (let i = 0; i < brikker.length; i++) {
+    vendespilsbrikker.innerHTML += `
+      <div class="brik" data-id="${brikker[i].id}">
+        <div class="kort">
+          <img src="${brikker[i].bagside}" alt="bagside" class="bagside">
+          <img src="${brikker[i].forside}" alt="brik ${brikker[i].id}" class="forside">
+        </div>
+      </div>
+    `;
+  }
+}
+
+// Kald opbygning og visning når fiskene er hentet
+window.addEventListener("load", () => {
+  setTimeout(() => {
+    opbygBrikker();
+    visBrikker();
+  }, 600);
+});
+
+const FLIP_MS = 500; // matcher CSS transition
+
+// Klik: vend brikker og tjek for match (2 ad gangen)
+let åben = []; // holder de åbne brikker (DOM-elementer)
+let låst = false; // lås input mens vi tjekker
+
+vendespilsbrikker.addEventListener("click", (e) => {
+  const brik = e.target.closest(".brik");
+  if (!brik || låst) return;
+
+  if (brik.classList.contains("vendt") || brik.classList.contains("fundet"))
+    return;
+
+  brik.classList.add("vendt");
+  åben.push(brik);
+
+  if (åben.length === 2) {
+    låst = true;
+    const [a, b] = åben;
+    const match = a.dataset.id === b.dataset.id;
+
+    setTimeout(() => {
+      if (match) {
+        a.classList.add("fundet");
+        b.classList.add("fundet");
+
+        // Hent data om fisken
+        const fish = allFish.find((f) => f.id == a.dataset.id);
+
+        // 1. Vis dialog
+        showMatchDialog(fish);
+
+        // 2. Tilføj til score
+        addToScore(fish);
+      } else {
+        a.classList.remove("vendt");
+        b.classList.remove("vendt");
+      }
+      åben = [];
+      låst = false;
+    }, FLIP_MS); // vent til flip er færdig
+  }
+});
+
+// DIALOG NÅR MACHT ER FUNDET
+
+function showMatchDialog(cardData) {
+  document.getElementById("matchName").innerText = cardData.name;
+  document.getElementById("dialogImage").src = cardData.image;
+  document.getElementById("matchDialog").showModal();
+}
+
+// Luk dialog når man klikker på OK-knappen
+document.getElementById("closeDialogBtn").addEventListener("click", () => {
+  document.getElementById("matchDialog").close();
+});
+
+// Luk dialog hvis man klikker udenfor dialogen (kun én gang)
+document.addEventListener("DOMContentLoaded", function () {
+  const matchDialog = document.getElementById("matchDialog");
+  if (matchDialog) {
+    matchDialog.addEventListener("click", function (e) {
+      if (e.target === matchDialog) {
+        matchDialog.close();
+      }
+    });
+  }
+});
+
+// STIK LIGGES I SCORE-OMRÅDET
+
+function addToScore(cardData) {
+  const scoreArea = document.getElementById("scoreArea");
+  const img = document.createElement("img");
+
+  img.src = cardData.image;
+  img.alt = cardData.name;
+  img.classList.add("score-card");
+
+  scoreArea.appendChild(img);
+}

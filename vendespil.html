@@ -8,12 +8,30 @@
     <link rel="stylesheet" href="css/css.css" />
   </head>
   <body>
-    <div id="vendespilsbrikker"></div>
-    <div>
-      <button class="luk-knap" onclick="tilbageButtonClick()">
-        <img src="images/luk.png" alt="luk-knap" />
-      </button>
+    <div class="vendespil-wrapper">
+      <div id="vendespilsbrikker"></div>
+      <!-- Vendespil indsættes her via JavaScript -->
     </div>
-    <script src="js/js.js" defer></script>. <!-- defer? HVad gør den? -->
+
+    <!-- Overlay/dialog -->
+    <dialog id="matchDialog">
+      <div class="match-dialog-content">
+        <h1>Du fandt et match! 🎉</h1>
+        <h2 id="matchName"></h2>
+        <img id="dialogImage" src="" alt="" />
+        <button id="closeDialogBtn">OK</button>
+      </div>
+    </dialog>
+
+    <!-- Score område med stik -->
+    <div id="scoreArea"></div>
+
+    <!------ LUK-KNAP ------>
+    <a href="spil-med-os.html" class="luk-knap">
+      <img src="images/bobble.svg" alt="Bobble-luk" />
+      <h3 class="luk-knap-tekst">X</h3>
+    </a>
+
+    <script src="js/js.js" defer></script>
   </body>
 </html>
