@@ -327,6 +327,11 @@ window.addEventListener("load", () => {
     opbygBrikker();
     visBrikker();
     visSkygger();
+    // Sørg for at endGameDialog er skjult fra start
+    const endGameDialog = document.getElementById("endGameDialog");
+    if (endGameDialog && endGameDialog.open) {
+      endGameDialog.close();
+    }
   }, 600);
 });
 

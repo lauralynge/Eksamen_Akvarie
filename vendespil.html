@@ -8,10 +8,9 @@
     <link rel="stylesheet" href="css/css.css" />
   </head>
   <body>
-
-     <!-- Score område til stik -->
+    <!-- Score område til stik -->
     <div id="scoreShadowArea"></div>
-   
+
     <div class="vendespil-wrapper">
       <div id="vendespilsbrikker"></div>
       <!-- Vendespil indsættes her via JavaScript -->
@@ -31,10 +30,23 @@
     <dialog id="endGameDialog">
       <h1>Sejt! Du fandt alle fiskene</h1>
       <h2>Har du lyst til at spille igen?</h2>
-      <div id="endGameFishRow" style="display:flex; justify-content:center; gap:20px; margin:20px 0;"></div>
+      <div
+        id="endGameFishRow"
+        style="
+          display: flex;
+          justify-content: center;
+          gap: 20px;
+          margin: 20px 0;
+        "
+      ></div>
       <button id="closeEndGameBtn" type="button">
         <img src="images/start-igen.png" alt="start-igen" />
       </button>
+      <!------ Luk-knap i dialog ------>
+      <a href="spil-med-os.html" class="luk-knap">
+        <img src="images/bobble.svg" alt="Bobble-luk" />
+        <h3 class="luk-knap-tekst">X</h3>
+      </a>
     </dialog>
 
     <!------ LUK-KNAP ------>

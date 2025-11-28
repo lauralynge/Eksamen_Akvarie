@@ -413,6 +413,7 @@ h4 {
 
 /* Hvert enkelt fiskekort */
 .fiskekort {
+  display: flex;
   flex: 0 0 auto;
   background: rgba(255, 255, 255, 0.3);
   border-radius: var(--radius);
@@ -427,7 +428,7 @@ h4 {
 .fiskekort img {
   width: 200px;
   height: 150px;
-  object-fit: cover;
+  object-fit: contain;
   border-radius: var(--radius);
   cursor: pointer;
 }
@@ -872,6 +873,7 @@ h2 {
   max-width: 200px;
   max-height: 100px;
   height: auto;
+  opacity: 1;
 }
 
 /* VENDESPIL ENDGAME_DIALOG STYLING */
@@ -890,6 +892,10 @@ h2 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+#endGameDialog:not([open]) {
+  display: none;
 }
 
 #endGameDialog h1 {
