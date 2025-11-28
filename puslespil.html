@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Puslespil</title>
+
+    <link rel="stylesheet" href="css/css.css" />
+  </head>
+  <body>
+    <!------ PUSLESPIL ------>
+    <div class="puslespil-wrapper">
+      <h2>3×3 Puslespil</h2>
+      <h2>Træk brikkerne ind på rammen og løs puslespillet!</h2>
+
+  <div class="puzzle-layout">
+  <div id="piece-container-left"></div>
+        <div id="puzzle"></div>
+  <div id="piece-container-right"></div>
+      </div>
+
+      <p id="status"></p>
+    </div>
+    <dialog id="endGameDialog">
+      <h1>Tillykke! Du har løst puslespillet!</h1>
+
+      <!------ Luk-knap i dialog ------>
+      <a href="spil-med-os.html" class="luk-knap">
+        <img src="images/bobble.svg" alt="Bobble-luk" />
+        <h3 class="luk-knap-tekst">X</h3>
+      </a>
+    </dialog>
+
+    <!------ LUK-KNAP ------>
+    <a href="spil-med-os.html" class="luk-knap">
+      <img src="images/bobble.svg" alt="Bobble-luk" />
+      <h3 class="luk-knap-tekst">X</h3>
+    </a>
+    <script src="js/puslespil.js" defer></script>
+  </body>
+</html>

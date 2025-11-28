@@ -1,7 +1,8 @@
 /* ======================
     IMPORTERING AF GOOGLE FONTS
    ====================== */
-/* Importering af DynPuff font */
+
+/* Importering af DynaPuff font */
 @import url("https://fonts.googleapis.com/css2?family=DynaPuff:wght@400..700&display=swap");
 
 /* Importering af Poppins font */
@@ -1034,4 +1035,180 @@ h2 {
 
 .luk-knap:hover {
   transform: scale(1.1); /* Gør boblen lidt større når man hover */
+}
+
+/* ===================
+    PUSLESPIL STYLING
+   =================== */
+
+.puslespil-wrapper {
+  font-family: sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 30px;
+  border-radius: 12px;
+}
+#puzzle {
+  width: 600px;
+  height: 600px;
+  display: grid;
+  grid-template-columns: repeat(3, 100px);
+  grid-template-rows: repeat(3, 100px);
+  border: 2px solid #333;
+  background-color: rgba(247, 247, 247, 0.5);
+  border-radius: var(--radius);
+}
+
+.piece {
+  width: 200px;
+  height: 200px;
+  background-image: url("../images/puslespil.jpg");
+  background-size: 600px 600px; /* Sikrer at hele billedet dækker grid */
+  background-repeat: no-repeat;
+  border: 1px solid #077789; /* Primær blå for mere kontrast */
+  box-shadow: 0 2px 8px rgba(7, 119, 137, 0.12);
+  box-sizing: border-box;
+  transition: box-shadow 0.2s, border-color 0.2s;
+  cursor: grab;
+  position: relative;
+  overflow: hidden;
+}
+/* Rundede hjørner på de fire hjørne-brikker */
+.piece.corner-top-left {
+  border-top-left-radius: var(--radius);
+}
+.piece.corner-top-right {
+  border-top-right-radius: var(--radius);
+}
+.piece.corner-bottom-left {
+  border-bottom-left-radius: var(--radius);
+}
+.piece.corner-bottom-right {
+  border-bottom-right-radius: var(--radius);
+}
+.piece:active {
+  box-shadow: 0 4px 16px rgba(7, 119, 137, 0.18);
+  border-color: #0099cc;
+}
+
+.piece.dragging {
+  opacity: 0.5;
+  z-index: 2;
+}
+
+.puzzle-layout {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+/* Styling for brik-containerne */
+#piece-container-left,
+#piece-container-right {
+  display: grid;
+  grid-template-columns: repeat(2, 100px);
+  grid-template-rows: repeat(2, 120px);
+  gap: 20px;
+  width: 220px;
+  height: 280px;
+  align-items: flex-start;
+  justify-items: center;
+}
+
+/* Når endgame-dialogen er åben, skjul og slør puslespillets indhold */
+body.dialog-open .puslespil-wrapper {
+  opacity: 0.15;
+  pointer-events: none;
+  filter: blur(2px);
+}
+
+/* PUSLESPIL ENDGAME_DIALOG STYLING */
+
+.puzzle-end-image-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 30px;
+}
+.puzzle-end-image {
+  height: 200px;
+  border-radius: 18px;
+  box-shadow: 0 4px 16px rgba(7, 119, 137, 0.18);
+}
+.puzzle-end-btn {
+  padding: 10px 50px;
+  background: var(--primary-color);
+  border: none;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  transition: background 0.2s;
+  font-size: 1.2rem;
+}
+.puzzle-end-btn:hover {
+  background: #d9d9d9;
+}
+
+/* ===================
+    FAPPY-FISH STYLING
+   =================== */
+
+/*marie-louise*/
+/* Flappy fish CSS */
+
+/* Fyld siden og vis din PNG som baggrund */
+
+/* Centrer canvas pænt */
+.wrap {
+  height: 100%;
+  display: grid;
+  place-items: center;
+}
+
+canvas#game {
+  width: min(95vw, 540px); /* responsivt: bredde på skærm */
+  height: calc(min(95vw, 540px) * 16 / 9); /* hold 16:9-forhold */
+  max-height: 90vh;
+  background: transparent; /* så body-baggrund kan ses */
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35),
+    inset 0 0 40px rgba(255, 255, 255, 0.05);
+  display: block;
+}
+
+/* UI-hint over spillet */
+.hud {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+
+/* Tilbage knap i højre hjørne */
+.tilbage-button-left {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 1500;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.tilbage-button-left:hover {
+  transform: scale(1.1);
+  opacity: 0.8;
+}
+
+.tilbage-button-left img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  display: block;
 }

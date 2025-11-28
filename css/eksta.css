@@ -29,42 +29,116 @@
   margin-bottom: 30px;
 }
 
-/* ========================
-    KNAPPER STYLING
-   ======================== */
+/* ===================
+    PUSLESPIL STYLING
+   =================== */
 
-/* Tilbage knapper */
-.tilbage-knap {
-  display: inline-block;
-  background: #4caf50;
-  color: white;
-  padding: 15px 30px;
-  text-decoration: none;
-  border-radius: 25px;
-  font-family: "DynaPuff", cursive;
-  font-size: 18px;
-  transition: background 0.3s ease;
+.puslespil-wrapper {
+  font-family: sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 30px;
+  border-radius: 12px;
+}
+#puzzle {
+  width: 600px;
+  height: 600px;
+  display: grid;
+  grid-template-columns: repeat(3, 100px);
+  grid-template-rows: repeat(3, 100px);
+  border: 2px solid #333;
+  background-color: rgba(247, 247, 247, 0.5);
+  border-radius: var(--radius);
 }
 
-.tilbage-knap:hover {
-  background: #45a049;
+.piece {
+  width: 200px;
+  height: 200px;
+  background-image: url("../images/puslespil.jpg");
+  background-size: 600px 600px; /* Sikrer at hele billedet dækker grid */
+  background-repeat: no-repeat;
+  border: 1px solid #077789; /* Primær blå for mere kontrast */
+  box-shadow: 0 2px 8px rgba(7, 119, 137, 0.12);
+  box-sizing: border-box;
+  transition: box-shadow 0.2s, border-color 0.2s;
+  cursor: grab;
+  position: relative;
+  overflow: hidden;
+}
+/* Rundede hjørner på de fire hjørne-brikker */
+.piece.corner-top-left {
+  border-top-left-radius: var(--radius);
+}
+.piece.corner-top-right {
+  border-top-right-radius: var(--radius);
+}
+.piece.corner-bottom-left {
+  border-bottom-left-radius: var(--radius);
+}
+.piece.corner-bottom-right {
+  border-bottom-right-radius: var(--radius);
+}
+.piece:active {
+  box-shadow: 0 4px 16px rgba(7, 119, 137, 0.18);
+  border-color: #0099cc;
 }
 
-.tilbage-knap-bobbler {
+.piece.dragging {
+  opacity: 0.5;
+  z-index: 2;
+}
+
+.puzzle-layout {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+/* Styling for brik-containerne */
+#piece-container-left,
+#piece-container-right {
+  display: grid;
+  grid-template-columns: repeat(2, 100px);
+  grid-template-rows: repeat(2, 120px);
+  gap: 20px;
+  width: 220px;
+  height: 280px;
+  align-items: flex-start;
+  justify-items: center;
+}
+
+/* Når endgame-dialogen er åben, skjul og slør puslespillets indhold */
+body.dialog-open .puslespil-wrapper {
+  opacity: 0.15;
+  pointer-events: none;
+  filter: blur(2px);
+}
+
+/* PUSLESPIL ENDGAME_DIALOG STYLING */
+
+.puzzle-end-image-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 30px;
+}
+.puzzle-end-image {
+  height: 200px;
+  border-radius: 18px;
+  box-shadow: 0 4px 16px rgba(7, 119, 137, 0.18);
+}
+.puzzle-end-btn {
+  padding: 10px 50px;
+  background: var(--primary-color);
+  border: none;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
   cursor: pointer;
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  z-index: 10;
-  transition: transform 0.3s ease;
+  transition: background 0.2s;
+  font-size: 1.2rem;
 }
-
-.tilbage-knap-bobbler img {
-  width: 50px; /* Størrelsen på billedet */
-  height: 50px;
-  display: block;
-}
-
-.tilbage-knap-bobbler:hover {
-  transform: scale(1.1); /* Gør boblen lidt større når man hover */
+.puzzle-end-btn:hover {
+  background: #d9d9d9;
 }
