@@ -28,8 +28,11 @@
   --bubble-medium: url("../images/boble2.svg");
   --bubble-small: url("../images/boble3.svg");
 
-  /* Effects */ /* ret? */
-  --backdrop: rgba(0, 0, 0, 0.5) blur(8px);
+  /* Dialog effects */
+  --backdrop-color: rgba(0, 0, 0, 0.5);
+  --backdrop-blur: 2px;
+
+  /* Shadows, Radius & Transitions */
   --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.3);
   --shadow-lg: 0 8px 25px rgba(0, 0, 0, 0.3);
   --radius: 1rem;
@@ -700,8 +703,9 @@ h4 {
 
 /* Wrapper til vertikal og horisontal centrering af vendespillet */
 .vendespil-wrapper {
-  min-height: 100vh;
+  max-height: 100vh;
   display: flex;
+  margin-top: 75px;
   align-items: center;
   justify-content: center;
   position: relative;
@@ -776,8 +780,6 @@ h4 {
 
 /* VENDESPIL DIALOG STYLING */
 
-/* Overlay */
-
 /* indholdet og layout i dialogen */
 .match-dialog-content {
   padding: 20px;
@@ -788,6 +790,14 @@ h4 {
   align-items: center;
   text-align: center;
   justify-content: center;
+}
+
+.match-dialog-content h1 {
+  margin-bottom: 0.2em;
+}
+
+.match-dialog-content h2 {
+  margin-top: 0;
 }
 
 /* rammen omkring dialogen */
@@ -801,13 +811,13 @@ h4 {
 }
 
 #matchDialog::backdrop {
-  background: var(--backdrop);
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(2px);
 }
 
 #matchDialog h1,
 h2 {
   color: var(--primary-blue);
-  line-height: 0.5;
 }
 
 #dialogImage {
@@ -840,8 +850,105 @@ h2 {
   min-height: 60px;
 }
 
+/* VENDESPIL SCORE-STYLING */
+
+#scoreShadowArea {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 50px;
+  gap: 50px;
+}
+
+.score-shadow {
+  max-width: 200px;
+  max-height: 100px;
+  height: auto;
+  opacity: 0.5;
+  transition: opacity 0.3s;
+}
+
+.score-shadow.filled {
+  max-width: 200px;
+  max-height: 100px;
+  height: auto;
+}
+
+/* VENDESPIL ENDGAME_DIALOG STYLING */
+
+#endGameDialog {
+  padding: 80px 100px;
+  height: 500px;
+  width: 800px;
+  overflow-y: auto;
+  border-radius: 18px;
+  border: none;
+  box-shadow: var(--shadow);
+  background: rgba(247, 247, 247, 0.5);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#endGameDialog h1 {
+  color: #1a4d6b;
+}
+
+#endGameDialog h2 {
+  margin-bottom: 30px;
+  font-size: 2rem;
+  color: #1a4d6b;
+}
+
+#endGameDialog p {
+  font-size: 1.2rem;
+}
+
+/* Endgame-dialog-knap styling */
+#closeEndGameBtn {
+  padding: 10px 50px;
+  background: var(--primary-color);
+  border: none;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+#closeEndGameBtn img {
+  width: 50px;
+  height: auto;
+}
+
+#closeEndGameBtn:hover {
+  background: #d9d9d9;
+}
+
+#endGameDialog::backdrop {
+  background: rgba(30, 60, 90, 0.25);
+  backdrop-filter: blur(2px);
+}
+
+/* Endgame-dialog fiskerække styling */
+#endGameFishRow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  margin: 30px;
+}
+#endGameFishRow img {
+  height: 60px;
+  width: auto;
+  object-fit: contain;
+  border-radius: 8px;
+  padding: 0;
+}
+
 /* ========================
-    KNAPPER STYLING
+    GENERELLE KNAPPER STYLING
    ======================== */
 
 /* HJEM-KNAPPER */

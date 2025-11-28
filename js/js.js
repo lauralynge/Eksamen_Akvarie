@@ -279,6 +279,33 @@ function opbygBrikker() {
   brikker = shuffle(brikker); // Bland brikkerne
 }
 
+// Opbygning af silhuetterne til score-området
+function visSkygger() {
+  const scoreShadowArea = document.getElementById("scoreShadowArea");
+
+  scoreShadowArea.innerHTML = "";
+
+  vendespilFisk().forEach((fisk) => {
+    const img = document.createElement("img");
+
+    img.src = fisk.imageShadow; // billede af skygge/silhuet
+    img.dataset.id = fisk.id;
+    img.classList.add("score-shadow");
+
+    scoreShadowArea.appendChild(img);
+  });
+}
+
+// Udfyld skygge i score-området når et match er fundet
+function udfyldSkygge(fish) {
+  const shadow = document.querySelector(`.score-shadow[data-id="${fish.id}"]`);
+
+  if (shadow) {
+    shadow.src = fish.image; // detaljeret fiske-version
+    shadow.classList.add("filled");
+  }
+}
+
 // # Byg HTML for alle brikker og vis dem på siden
 function visBrikker() {
   vendespilsbrikker.innerHTML = "";
@@ -299,14 +326,17 @@ window.addEventListener("load", () => {
   setTimeout(() => {
     opbygBrikker();
     visBrikker();
+    visSkygger();
   }, 600);
 });
 
 const FLIP_MS = 500; // matcher CSS transition
 
 // Klik: vend brikker og tjek for match (2 ad gangen)
+
 let åben = []; // holder de åbne brikker (DOM-elementer)
 let låst = false; // lås input mens vi tjekker
+let spilErFærdigt = false; // flag for om spillet er færdigt
 
 vendespilsbrikker.addEventListener("click", (e) => {
   const brik = e.target.closest(".brik");
@@ -323,6 +353,7 @@ vendespilsbrikker.addEventListener("click", (e) => {
     const [a, b] = åben;
     const match = a.dataset.id === b.dataset.id;
 
+    // Når et match er fundet
     setTimeout(() => {
       if (match) {
         a.classList.add("fundet");
@@ -331,11 +362,26 @@ vendespilsbrikker.addEventListener("click", (e) => {
         // Hent data om fisken
         const fish = allFish.find((f) => f.id == a.dataset.id);
 
-        // 1. Vis dialog
+        // Vis dialog
         showMatchDialog(fish);
 
-        // 2. Tilføj til score
-        addToScore(fish);
+        // Udfyld skygger af fisk i score-området
+        udfyldSkygge(fish);
+
+        // Skjul brikkerne
+        setTimeout(() => {
+          a.style.visibility = "hidden";
+          b.style.visibility = "hidden";
+
+          // Tjek om alle brikker er fundet/skjult
+          const alleBrikker = document.querySelectorAll(".brik");
+          const alleSkjult = Array.from(alleBrikker).every(
+            (brik) => brik.style.visibility === "hidden"
+          );
+          if (alleSkjult) {
+            spilErFærdigt = true;
+          }
+        }, FLIP_MS);
       } else {
         a.classList.remove("vendt");
         b.classList.remove("vendt");
@@ -347,7 +393,6 @@ vendespilsbrikker.addEventListener("click", (e) => {
 });
 
 // DIALOG NÅR MACHT ER FUNDET
-
 function showMatchDialog(cardData) {
   document.getElementById("matchName").innerText = cardData.name;
   document.getElementById("dialogImage").src = cardData.image;
@@ -357,6 +402,12 @@ function showMatchDialog(cardData) {
 // Luk dialog når man klikker på OK-knappen
 document.getElementById("closeDialogBtn").addEventListener("click", () => {
   document.getElementById("matchDialog").close();
+  if (spilErFærdigt) {
+    // Kald endGame først efter matchDialog er lukket
+    setTimeout(() => {
+      endGame();
+    }, 100);
+  }
 });
 
 // Luk dialog hvis man klikker udenfor dialogen (kun én gang)
@@ -371,15 +422,39 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-// STIK LIGGES I SCORE-OMRÅDET
-
-function addToScore(cardData) {
-  const scoreArea = document.getElementById("scoreArea");
-  const img = document.createElement("img");
-
-  img.src = cardData.image;
-  img.alt = cardData.name;
-  img.classList.add("score-card");
-
-  scoreArea.appendChild(img);
+// SPIL ER FÆRDIGT
+function endGame() {
+  // Vis slut-dialog i stedet for alert
+  const dialog = document.getElementById("endGameDialog");
+  if (dialog) {
+    // Fjern score-området
+    const scoreShadowArea = document.getElementById("scoreShadowArea");
+    if (scoreShadowArea) {
+      scoreShadowArea.innerHTML = "";
+    }
+    // Fyld fish-row med alle fisk
+    const fishRow = document.getElementById("endGameFishRow");
+    if (fishRow) {
+      fishRow.innerHTML = allFish
+        .filter((fisk) => fisk.vendespil)
+        .map(
+          (fisk) =>
+            `<img src='${fisk.image}' alt='${fisk.name}' style='height:80px; border-radius:8px;' title='${fisk.name}' />`
+        )
+        .join("");
+    }
+    dialog.showModal();
+    // Tilføj event listener til start-igen-knap
+    const btn = document.getElementById("closeEndGameBtn");
+    if (btn) {
+      btn.onclick = () => {
+        dialog.close();
+        location.reload();
+      };
+    }
+  } else {
+    // fallback hvis dialog ikke findes
+    alert("Sejt! Du fandt alle fiskene. Har du lyst til at spille igen?");
+    location.reload();
+  }
 }
