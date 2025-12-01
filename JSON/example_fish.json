@@ -1,0 +1,14 @@
+
+{
+  "id": 1,
+  "name": "Klovnfisk",
+  "colorOptions": ["#FF6B00", "#FFFFFF", "#000000", "#00AEEF"],
+  "imageOutline": "images/klovnfisk_outline.png",
+  "funLines": {
+    "#FF6B00": "Uh! Jeg blev helt orange – som en rigtig klovnfisk!",
+    "#FFFFFF": "Hvid som havskum – flot farvet!",
+    "#000000": "Sort er min seje stribe!",
+    "#00AEEF": "Blå som havet – jeg elsker det!"
+  },
+  "coloredParts": {}
+}

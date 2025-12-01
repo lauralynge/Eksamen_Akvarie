@@ -1,51 +1,61 @@
 "use strict";
 
-// #0: Lyt efter side indlæsning
-window.addEventListener("load", initApp);
+let allFish = [];
 
-let allFish = []; // Globalt array til at holde alle fisk
+// Når siden er klar
+window.addEventListener("load", () => {
+  initPuzzle();
+  getFish();
+});
 
-// #1: Initialiser appen
-function initApp() {
-  console.log("initApp: app.js kører 🎉");
-  getFish(); // Henter fiskene
-}
-
-// #2: Hent fisk fra JSON og vis dem
+// ======== FISK ========
 async function getFish() {
-  console.log("🌐 Henter alle fisk fra JSON...");
   try {
     const response = await fetch("./JSON/fish.json");
     const data = await response.json();
-    allFish = data.fish; // Hent fisk-arrayet fra JSON
+    allFish = data.fish;
     console.log(`📊 JSON data modtaget: ${allFish.length} fisk`);
   } catch (error) {
     console.error("❌ Fejl under hentning af fisk:", error);
   }
 }
 
+// Fyld fiskene i slutskærmen
+function fillFishRow() {
+  const fishRow = document.getElementById("endGameFishRow");
+  if (fishRow && allFish.length > 0) {
+    fishRow.innerHTML = allFish
+      .filter((fisk) => fisk.vendespil)
+      .map(
+        (fisk) =>
+          `<img src='${fisk.image}' alt='${fisk.name}' style='height:80px; border-radius:8px;' title='${fisk.name}' />`
+      )
+      .join("");
+  }
+}
+
 // ======== PUSLESPIL ========
+function initPuzzle() {
+  const puzzle = document.getElementById("puzzle");
+  const pieceContainerLeft = document.getElementById("piece-container-left");
+  const pieceContainerRight = document.getElementById("piece-container-right");
+  const statusText = document.getElementById("status");
 
-const puzzle = document.getElementById("puzzle");
-const pieceContainerLeft = document.getElementById("piece-container-left");
-const pieceContainerRight = document.getElementById("piece-container-right");
-const statusText = document.getElementById("status");
-
-if (puzzle && pieceContainerLeft && pieceContainerRight && statusText) {
-  // Opret brikkerne med korrekt udsnit
-  const pieceSize = 200; // px
-  const puzzleSize = 3; // 3x3 grid
+  const pieceSize = 200;
+  const puzzleSize = 3;
   const pieces = [];
+
+  // Opret brikker
   for (let i = 0; i < 9; i++) {
     const div = document.createElement("div");
     div.classList.add("piece");
     div.setAttribute("draggable", "true");
 
-    // Beregn korrekt position
     const col = i % puzzleSize;
     const row = Math.floor(i / puzzleSize);
     const x = -col * pieceSize;
     const y = -row * pieceSize;
+
     div.style.width = pieceSize + "px";
     div.style.height = pieceSize + "px";
     div.style.backgroundPosition = `${x}px ${y}px`;
@@ -54,26 +64,26 @@ if (puzzle && pieceContainerLeft && pieceContainerRight && statusText) {
     }px`;
 
     div.dataset.correct = i;
-    div.dataset.index = i; // startposition
+
+    // Tilføj hjørne-klasser
+    if (row === 0 && col === 0) div.classList.add("corner-top-left");
+    if (row === 0 && col === puzzleSize - 1)
+      div.classList.add("corner-top-right");
+    if (row === puzzleSize - 1 && col === 0)
+      div.classList.add("corner-bottom-left");
+    if (row === puzzleSize - 1 && col === puzzleSize - 1)
+      div.classList.add("corner-bottom-right");
+
     pieces.push(div);
   }
 
-  // Bland brikkerne og fordel dem i to containere med 4 i hver
+  // Bland brikkerne
   pieces.sort(() => Math.random() - 0.5);
   pieces.forEach((p, idx) => {
-    if (idx < 4) {
-      pieceContainerLeft.appendChild(p);
-    } else if (idx < 8) {
-      pieceContainerRight.appendChild(p);
-    } else {
-      (Math.random() < 0.5
-        ? pieceContainerLeft
-        : pieceContainerRight
-      ).appendChild(p);
-    }
+    (idx % 2 === 0 ? pieceContainerLeft : pieceContainerRight).appendChild(p);
   });
 
-  // Opret 9 tomme slots i puslespilsrammen
+  // Opret slots
   puzzle.innerHTML = "";
   for (let i = 0; i < 9; i++) {
     const slot = document.createElement("div");
@@ -81,18 +91,15 @@ if (puzzle && pieceContainerLeft && pieceContainerRight && statusText) {
     slot.dataset.slot = i;
     slot.style.width = pieceSize + "px";
     slot.style.height = pieceSize + "px";
-    slot.style.position = "relative";
     puzzle.appendChild(slot);
   }
 
   let dragging = null;
-  let dragOrigin = null;
 
   // Drag start
   document.addEventListener("dragstart", (e) => {
     if (e.target.classList.contains("piece")) {
       dragging = e.target;
-      dragOrigin = e.target.parentElement;
       e.target.classList.add("dragging");
     }
   });
@@ -101,65 +108,34 @@ if (puzzle && pieceContainerLeft && pieceContainerRight && statusText) {
   document.addEventListener("dragend", (e) => {
     if (e.target.classList.contains("piece")) {
       e.target.classList.remove("dragging");
+      dragging = null;
     }
   });
 
-  // Drag over på puzzle-området og begge containere
-  puzzle.addEventListener("dragover", (e) => e.preventDefault());
+  // Drop i slots
   document.querySelectorAll(".puzzle-slot").forEach((slot) => {
-    slot.addEventListener("dragover", (e) => {
-      e.preventDefault();
-    });
+    slot.addEventListener("dragover", (e) => e.preventDefault());
     slot.addEventListener("drop", (e) => {
       e.preventDefault();
       if (!dragging) return;
-      // Kun tillad drop hvis slot er tom
-      if (!slot.querySelector(".piece")) {
-        // Tjek om brikken droppes på korrekt plads
-        if (dragging.dataset.correct == slot.dataset.slot) {
-          slot.appendChild(dragging);
-          dragging.setAttribute("data-slot", slot.dataset.slot);
-          checkSolved();
-        } else {
-          // Forkert plads: flyt tilbage til oprindelig container
-          if (dragOrigin === pieceContainerLeft) {
-            pieceContainerLeft.appendChild(dragging);
-          } else {
-            pieceContainerRight.appendChild(dragging);
-          }
-          statusText.textContent = "Prøv igen!";
-        }
+      if (slot.querySelector(".piece")) {
+        puzzle.appendChild(slot.querySelector(".piece"));
       }
-      dragging = null;
-      dragOrigin = null;
+      slot.appendChild(dragging);
+      checkSolved();
     });
   });
-  pieceContainerLeft.addEventListener("dragover", (e) => e.preventDefault());
-  pieceContainerRight.addEventListener("dragover", (e) => e.preventDefault());
 
-  // Drop på puslespilsrammen
-  // puzzle.addEventListener("drop", ...) fjernet, da drop nu håndteres af slots
-
-  // Drop tilbage i venstre container
-  pieceContainerLeft.addEventListener("drop", (e) => {
-    e.preventDefault();
-    if (dragging) {
-      pieceContainerLeft.appendChild(dragging);
-      dragging = null;
-      dragOrigin = null;
-    }
-  });
-  // Drop tilbage i højre container
-  pieceContainerRight.addEventListener("drop", (e) => {
-    e.preventDefault();
-    if (dragging) {
-      pieceContainerRight.appendChild(dragging);
-      dragging = null;
-      dragOrigin = null;
-    }
+  // Drop tilbage i containere
+  [pieceContainerLeft, pieceContainerRight].forEach((container) => {
+    container.addEventListener("dragover", (e) => e.preventDefault());
+    container.addEventListener("drop", (e) => {
+      e.preventDefault();
+      if (dragging) container.appendChild(dragging);
+    });
   });
 
-  // Tjek om puzzle er løst
+  // Tjek om puslespil er løst
   function checkSolved() {
     let solved = true;
     for (let i = 0; i < 9; i++) {
@@ -171,84 +147,29 @@ if (puzzle && pieceContainerLeft && pieceContainerRight && statusText) {
       }
     }
     if (solved) {
-      statusText.textContent = "🎉 Du løste puslespillet!";
-      setTimeout(showPuzzleEndDialog, 600); // Vis dialog efter kort pause
-    } else {
-      statusText.textContent = "";
+      setTimeout(showPuzzleEndDialog, 600);
     }
   }
 
-  // Vis endgame-dialog for puslespil
   function showPuzzleEndDialog() {
-    let dialog = document.getElementById("endGameDialog");
-    if (!dialog) {
-      // Opret dialog dynamisk hvis den ikke findes
-      dialog = document.createElement("dialog");
-      dialog.id = "endGameDialog";
-      document.body.appendChild(dialog);
-    }
-    dialog.innerHTML = `
-      <h1>Sejt! Du løste puslespillet!</h1>
-      <div class="puzzle-end-image-row">
-        <img src="images/puslespil.jpg" alt="Færdigt puslespil" class="puzzle-end-image" />
-      </div>
-      <button id="closePuzzleEndGameBtn" class="puzzle-end-btn">Spil igen</button>
-    `;
+    const dialog = document.getElementById("endPuzzleGameDialog");
     document.body.classList.add("dialog-open");
     dialog.showModal();
-    // Luk dialog og genstart spillet
-    const btn = document.getElementById("closePuzzleEndGameBtn");
-    if (btn) {
-      btn.onclick = () => {
-        dialog.close();
-        document.body.classList.remove("dialog-open");
-        location.reload();
-      };
-    }
-    // Luk dialog hvis man klikker udenfor
-    dialog.addEventListener("click", function (e) {
-      if (e.target === dialog) {
-        dialog.close();
-        document.body.classList.remove("dialog-open");
-        location.reload();
-      }
-    });
-  }
-}
 
-// SPIL ER FÆRDIGT
-function endGame() {
-  // Vis slut-dialog i stedet for alert
-  const dialog = document.getElementById("endGameDialog");
-  if (dialog) {
-    // Fjern score-området
-    const scoreShadowArea = document.getElementById("scoreShadowArea");
-    if (scoreShadowArea) {
-      scoreShadowArea.innerHTML = "";
-    }
-    // Fyld fish-row med alle fisk
-    const fishRow = document.getElementById("endGameFishRow");
-    if (fishRow) {
-      fishRow.innerHTML = allFish
-        .filter((fisk) => fisk.vendespil)
-        .map(
-          (fisk) =>
-            `<img src='${fisk.image}' alt='${fisk.name}' style='height:80px; border-radius:8px;' title='${fisk.name}' />`
-        )
-        .join("");
-    }
-    dialog.showModal();
-    // Tilføj event listener til start-igen-knap
-    const btn = document.getElementById("closeEndGameBtn");
+    // Start-igen-knap
+    const btn = document.getElementById("restartPuzzleBtn");
     if (btn) {
       btn.onclick = () => {
         dialog.close();
-        location.reload();
+        document.body.classList.remove("dialog-open");
+        // Fjern alle brikker fra slots og containere
+        document.querySelectorAll(".piece").forEach((piece) => piece.remove());
+        document
+          .querySelectorAll(".puzzle-slot")
+          .forEach((slot) => (slot.innerHTML = ""));
+        // Start puslespillet forfra med nye shuffled brikker
+        initPuzzle();
       };
     }
-  } else {
-    // fallback hvis dialog ikke findes
-    alert("Sejt! Du fandt alle fiskene. Har du lyst til at spille igen?");
-    location.reload();
   }
 }

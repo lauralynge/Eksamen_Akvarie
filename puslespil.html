@@ -10,19 +10,32 @@
   <body>
     <!------ PUSLESPIL ------>
     <div class="puslespil-wrapper">
-      <h2>3×3 Puslespil</h2>
-      <h2>Træk brikkerne ind på rammen og løs puslespillet!</h2>
+      <h2>
+        Træk brikkerne ind på rammen <br />
+        og løs puslespillet!
+      </h2>
 
-  <div class="puzzle-layout">
-  <div id="piece-container-left"></div>
+      <div class="puzzle-layout">
+        <div id="piece-container-left"></div>
         <div id="puzzle"></div>
-  <div id="piece-container-right"></div>
+        <div id="piece-container-right"></div>
       </div>
 
       <p id="status"></p>
     </div>
-    <dialog id="endGameDialog">
-      <h1>Tillykke! Du har løst puslespillet!</h1>
+
+    <!------ DIALOGBOKS VED FÆRDIGT PUSLESPIL ------>
+    <dialog id="endPuzzleGameDialog">
+      <h1>
+        Sejt! <br />
+        Du har løst puslespillet!
+      </h1>
+      <div class="puzzle-end-image">
+        <img src="images/puslespil.jpg" alt="Færdigt puslespil" />
+      </div>
+      <button id="restartPuzzleBtn" type="restart-puzzle-end-btn">
+        <img src="images/start-igen.png" alt="start-igen" />
+      </button>
 
       <!------ Luk-knap i dialog ------>
       <a href="spil-med-os.html" class="luk-knap">
@@ -37,5 +50,6 @@
       <h3 class="luk-knap-tekst">X</h3>
     </a>
     <script src="js/puslespil.js" defer></script>
+    <script src="js/js.js" defer></script>
   </body>
 </html>
