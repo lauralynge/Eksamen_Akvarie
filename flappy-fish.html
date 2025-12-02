@@ -7,23 +7,23 @@
     <link rel="stylesheet" href="css/css.css" />
   </head>
   <body>
-    <!------ FLAPPY FISH GAME CANVAS ------>
     <main class="wrap">
-      <canvas
-        id="game"
-        width="960"
-        height="540"
-        aria-label="Flappy Fish"
-      ></canvas>
+      <!-- Spil-canvas -->
+      <canvas id="game" aria-label="Flappy Fish"></canvas>
+
+      <!-- HUD overlay -->
       <div class="hud">
         <div class="hint"></div>
       </div>
     </main>
-    <!------ LUK-KNAP ------>
+
+    <!-- Tilbage-knap -->
     <a href="spil-med-os.html" class="luk-knap">
       <img src="images/bobble.svg" alt="Bobble-luk" />
       <h3 class="luk-knap-tekst">X</h3>
     </a>
+
+    <!-- Scripts -->
     <script src="js/flappy-fish.js" defer></script>
     <script src="js/js.js" defer></script>
   </body>

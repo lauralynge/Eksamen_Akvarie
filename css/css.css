@@ -15,14 +15,15 @@
 :root {
   /* Colors */
   --primary-color: #f7f7f7; /* Skift */
-  --secondary-color: #1A4D6B; /* Skift */
+  --secondary-color: #1a4d6b; /* Skift */
   --primary-blue: #077789; /* Skift */
   --secondary-blue: #0099cc; /* Skift */
 
   /* Backgrounds */
   --bg: #fafafa; /* Skift */
-  --bg-dialog: #f7f7f7; /* Skift */
-  --bg-image-main: url("../images/baggrund.svg"); /* Skift? */
+  --bg-dialog: #f7f7f7;
+  --bg-dialog-end: rgba(247, 247, 247, 0.5);
+  --bg-image-main: url("../images/baggrund.png"); /* Skift? */
 
   /* Bobler */ /* BRUGER JEG OVERHOEVET DISSE? */
   --bubble-big: url("../images/boble1.svg");
@@ -39,6 +40,13 @@
   --radius: 1rem;
   --transition: transform 0.2s ease;
   --transform: translateX(120px) scale(0);
+
+  /* puslespil */
+  --piece-size: 200px;
+  --puzzle-size: calc(var(--piece-size) * 3);
+  --primary-puzzle: #077789;
+  --correct: #4caf50;
+  --shadow-puzzle: 0 2px 8px rgba(7, 119, 137, 0.12);
 }
 
 /* ===========
@@ -466,7 +474,7 @@ h4 {
 }
 
 /* ========================
-    DIALOG STYLING
+    DIALOG STYLING FOR FISK
    ======================== */
 
 /* Dialog element */
@@ -476,9 +484,7 @@ h4 {
   box-shadow: var(--shadow-lg);
   padding: 0;
   width: 1000px; /* Fast bredde */
-  height: 700px; /* Fast højde */
-  max-width: 90vw; /* Responsive på små skærme */
-  max-height: 90vh; /* Responsive på små skærme */
+  height: 650px; /* Fast højde */
   background: transparent;
 }
 
@@ -809,7 +815,7 @@ h4 {
   border-radius: var(--radius);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
   width: 1000px;
-  height: 700px;
+  height: 650px;
 }
 
 #matchDialog::backdrop {
@@ -880,14 +886,14 @@ h2 {
 /* VENDESPIL ENDGAME_DIALOG STYLING */
 
 #endGameDialog {
-  padding: 80px 100px;
-  height: 500px;
-  width: 800px;
+  padding: 30px 100px;
+  height: 650px;
+  width: 1000px;
   overflow-y: auto;
   border-radius: 18px;
   border: none;
   box-shadow: var(--shadow);
-  background: rgba(247, 247, 247, 0.5);
+  background: var(--bg-dialog-end);
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -900,17 +906,13 @@ h2 {
 }
 
 #endGameDialog h1 {
-  color: #1a4d6b;
+  color: var(--secondary-color);
+  margin: 0;
 }
 
 #endGameDialog h2 {
-  margin-bottom: 30px;
   font-size: 2rem;
-  color: #1a4d6b;
-}
-
-#endGameDialog p {
-  font-size: 1.2rem;
+  color: var(--secondary-color);
 }
 
 /* Endgame-dialog-knap styling */
@@ -922,6 +924,7 @@ h2 {
   box-shadow: var(--shadow);
   cursor: pointer;
   transition: background 0.2s;
+  margin: 50px
 }
 
 #closeEndGameBtn img {
@@ -944,13 +947,11 @@ h2 {
   justify-content: center;
   align-items: center;
   gap: 30px;
-  margin: 30px;
+  margin: 50px;
 }
 #endGameFishRow img {
-  height: 60px;
+  height: 100px;
   width: auto;
-  object-fit: contain;
-  border-radius: 8px;
   padding: 0;
 }
 
@@ -1038,181 +1039,155 @@ h2 {
 }
 
 /* ===================
-    PUSLESPIL STYLING
+   P U S L E S P I L
    =================== */
 
 .puslespil-wrapper {
-  font-family: sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center;
-  margin-top: 30px;
-  border-radius: 12px;
   gap: 30px;
-}
-#puzzle {
-  width: 600px;
-  height: 600px;
-  display: grid;
-  grid-template-columns: repeat(3, 200px);
-  grid-template-rows: repeat(3, 200px);
-  border: 2px solid rgba(247, 247, 247);
-  background-color: rgba(247, 247, 247, 0.5);
-  border-radius: var(--radius);
+  text-align: center;
 }
 
-.piece {
-  width: 200px;
-  height: 200px;
-  background-image: url("../images/puslespil.jpg");
-  background-size: 600px 600px; /* Sikrer at hele billedet dækker grid */
-  background-repeat: no-repeat;
-  border: 1px solid #077789; /* Primær blå for mere kontrast */
-  box-shadow: 0 2px 8px rgba(7, 119, 137, 0.12);
-  box-sizing: border-box;
-  transition: box-shadow 0.2s, border-color 0.2s;
-  cursor: grab;
-  position: relative;
-  overflow: hidden;
-}
-/* Rundede hjørner på de fire hjørne-brikker */
-.piece.corner-top-left {
-  border-top-left-radius: var(--radius);
-}
-.piece.corner-top-right {
-  border-top-right-radius: var(--radius);
-}
-.piece.corner-bottom-left {
-  border-bottom-left-radius: var(--radius);
-}
-.piece.corner-bottom-right {
-  border-bottom-right-radius: var(--radius);
-}
-.piece:active {
-  box-shadow: 0 4px 16px rgba(7, 119, 137, 0.18);
-  border-color: #0099cc;
-}
-
-.piece.dragging {
-  opacity: 0.5;
-  z-index: 2;
-}
-
-/* Puzzle-layout */
-
+/* Layout */
 .puzzle-layout {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  width: 100%;
-  max-width: 1200px; /* eller hvad der passer til din side */
-  margin: 0 auto;
-  gap: 0; /* fjern eller reducer gap */
+  justify-content: center;
+  gap: 40px;
 }
-#piece-container-left,
-#piece-container-right,
+
+/* Puslespilsrammen */
 #puzzle {
-  justify-self: center;
+  width: var(--puzzle-size);
+  height: var(--puzzle-size);
+  display: grid;
+  grid-template-columns: repeat(3, var(--piece-size));
+  grid-template-rows: repeat(3, var(--piece-size));
+  border-radius: 12px;
+  border: 2px solid #eee;
+  background-color: rgba(247, 247, 247, 0.6);
+  position: relative;
 }
 
-/* Sørger for at containerne ikke vokser, men bevarer deres bredde */
-#piece-container-left,
-#piece-container-right,
-#puzzle {
-  flex: 0 1 auto;
+/* Slots */
+.puzzle-slot {
+  width: var(--piece-size);
+  height: var(--piece-size);
+  position: relative;
+  transition: background 0.2s;
 }
 
-/* Hver brik skal vise en del af billedet */
-/* Øverste venstre hjørne */
-.piece[data-pos="0-0"] {
-  background-position: 0px 0px;
+/* “glow” når man holder en brik henover */
+.puzzle-slot.drag-over {
+  outline: 3px dashed var(--primary-puzzle);
+  outline-offset: -6px;
 }
-/* Øverste midt */
-.piece[data-pos="0-1"] {
-  background-position: -200px 0px;
-}
-/* Øverste højre */
-.piece[data-pos="0-2"] {
-  background-position: -400px 0px;
-}
-/* Midterste venstre */
-.piece[data-pos="1-0"] {
-  background-position: 0px -200px;
-}
-/* Midterste midt */
-.piece[data-pos="1-1"] {
-  background-position: -200px -200px;
-}
-/* Midterste højre */
-.piece[data-pos="1-2"] {
-  background-position: -400px -200px;
-}
-/* Nederste venstre */
-.piece[data-pos="2-0"] {
-  background-position: 0px -400px;
-}
-/* Nederste midt */
-.piece[data-pos="2-1"] {
-  background-position: -200px -400px;
-}
-/* Nederste højre */
-.piece[data-pos="2-2"] {
-  background-position: -400px -400px;
-}
-/* Styling for brik-containerne */
 
+/* Brikker */
+.piece {
+  width: var(--piece-size);
+  height: var(--piece-size);
+  border-radius: 4px;
+  background-image: url("../images/puslespil.jpg");
+  background-size: var(--puzzle-size) var(--puzzle-size);
+  border: 1px solid var(--primary-puzzle);
+  box-shadow: var(--shadow-puzzle);
+  cursor: grab;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.3s;
+}
+
+/* Hjørnebrikker */
+.corner-top-left {
+  border-top-left-radius: var(--radius);
+}
+
+.corner-top-right {
+  border-top-right-radius: var(--radius);
+}
+
+.corner-bottom-left {
+  border-bottom-left-radius: var(--radius);
+}
+
+.corner-bottom-right {
+  border-bottom-right-radius: var(--radius);
+}
+
+/* Når en brik “snaps” ind */
+.piece.snap {
+  animation: snap 0.25s ease-out;
+}
+
+@keyframes snap {
+  0% {
+    transform: scale(1.1);
+  }
+  60% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Når brikken er korrekt placeret */
+.piece.correct {
+  border-color: var(--correct);
+  box-shadow: 0 0 10px var(--correct);
+}
+
+/* Containerne på siderne */
 #piece-container-left,
 #piece-container-right {
   display: grid;
-  grid-template-columns: repeat(2, 200px);
-  grid-template-rows: repeat(2, 200px);
+  grid-template-columns: repeat(2, var(--piece-size));
+  grid-auto-rows: var(--piece-size);
   gap: 20px;
-  width: 220px;
-  height: 280px;
-  align-items: flex-start;
-  justify-items: center;
+  min-width: calc(var(--piece-size) * 2 + 20px);
 }
 
-/* Når endgame-dialogen er åben, skjul og slør puslespillets indhold */
+/* PUSLESPIL GAME DIALOG STYLING */
+
 body.dialog-open .puslespil-wrapper {
-  opacity: 0.15;
+  opacity: 0.1;
   pointer-events: none;
-  display: none; /* skjuler hele puslespillet */
+  display: none; /* skjuler hele puslespillet, når dialogen er åben */
 }
-
-/* PUSLESPIL ENDGAME_DIALOG STYLING */
 
 #endPuzzleGameDialog {
-  padding: 80px 100px;
-  height: 500px;
-  width: 800px;
-
-  border-radius: 18px;
   border: none;
-  box-shadow: var(--shadow);
-  background: rgba(247, 247, 247, 0.5);
+  border-radius: var(--radius);
+  padding: 30px 100px;
+  background: var(--bg-dialog-end);
+  box-shadow: var(--shadow-puzzle);
   text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  height: 650px;
+  width: 1000px;
+  object-fit: contain;
+  overflow: hidden;
 }
 
-#endPuzzleGameDialog:not([open]) {
-  display: none;
+.puzzle-end-image img {
+  max-width: 300px;
+  height: 300px;
+  margin-top: 10px;
+  margin-bottom: 30px;
+  border-radius: var(--radius);
+}
+
+#endPuzzleGameDialog h1 {
+  color: var(--secondary-color);
+
+}
+
+#endPuzzleGameDialog h2 {
+  font-size: 2rem;
+  color: var(--secondary-color);
 }
 
 #endPuzzleGameDialog::backdrop {
-  background: rgba(30, 60, 90, 0.25);
-  backdrop-filter: blur(2px);
-}
-
-.puzzle-end-image {
-  height: 30px;
-  border-radius: var(--radius);
-  padding: 0;
-  box-shadow: 0 4px 16px rgba(7, 119, 137, 0.18);
+  background: rgba(0, 0, 0, 0.2);
 }
 
 /* Endgame-dialog-knap styling */
