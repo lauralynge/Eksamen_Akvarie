@@ -23,7 +23,8 @@
   --bg: #fafafa; /* Skift */
   --bg-dialog: #f7f7f7;
   --bg-dialog-end: rgba(247, 247, 247, 0.5);
-  --bg-image-main: url("../images/baggrund.png"); /* Skift? */
+  --bg-image-main: url("../images/baggrund-top.svg"); /* Skift? */
+  --bg-image-bund: url("../images/baggrund-bund.svg"); /* Skift? */
 
   /* Bobler */ /* BRUGER JEG OVERHOEVET DISSE? */
   --bubble-big: url("../images/boble1.svg");
@@ -96,6 +97,7 @@ body {
   padding: 0;
   min-height: 100vh;
   overflow: hidden; /* Skjul al scroll på siden */
+  transition: background-image 0.6s ease-in-out; /* glidende overgang */
 }
 
 h1 {
@@ -390,11 +392,14 @@ h4 {
    ======================== */
 
 /* hovedcontainer (med knapper) */
-.fiskekarrusel-container {
+.top-section {
+  min-height: 100vh;
+  background-image: url("images/baggrund.png");
   position: relative;
   width: 100%;
   margin: 0 auto;
   padding: 150px 0 20px 0; /* Meget mere luft i toppen */
+  overflow: visible;
 }
 
 /* karrusel wrapper med pilknapper */
@@ -471,6 +476,133 @@ h4 {
 .karrusel-knap img {
   width: 30px;
   height: 30px;
+}
+
+/***** AKAVARIE BUND STYLING *****/
+
+/* Gør scroll blødt (smooth scroll) */
+html {
+  scroll-behavior: smooth;
+}
+/* Bundsektion */
+.bund-section {
+  min-height: 100vh;
+  background-image: var(--bg-image-bund); /* <-- udskift til rigtigt billede */ 
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  padding: 40px;
+  box-sizing: border-box;
+  text-align: center;
+  overflow: visible; /* undgå at knapper klippes væk */
+}
+
+/* bund-sektion overlay med fixed baggrund */
+.bund-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+  opacity: 0; /* starter usynlig */
+  transition: opacity 0.6s ease-in-out;
+}
+
+/* vis overlay, når brugeren scroller / trykker pil-ned */
+.bund-section.active .bund-overlay {
+  opacity: 1;
+}
+
+/* bund-content over overlay */
+.bund-content {
+  max-width: 600px;
+  position: relative;
+  z-index: 1; /* sikrer at tekst og pil ligger over baggrund */
+  text-align: center;
+  padding-top: 80px; /* plads til opad-pil */
+}
+
+/* Container til scroll-pilen */
+.scroll-ned-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+/* Pil NED – placeret i bunden af top-sektionen */
+.scroll-ned-knap {
+  position: absolute;
+  bottom: 0px; /* afstand fra bunden */
+  left: 50%;
+  transform: translateX(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 40; /* sørg for den ligger over andet indhold */
+  display: block;
+}
+
+/* Aktivér animationen på pilen */
+.scroll-ned-knap img {
+  width: 500px;
+  animation: pil-pulse 1.6s infinite ease-in-out;
+}
+
+/* Pil OP – placeret i toppen af bund-sektionen */
+.scroll-op-knap {
+  position: absolute;
+  top: 0px; /* afstand fra toppen */
+  left: 50%;
+  transform: translateX(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 40;
+  display: block;
+}
+
+/* fjern pilene afhængig af scroll-tilstand */
+body.scrolled .scroll-ned-knap {
+  display: none;
+}
+body:not(.scrolled) .scroll-op-knap {
+  display: none;
+}
+
+/* Animation der får pilene (op + ned) til at zoome ind og ud */
+@keyframes pil-pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.12);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Puls-animation og størrelse (samme til begge pile) */
+.scroll-ned-knap img,
+.scroll-op-knap img {
+  width: 500px;
+  display: block;
+  pointer-events: none; /* sikrer at klik rammer knappen og ikke billedet */
+  animation: pil-pulse 1.6s infinite ease-in-out;
+  transition: transform 0.2s;
+}
+
+.scroll-ned-knap:active img,
+.scroll-op-knap:active img {
+  transform: scale(1.1);
 }
 
 /* ========================
@@ -786,7 +918,7 @@ h4 {
   }
 }
 
-/* VENDESPIL DIALOG STYLING */
+/***** VENDESPIL DIALOG STYLING *****/
 
 /* indholdet og layout i dialogen */
 .match-dialog-content {
@@ -858,7 +990,7 @@ h2 {
   min-height: 60px;
 }
 
-/* VENDESPIL SCORE-STYLING */
+/***** VENDESPIL SCORE-STYLING *****/
 
 #scoreShadowArea {
   display: flex;
@@ -883,7 +1015,7 @@ h2 {
   opacity: 1;
 }
 
-/* VENDESPIL ENDGAME_DIALOG STYLING */
+/***** VENDESPIL ENDGAME_DIALOG STYLING ******/
 
 #endGameDialog {
   padding: 30px 100px;
@@ -924,7 +1056,7 @@ h2 {
   box-shadow: var(--shadow);
   cursor: pointer;
   transition: background 0.2s;
-  margin: 50px
+  margin: 50px;
 }
 
 #closeEndGameBtn img {
@@ -959,7 +1091,7 @@ h2 {
     GENERELLE KNAPPER STYLING
    ======================== */
 
-/* HJEM-KNAPPER */
+/***** HJEM-KNAPPER *****/
 .hjem-knap {
   position: fixed;
   top: 20px;
@@ -994,7 +1126,7 @@ h2 {
   top: 45%; /* Flyttet lidt op fra 50% */
 }
 
-/* LUK-KNAPPER */
+/***** LUK-KNAPPER *****/
 .luk-knap {
   position: fixed;
   top: 20px;
@@ -1039,7 +1171,7 @@ h2 {
 }
 
 /* ===================
-   P U S L E S P I L
+   PUSLESPIL STYLING
    =================== */
 
 .puslespil-wrapper {
@@ -1147,7 +1279,7 @@ h2 {
   min-width: calc(var(--piece-size) * 2 + 20px);
 }
 
-/* PUSLESPIL GAME DIALOG STYLING */
+/***** PUSLESPIL GAME DIALOG STYLING *****/
 
 body.dialog-open .puslespil-wrapper {
   opacity: 0.1;
@@ -1178,7 +1310,6 @@ body.dialog-open .puslespil-wrapper {
 
 #endPuzzleGameDialog h1 {
   color: var(--secondary-color);
-
 }
 
 #endPuzzleGameDialog h2 {

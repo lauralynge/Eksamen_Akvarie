@@ -236,3 +236,39 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
+// ======== SCROLL FUNKTIONER ========
+
+// Scroll ned til bund
+document.getElementById("scrollButton").addEventListener("click", function () {
+  document.getElementById("akvarie-bund").scrollIntoView({
+    behavior: "smooth",
+  });
+});
+
+// Scroll op til top
+document
+  .getElementById("scrollUpButton")
+  .addEventListener("click", function () {
+    document.body.scrollIntoView({
+      behavior: "smooth",
+    });
+  });
+
+// Skift body class for pil-visning
+window.addEventListener("scroll", function () {
+  const bund = document.getElementById("akvarie-bund");
+  if (window.scrollY + window.innerHeight > bund.offsetTop + 100) {
+    document.body.classList.add("scrolled");
+  } else {
+    document.body.classList.remove("scrolled");
+  }
+});
+
+// Endnu mere scroll
+const bund = document.getElementById("akvarie-bund");
+const downBtn = document.getElementById("scrollButton");
+
+downBtn.addEventListener("click", () => {
+  bund.scrollIntoView({ behavior: "smooth" });
+  document.body.classList.add("scrolled");
+});

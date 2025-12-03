@@ -227,3 +227,27 @@ body.dialog-open .puslespil-wrapper {
 #restartPuzzleBtn:hover {
   background: #d9d9d9;
 }
+
+
+
+
+
+/* SCROLL */
+
+#akvarie-bund {
+  position: relative;
+  min-height: 100vh;
+  z-index: 5; /* sørg for den ligger over body men under top-sektionens indhold */
+  background-image: url("images/bund-test.png"); /* Skift */
+  background-size: cover;
+  background-position: center;
+}
+
+#akvarie-bund {
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+body.scrolled #akvarie-bund {
+  opacity: 1;
+}

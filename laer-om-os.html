@@ -13,9 +13,10 @@
       <img src="images/hjem-knap.svg" alt="Hjem-knap" />
     </a>
 
-    <!----- FISKE KARRUSEL ----->      <!-- drop pilene? -->
-    <div class="fiskekarrusel-container">
-      <div class="fiskekarrusel">
+    <!-- TOP-SEKTION -->
+    <!----- FISKE KARRUSEL -----> 
+  <section class="top-section">
+      <section class="fiskekarrusel">
         <button class="karrusel-knap venstre" onclick="scrollKarrusel('venstre')">
           <img src="images/pil-venstre.png" alt="Pil venstre" />
         </button>
@@ -27,7 +28,28 @@
         <button class="karrusel-knap højre" onclick="scrollKarrusel('højre')">
           <img src="images/pil-højre.png" alt="Pil højre" />
         </button>
+      </section>
+
+    <!-- NY PIL, DER SCROLLER NED TIL BUNDEN -->
+    <div class="scroll-ned-container">
+      <button id="scrollButton" class="scroll-ned-knap">
+        <img src="images/pil-ned.svg" alt="Pil ned" />
+      </button>
+    </div>
+
+    <!-- BUND-SEKTION -->
+    <!-- NY SEKTION: BUNDEN AF AKVARIET -->
+    <section id="akvarie-bund" class="bund-section">
+        <div class="bund-overlay"></div>
+      <button id="scrollUpButton" class="scroll-op-knap">  <!-- Scroll til top -->
+         <img src="images/pil-op.svg" alt="Pil op" />
+       </button>
+      <div class="bund-content">
+        <h1>Bunden af akvariet</h1>
+        <h3>Her gemmer der sig krabber, muslinger og masser af liv!</h3>
       </div>
+    </section>
+
 
     <!----- INFO DIALOG MODAL ----->
  <dialog id="fish-dialog">
@@ -41,5 +63,6 @@
 
     <script src="js/laer-om-os.js"></script>
     <script src="js/js.js" defer></script>
+    <script src="js/scroll.js"></script> 
   </body>
 </html>
