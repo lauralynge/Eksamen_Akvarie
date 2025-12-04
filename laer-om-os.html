@@ -6,16 +6,19 @@
     <title>Lær om os</title>
     <link rel="stylesheet" href="css/css.css" />
   </head>
-  <body>
-    <!------ HJEMKNAP ------>
+  <body class="laer-om-os">
+    <div>
+      <img id="laer-om-os-img" class="laer-om-os-img-top" src="images/baggrund-samlet-test.svg" alt="Baggrundsbillede">
+    </div>
+       <!------ HJEMKNAP ------>
     <a href="intro.html" class="hjem-knap">
       <img src="images/bobble.svg" alt="Bobble-hjem" />
       <img src="images/hjem-knap.svg" alt="Hjem-knap" />
     </a>
 
-    <!-- TOP-SEKTION -->
+<!-- TOP-SEKTION -->
+<section id="top" class="top-section">
     <!----- FISKE KARRUSEL -----> 
-  <section class="top-section">
       <section class="fiskekarrusel">
         <button class="karrusel-knap venstre" onclick="scrollKarrusel('venstre')">
           <img src="images/pil-venstre.png" alt="Pil venstre" />
@@ -24,35 +27,21 @@
         <div class="fiskekarrusel-items" id="fiskekarrusel-items">
           <!-- Fiskekort indsættes her via JavaScript -->
         </div>
-
         <button class="karrusel-knap højre" onclick="scrollKarrusel('højre')">
           <img src="images/pil-højre.png" alt="Pil højre" />
         </button>
-      </section>
-
+        </section>
+  
     <!-- NY PIL, DER SCROLLER NED TIL BUNDEN -->
     <div class="scroll-ned-container">
-      <button id="scrollButton" class="scroll-ned-knap">
+      <button id="scrollDownButton" class="scroll-ned-knap" onclick="scrollToBottom('bottom')">
         <img src="images/pil-ned.svg" alt="Pil ned" />
       </button>
     </div>
+</section>
 
-    <!-- BUND-SEKTION -->
-    <!-- NY SEKTION: BUNDEN AF AKVARIET -->
-    <section id="akvarie-bund" class="bund-section">
-        <div class="bund-overlay"></div>
-      <button id="scrollUpButton" class="scroll-op-knap">  <!-- Scroll til top -->
-         <img src="images/pil-op.svg" alt="Pil op" />
-       </button>
-      <div class="bund-content">
-        <h1>Bunden af akvariet</h1>
-        <h3>Her gemmer der sig krabber, muslinger og masser af liv!</h3>
-      </div>
-    </section>
-
-
-    <!----- INFO DIALOG MODAL ----->
- <dialog id="fish-dialog">
+      <!----- INFO DIALOG MODAL ----->
+    <dialog id="fish-dialog">
       <form method="dialog">
         <button id="close-dialog" aria-label="Close">✕</button>
         <div id="dialog-content">
@@ -61,8 +50,24 @@
       </form>
     </dialog>
 
+
+    <!-- BUND-SEKTION -->
+    <!-- NY SEKTION: BUNDEN AF AKVARIET -->
+    <section id="bottom" class="bottom-section">
+        <div class="scroll-up-container">
+          <button id="scrollUpButton" class="scroll-op-knap" onclick="scrollToTop('top')">
+            <img src="images/pil-op.svg" id="scrollUpIcon" alt="Pil op"/>
+          </button>
+        </div> 
+      <!--<div class="bottom-content">
+        <h1>Bunden af akvariet</h1>
+        <h3>Her gemmer der sig krabber, muslinger og masser af liv!</h3>
+      </div>-->
+    </section>
+
+
+
     <script src="js/laer-om-os.js"></script>
     <script src="js/js.js" defer></script>
-    <script src="js/scroll.js"></script> 
   </body>
 </html>

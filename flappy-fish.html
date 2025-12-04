@@ -5,8 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Flappy Fish</title>
     <link rel="stylesheet" href="css/css.css" />
+
   </head>
   <body>
+    <!------ LUK-KNAP ------>
+    <a href="spil-med-os.html" class="luk-knap">
+      <img src="images/bobble.svg" alt="Bobble-luk" />
+      <h3 class="luk-knap-tekst">X</h3>
+    </a>
+
+    <!------ FLAPPY FISH SPIL ------>
     <main class="wrap">
       <!-- Spil-canvas -->
       <canvas id="game" aria-label="Flappy Fish"></canvas>
@@ -17,11 +25,10 @@
       </div>
     </main>
 
-    <!-- Tilbage-knap -->
-    <a href="spil-med-os.html" class="luk-knap">
-      <img src="images/bobble.svg" alt="Bobble-luk" />
-      <h3 class="luk-knap-tekst">X</h3>
-    </a>
+    <!------ Tryk her knap ------>
+    <button id="flappy-tryk-her" class="tryk-her">
+      <img src="images/tryk.svg" alt="tryk her" />
+    </button>
 
     <!-- Scripts -->
     <script src="js/flappy-fish.js" defer></script>

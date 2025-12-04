@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>screen scroll</title>
+    <link rel="stylesheet" href="css/test.css">
+
+</head>
+<body>
+    <!------ HJEMKNAP ------>
+    <a href="intro.html" class="hjem-knap">
+      <img src="images/bobble.svg" alt="Bobble-hjem" />
+      <img src="images/hjem-knap.svg" alt="Hjem-knap" />
+    </a>
+
+    <section id="top" class="container-top">
+        <div class="slides top">
+            <img src="images/baggrund-top.svg" alt="">
+
+         <!----- FISKE KARRUSEL -----> 
+      <div class="fiskekarrusel">
+        <button class="karrusel-knap venstre" onclick="scrollKarrusel('venstre')">
+          <img src="images/pil-venstre.png" alt="Pil venstre" />
+        </button>
+
+        <div class="fiskekarrusel-items" id="fiskekarrusel-items">
+          <!-- Fiskekort indsættes her via JavaScript -->
+        </div>
+    
+        <button class="karrusel-knap højre" onclick="scrollKarrusel('højre')">
+          <img src="images/pil-højre.png" alt="Pil højre" />
+        </button>
+        </div>
+            
+            <!-- NY PIL, DER SCROLLER NED TIL BUNDEN -->
+            <div class="scroll-ned-container">
+                <button id="scrollDownButton" class="scroll-ned-knap">
+                    <img src="images/pil-ned.svg" alt="Pil ned" />
+                </button>
+            </div>
+        </div>
+    </section>
+    <section id="bund" class="container-">
+        <div class="slides bund">
+            <img src="images/baggrund-bund.svg" alt="">
+
+            <!-- NY PIL, DER SCROLLER OP TIL TOPPEN -->
+            <div class="scroll-up-container">
+                <button id="scrollUpButton" class="scroll-op-knap">
+                    <img src="images/pil-op.svg" alt="Pil op" />
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <script src="js/js.js" defer></script>
+    <script src="js/test.js" defer></script>
+</body>
+</html>

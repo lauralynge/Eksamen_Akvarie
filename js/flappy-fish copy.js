@@ -44,13 +44,13 @@ const H = () => canvas.clientHeight;
 
 // --- Indlæs dine PNG-assets --------------------------------------------------
 const assets = {
-  fish: new Image("../images/palet-kirurg-flappy.png"),
-  top: new Image("../images/tang-flappy-omvendt.png"),
-  bottom: new Image("../images/tang-flappy.png"),
+  fish: new Image("../images/klovnfisk.png"),
+  top: new Image("../images/omvendttangtønde.png"),
+  bottom: new Image("../images/tangtønde.png"),
 };
-assets.fish.src = "images/palet-kirurg-flappy.png";
-assets.top.src = "images/tang-flappy-omvendt.png";
-assets.bottom.src = "images/tang-flappy.png";
+assets.fish.src = "images/klovnfisk.png";
+assets.top.src = "images/omvendttangtønde.png";
+assets.bottom.src = "images/tangtønde.png";
 
 // Vent (kort) på assets — hvis de ikke når at loade, tegner vi bare senere
 let imagesReady = false;
@@ -59,36 +59,24 @@ Object.values(assets).forEach((img) => {
   img.onload = () => {
     imagesLoaded++;
     if (imagesLoaded === Object.keys(assets).length) imagesReady = true;
-  }; 
+  };
 });
 
 // --- Spil-konstanter ---------------------------------------------------------
 const GRAVITY = 1800; // px/s^2
 const JUMP_VELOCITY = -520; // px/s
-const FISH_W = 120,
-  FISH_H = 72; 
+const FISH_W = 48,
+  FISH_H = 36;
 const PIPE_W = 70;
-const GAP_MIN = 300,
-  GAP_MAX = 330;
-const PIPE_SPEED = 220; // px/s 
-const SPAWN_EVERY = 1.5; // s
-const SEA_FLOOR_H = 0; // bund-kollision
-
-
-// --- Opdater "Tryk her" knap synlighed ---------------------------------------
-function updateTrykHerBtn() {
-  const btn = document.getElementById("flappy-tryk-her");
-  if (!btn) return;
-  if (gameState === "ready" || gameState === "gameover") {
-    btn.style.display = "block";
-  } else {
-    btn.style.display = "none";
-  }
-}
+const GAP_MIN = 150,
+  GAP_MAX = 190;
+const PIPE_SPEED = 220; // px/s
+const SPAWN_EVERY = 1.4; // s
+const SEA_FLOOR_H = 40; // usynlig bund-kollision
 
 // --- Spil-tilstand -----------------------------------------------------------
 let gameState = "ready"; // 'ready' | 'playing' | 'paused' | 'gameover'
-let fish, 
+let fish,
   pipes,
   score,
   best = 0,
@@ -96,19 +84,17 @@ let fish,
 
 // Start/Reset
 function resetGame() {
-  fish = { x: W() * 0.25, y: H() * 0.45, vy: 0, rot: 0 };
+  fish = { x: W() * 0.28, y: H() * 0.45, vy: 0, rot: 0 };
   pipes = [];
   score = 0;
   timeSinceSpawn = 0;
   gameState = "ready";
-  addVisibleStartPipes(); // Pipes er synlige fra midten og  til højre kant
-  updateTrykHerBtn(); // Opdater knap synlighed
 }
 resetGame();
 
 // --- Input -------------------------------------------------------------------
 function flap() {
-  if (gameState === "ready") gameState = "playing"; updateTrykHerBtn();
+  if (gameState === "ready") gameState = "playing";
   if (gameState === "gameover") {
     resetGame();
     return;
@@ -138,12 +124,11 @@ function rand(min, max) {
   return Math.random() * (max - min) + min;
 }
 
-function spawnPipe(startVisible = false, customX = null) {
+function spawnPipe() {
   const gap = rand(GAP_MIN, GAP_MAX);
   const topH = rand(40, H() - SEA_FLOOR_H - 40 - gap);
   const bottomY = topH + gap;
-  // Hvis startVisible er true, placer pipe inde på skærmen
-  const x = startVisible ? W() / 2 : W() + PIPE_W;
+  const x = W() + PIPE_W;
   pipes.push({
     x,
     top: { y: 0, h: topH },
@@ -154,20 +139,6 @@ function spawnPipe(startVisible = false, customX = null) {
 
 function rectsOverlap(ax, ay, aw, ah, bx, by, bw, bh) {
   return ax < bx + bw && ax + aw > bx && ay < by + bh && ay + ah > by;
-}
-
-
-// --- Synlige pipes ----
-function addVisibleStartPipes() {
-  const antal = 4; // hvor mange pipes du vil have synlige
-  const start = W() / 2;
-  const slut = W();
-  const afstand = PIPE_SPEED * SPAWN_EVERY;
-  for (let i = 0; i < antal; i++) {
-    const x = start + afstand * i;
-    spawnPipe(false); // opret pipe som normalt
-    pipes[pipes.length - 1].x = x; // flyt pipe til ønsket position
-  }
 }
 
 // --- Loop --------------------------------------------------------------------
@@ -289,63 +260,35 @@ function drawFish() {
   ctx.restore();
 }
 
-
-// --- Score board + beskeder --------------------------------------------------------------------
 function drawHUD() {
   // Score
-  ctx.fillStyle = "rgba(0,0,0,.35)"; // baggrund
-  drawRoundedRect(ctx, 40, 50, 160, 70, 24); // 24px radius
-  ctx.fillStyle = "#fff"; // tekstfarve
-  ctx.font = "bold 22px 'DynaPuff', cursive";
-  ctx.fillText(`Point    ${score}`, 60, 80);
-  ctx.font = "bold 16px 'DynaPuff', cursive";
-  ctx.fillText(`Rekord   ${best}`, 60, 104);
+  ctx.fillStyle = "rgba(0,0,0,.35)";
+  ctx.fillRect(10, 10, 120, 54);
+  ctx.fillStyle = "#fff";
+  ctx.font = "700 18px system-ui, sans-serif";
+  ctx.fillText(`Point: ${score}`, 18, 36);
+  ctx.font = "600 12px system-ui, sans-serif";
+  ctx.fillText(`Bedst: ${best}`, 18, 52);
 
   // Tilstandstekster
   if (gameState === "ready") {
-    centerText("Tryk/Space for at svømme");
+    centerText("Klik/Space for at svømme");
   } else if (gameState === "paused") {
-    centerText("Pause — tryk p for at fortsætte");
+    centerText("Pause — tryk P for at fortsætte");
   } else if (gameState === "gameover") {
-    centerText("Game Over\ntryk for at svømme igen");
-    updateTrykHerBtn();
+    centerText("Game Over — tryk R for at starte igen");
   }
 }
 
 function centerText(text) {
   ctx.save();
-  ctx.fillStyle = "rgba(0,0,0,.35)"; // baggrund
-  const w = Math.min(600, W() - 40), h = 150; // evt. større højde
-  const x = (W() - w) / 2, y = (H() - h) / 2;
-  drawRoundedRect(ctx, x, y, w, h, 24); // 24px radius
+  ctx.fillStyle = "rgba(0,0,0,.55)";
+  const w = Math.min(520, W() - 40),
+    h = 64;
+  ctx.fillRect((W() - w) / 2, (H() - h) / 2 - 24, w, h);
   ctx.fillStyle = "#fff";
-  ctx.font = "bold 40px 'DynaPuff', cursive";
+  ctx.font = "700 18px system-ui, sans-serif";
   ctx.textAlign = "center";
-  ctx.textBaseline = "middle";
-   // Del tekst op i linjer ved \n
-   const lines = text.split('\n');
-   const startY = H() / 2 + 6 - ((lines.length - 1) * 32) / 2;
-   lines.forEach((line, i) => {
-     ctx.fillText(line, W() / 2, startY + i * 32);
-   });
+  ctx.fillText(text, W() / 2, H() / 2 + 6);
   ctx.restore();
 }
-
-
-// --- Hjælpe funktioner --------------------------------------------------------------------
-// Hjælpefunktion til afrundede rektangler
-function drawRoundedRect(ctx, x, y, width, height, radius) {
-  ctx.beginPath();
-  ctx.moveTo(x + radius, y);
-  ctx.lineTo(x + width - radius, y);
-  ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
-  ctx.lineTo(x + width, y + height - radius);
-  ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
-  ctx.lineTo(x + radius, y + height);
-  ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
-  ctx.lineTo(x, y + radius);
-  ctx.quadraticCurveTo(x, y, x + radius, y);
-  ctx.closePath();
-  ctx.fill();
-}
-

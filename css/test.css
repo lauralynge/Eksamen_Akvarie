@@ -1,0 +1,529 @@
+/* ======================
+    IMPORTERING AF GOOGLE FONTS
+   ====================== */
+
+/* Importering af DynaPuff font */
+@import url("https://fonts.googleapis.com/css2?family=DynaPuff:wght@400..700&display=swap");
+
+/* Importering af Poppins font */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap");
+
+/* ===============
+    CSS VARIABLES
+   =============== */
+
+:root {
+  /* Colors */
+  --primary-color: #f7f7f7; /* Skift */
+  --secondary-color: #1a4d6b; /* Skift */
+  --primary-blue: #077789; /* Skift */
+  --secondary-blue: #0099cc; /* Skift */
+
+  /* Backgrounds */
+  --bg: #fafafa; /* Skift */
+  --bg-dialog: #f7f7f7;
+  --bg-dialog-end: rgba(247, 247, 247, 0.5);
+  --bg-image-main: url("../images/baggrund-top.svg"); /* Skift? */
+  --bg-image-bottom: url("../images/baggrund-bund.svg"); /* Skift? */
+  --bgimage-samlet: url("../images/baggrund-samlet.svg");
+
+  /* Bobler */ /* BRUGER JEG OVERHOEVET DISSE? */
+  --bubble-big: url("../images/boble1.svg");
+  --bubble-medium: url("../images/boble2.svg");
+  --bubble-small: url("../images/boble3.svg");
+
+  /* Dialog effects */
+  --backdrop-color: rgba(0, 0, 0, 0.5);
+  --backdrop-blur: 2px;
+
+  /* Shadows, Radius & Transitions */
+  --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.3);
+  --shadow-lg: 0 8px 25px rgba(0, 0, 0, 0.3);
+  --radius: 1rem;
+  --transition: transform 0.2s ease;
+  --transform: translateX(120px) scale(0);
+
+  /* puslespil */
+  --piece-size: 200px;
+  --puzzle-size: calc(var(--piece-size) * 3);
+  --primary-puzzle: #077789;
+  --correct: #4caf50;
+  --shadow-puzzle: 0 2px 8px rgba(7, 119, 137, 0.12);
+}
+
+/* ===========
+    CSS FONTS
+   =========== */
+
+/* Til H1–H2 / 48–56 px / overskrift og titler */
+.dynaPuff-medium {
+  font-family: "DynaPuff";
+  font-weight: 500;
+  font-style: normal;
+}
+
+/* Til H3–H4 eller callouts / 32–36 px / Brødtekst */
+.dynaPuff-regular {
+  font-family: "DynaPuff";
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* Til brødtekst og mindre tekster / brødtekst */
+.poppins-regular {
+  font-family: "Poppins", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.poppins-medium {
+  font-family: "Poppins", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+
+
+/* ========================
+    GLOBAL STYLES (LAYOUT)
+   ======================== */
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* Skjul al scroll på siden */
+}
+
+h1 {
+  font-family: "DynaPuff";
+  font-weight: 500;
+  font-size: 56px;
+  color: var(--primary-color);
+}
+
+h2 {
+  font-family: "DynaPuff";
+  font-weight: 400;
+  font-size: 48px;
+  color: var(--secondary-color);
+}
+
+h3 {
+  font-family: "Poppins";
+  font-weight: 500;
+  font-size: 36px;
+  color: var(--secondary-color);
+}
+
+h4 {
+  font-family: "Poppins";
+  font-weight: 400;
+  font-size: 32px;
+  color: var(--secondary-color);
+}
+
+
+/* ========================
+    FULLPAGE SCROLL STYLING
+   ======================== */
+
+.container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow-y: scroll linear;
+}
+
+.slides {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.slides img {
+    width: 100%;
+    height: 100vh;
+    object-fit: cover;
+    display: block;
+    z-index: -1;
+}
+/* Scroll ned knap */
+.scroll-ned-container {
+  display: flex;
+  justify-content: center;
+  max-height: 250px;
+  max-width: 500px  ;
+}
+
+.scroll-ned-knap {
+    position: absolute;
+    width: 500px;   /* samme som billedet, eller mindre */
+    height: 250px;
+    transform: translateX(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    left: 50%;
+    top: 70%;
+    z-index: 40; /* sørg for den ligger over andet indhold */
+}
+.scroll-ned-knap img {
+  width: auto;   /* størrelse */
+  height: 250px;
+}
+
+/* scroll op knap */
+.scroll-op-container {
+  display: flex;
+  justify-content: center;
+  max-height: 250px;
+  max-width: 500px  ;
+}
+
+.scroll-op-knap {
+    position: absolute;
+    width: 500px;   /* samme som billedet, eller mindre */
+    height: 250px;
+    transform: translateX(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    left: 50%;
+    bottom: 70%;
+    z-index: 40; /* sørg for den ligger over andet indhold */
+}
+.scroll-op-knap img {
+  width: auto;   /* størrelse */
+  height: 250px;
+}
+
+/* Animation der får pilene (op + ned) til at zoome ind og ud */
+@keyframes pil-pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.12);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Aktivér animationen på pilene / Puls-animation og størrelse */
+.scroll-ned-knap img,
+.scroll-op-knap img {
+  width: 500px;
+  animation: pil-pulse 1.6s infinite ease-in-out;
+  pointer-events: none; /* sikrer at klik rammer knappen og ikke billedet */
+  background: none;
+}
+
+/* ========================
+   GENERELLE KNAPPER STYLING
+   ======================== */
+
+/***** HJEM-KNAPPER *****/
+.hjem-knap {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  display: inline-block;
+  margin: 0;
+  text-decoration: none;
+  border-radius: 25px;
+  transition: transform 0.3s ease;
+  width: 80px;
+  height: 80px;
+  z-index: 100; /* Højere z-index så den ligger over alt andet */
+}
+
+.hjem-knap img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.hjem-knap img[alt="Bobble-hjem"] {
+  z-index: 1; /* Ligger nederst */
+  width: 80px;
+  height: auto;
+}
+
+.hjem-knap img[alt="Hjem-knap"] {
+  z-index: 2; /* Ligger øverst */
+  width: 50px;
+  height: auto;
+  top: 45%; /* Flyttet lidt op fra 50% */
+}
+
+
+/* ========================
+    FISKE KARRUSEL STYLING
+   ======================== */
+
+.slides.top {
+  position: relative;
+}
+
+.slides.top img {
+  position: relative;
+  z-index: -1;
+}
+
+/* karrusel wrapper med pilknapper */
+.fiskekarrusel {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+  box-sizing: border-box;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 100%;
+  max-width: 100vw;
+  pointer-events: none; /* så knapper ikke overlapper udenfor billedet */
+}
+
+.fiskekarrusel > * {
+  pointer-events: auto; /* knapper og indhold kan stadig klikkes */
+}
+
+/* scrollbar container for fiskene (uden knapper) */
+.fiskekarrusel-items {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  width: 100%;
+  max-width: 100%;
+  padding: 20px 0;
+}
+
+.fiskekarrusel-items::-webkit-scrollbar {
+  display: none;
+}
+
+/* Karrusel navigationsknapper */
+.karrusel-knap {
+  background: rgba(255, 255, 255, 0.3);
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow);
+  transition: all 0.3s ease;
+}
+
+.karrusel-knap:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+.karrusel-knap img {
+  width: 30px;
+  height: 30px;
+}
+
+/* ==== FISKEKORT I KARRUSEL ==== */
+/* Hvert enkelt fiskekort */
+.fiskekort {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  background: rgba(255,255,255,0.3); /* mere gennemsigtig baggrund */
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 20px 20px;
+  width: 200px;
+  height: 150px;
+  z-index: 1;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+} 
+
+/* Fiskekort billeder */
+.fiskekort img {
+  width: 200px;
+  height: 100px;
+  z-index: 2;
+  object-fit: contain;
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
+/* Fiskekort hover effekt */
+.fiskekort:hover {
+  box-shadow: var(--shadow-lg);
+  transform: scale(1.05);
+}
+
+
+/* ========================
+    DIALOG STYLING FOR FISK
+   ======================== */
+
+/* Dialog element */
+#fish-dialog {
+  border: none;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  padding: 0;
+  width: 1000px; /* Fast bredde */
+  height: 650px; /* Fast højde */
+  background: transparent;
+}
+
+#fish-dialog::backdrop {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+#fish-dialog form {
+  background: white;
+  border-radius: var(--radius);
+  padding: 20px;
+  position: relative;
+  margin: 0;
+  width: 100%; /* Fylder hele dialog bredde */
+  height: 100%; /* Fylder hele dialog højde */
+  box-sizing: border-box;
+  overflow-y: auto; /* Scroll hvis indhold er for stort */
+}
+
+/* Luk knap i dialog */
+#close-dialog {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #666;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+}
+
+#close-dialog:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+#dialog-content {
+  padding-top: 40px; /* Plads til luk-knappen */
+}
+
+/* Dialog indhold styling */
+.fish-dialog-container {
+  text-align: center;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.fish-dialog-image {
+  max-width: 100%;
+  max-height: 200px; /* Begrænset højde så der er plads til tekst */
+  height: auto;
+  border-radius: var(--radius);
+  margin-bottom: 15px;
+  object-fit: contain; /* Bevarer billedeforhold */
+}
+
+.fish-dialog-title {
+  color: var(--secondary-color);
+  margin-bottom: 10px;
+}
+
+.fish-dialog-latin {
+  font-style: italic;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.fish-dialog-info {
+  text-align: left;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.fish-dialog-paragraph {
+  margin-bottom: 15px;
+}
+
+.fish-color-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.fish-dialog-color-tag {
+  display: inline-block;
+  color: white;
+  padding: 5px 10px;
+  border-radius: var(--radius);
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: capitalize;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Farve-specifikke styles */ /* DROP DETTE */
+.fish-dialog-color-tag[data-color="orange"] {
+  background: #ff6b35;
+}
+.fish-dialog-color-tag[data-color="hvid"] {
+  background: #f8f8f8;
+  color: #333;
+}
+.fish-dialog-color-tag[data-color="sort"] {
+  background: #2c2c2c;
+}
+.fish-dialog-color-tag[data-color="blue"] {
+  background: #4a90e2;
+}
+.fish-dialog-color-tag[data-color="yellow"] {
+  background: #f5d347;
+  color: #333;
+}
+.fish-dialog-color-tag[data-color="brown"] {
+  background: #8b4513;
+}
+.fish-dialog-color-tag[data-color="green"] {
+  background: #4caf50;
+}
+.fish-dialog-color-tag[data-color="red"] {
+  background: #f44336;
+}
+.fish-dialog-color-tag[data-color="pink"] {
+  background: #e91e63;
+}
+.fish-dialog-color-tag[data-color="purple"] {
+  background: #9c27b0;
+}

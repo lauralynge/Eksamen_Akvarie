@@ -1,7 +1,45 @@
+// SCROLL KNAPPER FUNKTIONER
+
+// Lineær easing-funktion
+function linear(t) { return t; }
+
+// Smooth scroll funktion
+function smoothScrollTo(targetY, duration = 800) {
+  const startY = window.scrollY;
+  const distance = targetY - startY;
+  const startTime = performance.now();
+
+  function scrollStep(currentTime) {
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+  const ease = linear(progress);   // Lineær easing for helt jævn scroll
+    window.scrollTo(0, startY + distance * ease);
+
+    if (progress < 1) {
+      requestAnimationFrame(scrollStep);
+    }
+  }
+
+  requestAnimationFrame(scrollStep);
+}
+
+// Brug sådan her ved scroll til bund:
+document.getElementById("scrollDownButton").addEventListener("click", function () {
+  const bottom = document.getElementById("bund");
+  smoothScrollTo(bottom.offsetTop);
+});
+
+// Brug sådan her ved scroll til toppen:
+document.getElementById("scrollUpButton").addEventListener("click", function () {
+  const top = document.getElementById("top");
+  smoothScrollTo(top.offsetTop);
+});
+
+
 
 // ======== FISKE KARRUSEL ========
 
-// #3: Vis fisk i karrusellen
+// Vis fisk i karrusellen
 function displayFishCarousel(fishes) {
   const container = document.getElementById("fiskekarrusel-items");
   if (!container) return; // Stop hvis elementet ikke findes
@@ -110,17 +148,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }, 500); // Vent lidt på at JSON data er loaded
 });
 
-// Funktion til hjørne-knappen
-function cornerButtonClick() {
-  // Tilføj en sjov animation før navigation
-  const button = document.querySelector(".corner-button");
-  button.style.transform = "scale(1.3) rotate(360deg)";
-
-  // Naviger til fiskhjem.html efter animation
-  setTimeout(() => {
-    window.location.href = "fiskhjem.html";
-  }, 600);
-}
 
 // ======== DIALOG FUNKTIONER ========
 
@@ -209,29 +236,3 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 });
-
-// ======== LÆR-OM-OS SCROLL FUNKTIONALITET ========
-
-const scrollDownBtn = document.getElementById("scrollDownButton");
-const scrollUpBtn = document.getElementById("scrollUpButton");
-const img = document.getElementById("laer-om-os-img");
-
-if (scrollDownBtn && scrollUpBtn && img) {
-  scrollDownBtn.addEventListener("click", () => {
-    document.getElementById("bottom").scrollIntoView({ behavior: "smooth" });
-    img.classList.remove("laer-om-os-img-top");
-    img.classList.add("laer-om-os-img-bottom");
-
-    scrollDownBtn.style.display = "none";   // skjul ned-knap
-    scrollUpBtn.style.display = "block";    // vis op-knap
-  });
-
-  scrollUpBtn.addEventListener("click", () => {
-    document.getElementById("top").scrollIntoView({ behavior: "smooth" });
-    img.classList.remove("laer-om-os-img-bottom");
-    img.classList.add("laer-om-os-img-top");
-
-    scrollUpBtn.style.display = "none";     // skjul op-knap
-    scrollDownBtn.style.display = "block";  // vis ned-knap
-  });
-}

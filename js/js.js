@@ -25,37 +25,3 @@ async function getFish() {
   }
 }
 
-// ======== INAKTIVITETS TIMER ========   VIRKER IKKE OPTIMALT
-//  Hopper automatisk til index.html efter 60 sekunders
-
-const INACTIVITY_LIMIT = 60 * 1000; // 60 sekunder
-let inactivityTimer;
-
-function resetInactivityTimer() {
-  clearTimeout(inactivityTimer);
-
-  inactivityTimer = setTimeout(() => {
-    window.location.href = "index.html"; // hop tilbage til forsiden
-  }, INACTIVITY_LIMIT);
-}
-
-function setupInactivityTimer() {
-  // Reset timer ved ALLE aktiviteter
-  const activityEvents = [
-    "mousedown",
-    "mousemove",
-    "keydown",
-    "touchstart",
-    "scroll",
-  ];
-
-  activityEvents.forEach((evt) => {
-    document.addEventListener(evt, resetInactivityTimer);
-  });
-
-  // Start timer første gang
-  resetInactivityTimer();
-}
-
-// Start når siden er klar
-window.addEventListener("load", setupInactivityTimer);

@@ -24,7 +24,8 @@
   --bg-dialog: #f7f7f7;
   --bg-dialog-end: rgba(247, 247, 247, 0.5);
   --bg-image-main: url("../images/baggrund-top.svg"); /* Skift? */
-  --bg-image-bund: url("../images/baggrund-bund.svg"); /* Skift? */
+  --bg-image-bottom: url("../images/baggrund-bund.svg"); /* Skift? */
+  --bgimage-samlet: url("../images/baggrund-samlet.svg");
 
   /* Bobler */ /* BRUGER JEG OVERHOEVET DISSE? */
   --bubble-big: url("../images/boble1.svg");
@@ -390,30 +391,65 @@ h4 {
 /* ========================
     LÆR OM OS-SIDE STYLING
    ======================== */
+body.laer-om-os{
+    background-image: none;
+    background-attachment: scroll;
+}
 
-/* hovedcontainer (med knapper) */
-.top-section {
-  min-height: 100vh;
-  background-image: url("images/baggrund.png");
+
+body.laer-om-os > div > img[alt="Baggrundsbillede"] {
+  /* position: absolute; */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  object-position: top;
+  z-index: -1;
+  pointer-events: none;
+}
+
+#laer-om-os-img {
   position: relative;
-  width: 100%;
-  margin: 0 auto;
-  padding: 150px 0 20px 0; /* Meget mere luft i toppen */
-  overflow: visible;
+  transition: transform 1s ease-in-out; /* glidende bevægelse */
+}
+
+/* Startposition (øverst) */
+.laer-om-os-img-top {
+  top: 0;
+  object-position: top;
+  transform: translateY(0);
+}
+/* Slutposition (nederst) */
+.laer-om-os-img-bottom {
+  top: 1500px; /* justér efter hvor langt ned billedet skal glide */
+  object-position: bottom;
+transform: translateY(100vh); /* flyt en hel skærmhøjde ned */
+}
+
+
+.top-section {
+   min-height: 100vh;
+   width: 100vw;
+   display: block;
 }
 
 /* karrusel wrapper med pilknapper */
-.fiskekarrusel {
+.top-section .fiskekarrusel {
   display: flex;
+  margin-top: 350px;
   align-items: center;
   justify-content: center;
   gap: 20px;
   padding: 20px;
+  box-sizing: border-box;
 }
 
 /* scrollbar container for fiskene (uden knapper) */
-.fiskekarrusel-items {
+.top-section .fiskekarrusel-items {
   display: flex;
+  justify-content: center;
+  align-items: center;
   gap: 20px;
   overflow-x: auto;
   scroll-behavior: smooth;
@@ -421,10 +457,36 @@ h4 {
   padding: 20px 0;
 }
 
-.fiskekarrusel-items::-webkit-scrollbar {
+.top-section .fiskekarrusel-items::-webkit-scrollbar {
   display: none;
 }
 
+/* Karrusel navigationsknapper */
+.karrusel-knap {
+  background: rgba(255, 255, 255, 0.3);
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow);
+  transition: all 0.3s ease;
+}
+
+.karrusel-knap:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+.karrusel-knap img {
+  width: 30px;
+  height: 30px;
+}
+
+/* ==== FISKEKORT I KARRUSEL ==== */
 /* Hvert enkelt fiskekort */
 .fiskekort {
   display: flex;
@@ -453,112 +515,36 @@ h4 {
   transform: scale(1.05);
 }
 
-/* Karrusel navigationsknapper */
-.karrusel-knap {
-  background: rgba(255, 255, 255, 0.3);
-  border: none;
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: var(--shadow);
-  transition: all 0.3s ease;
-}
-
-.karrusel-knap:hover {
-  background: rgba(255, 255, 255, 0.3);
-  transform: scale(1.1);
-}
-
-.karrusel-knap img {
-  width: 30px;
-  height: 30px;
-}
-
-/***** AKAVARIE BUND STYLING *****/
-
-/* Gør scroll blødt (smooth scroll) */
-html {
-  scroll-behavior: smooth;
-}
-/* Bundsektion */
-.bund-section {
-  min-height: 100vh;
-  background-image: var(--bg-image-bund); /* <-- udskift til rigtigt billede */ 
-  position: relative;
-  background-size: cover;
-  background-position: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  padding: 40px;
-  box-sizing: border-box;
-  text-align: center;
-  overflow: visible; /* undgå at knapper klippes væk */
-}
-
-/* bund-sektion overlay med fixed baggrund */
-.bund-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background-size: cover;
-  background-position: center;
-  z-index: 0;
-  opacity: 0; /* starter usynlig */
-  transition: opacity 0.6s ease-in-out;
-}
-
-/* vis overlay, når brugeren scroller / trykker pil-ned */
-.bund-section.active .bund-overlay {
-  opacity: 1;
-}
-
-/* bund-content over overlay */
-.bund-content {
-  max-width: 600px;
-  position: relative;
-  z-index: 1; /* sikrer at tekst og pil ligger over baggrund */
-  text-align: center;
-  padding-top: 80px; /* plads til opad-pil */
-}
 
 /* Container til scroll-pilen */
-.scroll-ned-container {
+ .scroll-ned-container {
   display: flex;
   justify-content: center;
-  margin-top: 30px;
+  position: relative;
 }
 
-/* Pil NED – placeret i bunden af top-sektionen */
 .scroll-ned-knap {
-  position: absolute;
-  bottom: 0px; /* afstand fra bunden */
-  left: 50%;
-  transform: translateX(-50%);
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  z-index: 40; /* sørg for den ligger over andet indhold */
-  display: block;
+    position: fixed;
+    transform: translateX(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    left: 50%;
+    top: 70%;
+    z-index: 40; /* sørg for den ligger over andet indhold */
 }
 
-/* Aktivér animationen på pilen */
-.scroll-ned-knap img {
-  width: 500px;
-  animation: pil-pulse 1.6s infinite ease-in-out;
+
+.scroll-op-container {
+  display: flex;
+  justify-content: center;
+  position: relative;
 }
 
 /* Pil OP – placeret i toppen af bund-sektionen */
 .scroll-op-knap {
   position: absolute;
-  top: 0px; /* afstand fra toppen */
+  top: 135%; /* afstand fra toppen */
   left: 50%;
   transform: translateX(-50%);
   background: none;
@@ -567,14 +553,6 @@ html {
   padding: 0;
   z-index: 40;
   display: block;
-}
-
-/* fjern pilene afhængig af scroll-tilstand */
-body.scrolled .scroll-ned-knap {
-  display: none;
-}
-body:not(.scrolled) .scroll-op-knap {
-  display: none;
 }
 
 /* Animation der får pilene (op + ned) til at zoome ind og ud */
@@ -590,20 +568,15 @@ body:not(.scrolled) .scroll-op-knap {
   }
 }
 
-/* Puls-animation og størrelse (samme til begge pile) */
+/* Aktivér animationen på pilene / Puls-animation og størrelse */
 .scroll-ned-knap img,
 .scroll-op-knap img {
   width: 500px;
-  display: block;
-  pointer-events: none; /* sikrer at klik rammer knappen og ikke billedet */
   animation: pil-pulse 1.6s infinite ease-in-out;
-  transition: transform 0.2s;
+  pointer-events: none; /* sikrer at klik rammer knappen og ikke billedet */
+  background: none;
 }
 
-.scroll-ned-knap:active img,
-.scroll-op-knap:active img {
-  transform: scale(1.1);
-}
 
 /* ========================
     DIALOG STYLING FOR FISK
@@ -1355,14 +1328,13 @@ body.dialog-open .puslespil-wrapper {
 }
 
 canvas#game {
-  width: min(95vw, 540px); /* responsivt: bredde på skærm */
-  height: calc(min(95vw, 540px) * 16 / 9); /* hold 16:9-forhold */
-  max-height: 90vh;
-  background: transparent; /* så body-baggrund kan ses */
-  border-radius: 16px;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35),
-    inset 0 0 40px rgba(255, 255, 255, 0.05);
+  width: 100vw;
+  height: 100vh;
   display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: transparent;
 }
 
 /* UI-hint over spillet */
@@ -1374,28 +1346,37 @@ canvas#game {
   pointer-events: none;
 }
 
-/* Tilbage knap i højre hjørne */
-.tilbage-button-left {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  z-index: 1500;
-  transition: transform 0.3s ease, opacity 0.3s ease;
-  border-radius: 50%;
-  overflow: hidden;
+#flappy-tryk-her {
+    left: 50%;
+    top: 60%;
 }
 
-.tilbage-button-left:hover {
-  transform: scale(1.1);
-  opacity: 0.8;
+/* ===================
+    FARVELÆGSNINGSPIL       IKKE LAVET ENDNU
+   =================== */
+/* Content Container til de nye sider */
+.content-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 40px;
+  border-radius: 20px;
+  max-width: 600px;
 }
 
-.tilbage-button-left img {
-  width: 80px;
-  height: 80px;
-  object-fit: contain;
-  display: block;
+.content-container h1 {
+  font-family: 'DynaPuff', cursive;
+  font-size: 48px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.content-container p {
+  font-size: 20px;
+  color: #666;
+  margin-bottom: 30px;
 }

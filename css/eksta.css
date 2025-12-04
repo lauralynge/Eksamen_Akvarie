@@ -251,3 +251,264 @@ body.dialog-open .puslespil-wrapper {
 body.scrolled #akvarie-bund {
   opacity: 1;
 }
+
+
+
+
+
+/* ==========
+    FARVELÆG
+   ========== */
+
+  .game {
+    background: #f7f7f7;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 0 10px #0002;
+    max-width: 600px;
+  }
+
+  .palette {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .color {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 1px solid #555;
+  }
+
+  .color.selected {
+    border: 4px solid black;
+  }
+
+  svg path,
+  svg circle {
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+  svg path:hover,
+  svg circle:hover {
+    opacity: 0.7;
+  }
+
+  #undoBtn {
+    margin-bottom: 20px;
+    padding: 8px 16px;
+    cursor: pointer;
+  }
+
+
+
+
+
+
+
+
+
+
+  /****** AKVARIE TOP OG BUND STYLING *****/
+
+body.laer-om-os {
+    margin: 0;
+    /*overflow: hidden;*/
+}
+
+.top-section .bottom-section{
+    width: 100vw;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    display: none; /* Kun én vises ad gangen */
+   
+    }
+section#bottom{
+ top: 40rem;
+    position: relative;
+}
+/* hovedcontainer (med knapper) */
+body.laer-om-os .top-section {
+  background-image: var(--bg-image-main);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  /* padding: 150px 0 20px 0; /* Meget mere luft i toppen */
+/*  overflow: auto;*/
+}
+
+body.laer-om-os .bottom-section {
+    background-image: var(--bg-image-bottom);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+
+
+/* Kun første sektion synlig fra start */
+#top {
+    display: block;
+}
+
+
+
+/*  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  /* padding: 150px 0 20px 0; /* Meget mere luft i toppen */
+  /*overflow: auto;*/
+
+
+/***** AKAVARIE BUND STYLING *****/
+
+/* Gør scroll blødt (smooth scroll) */
+html {
+  scroll-behavior: smooth;
+}
+/* Bundsektion 
+/*.bottom-section {
+  top: 100%;
+  background-image: var(--bg-image-bund); /* <-- udskift til rigtigt billede */ 
+  /*position: relative;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  padding: 40px;
+  box-sizing: border-box;
+  text-align: center;
+  overflow: visible; /* undgå at knapper klippes væk */
+
+
+/* bund-sektion overlay med fixed baggrund */
+/*.bund-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+  opacity: 0; /* starter usynlig */
+  /* transition: opacity 0.6s ease-in-out; 
+}
+  
+
+/* vis overlay, når brugeren scroller / trykker pil-ned */
+.bund-section.active .bund-overlay {
+  opacity: 1;
+}
+
+/* bund-content over overlay */
+.bottom-content {
+  max-width: 600px;
+  position: relative;
+  z-index: 1; /* sikrer at tekst og pil ligger over baggrund */
+  text-align: center;
+  padding-top: 80px; /* plads til opad-pil */
+}
+
+/* Container til scroll-pilen */
+ .scroll-ned-container {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  top: 80%;
+}
+
+/* Pil NED – placeret i bunden af top-sektionen */
+.scroll-ned-knap {
+  position: absolute;
+  left: 50%;
+  top: 80%;
+  transform: translateX(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 40; /* sørg for den ligger over andet indhold */
+  display: block;
+}
+
+/* Aktivér animationen på pilen */
+.scroll-ned-knap img {
+  width: 500px;
+  animation: pil-pulse 1.6s infinite ease-in-out;
+}
+
+/* Pil OP – placeret i toppen af bund-sektionen */
+.scroll-op-knap {
+  position: absolute;
+  top: 0px; /* afstand fra toppen */
+  left: 50%;
+  transform: translateX(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 40;
+  display: block;
+}
+
+/* fjern pilene afhængig af scroll-tilstand */
+body.scrolled .scroll-ned-knap {
+  display: none;
+}
+body:not(.scrolled) .scroll-op-knap {
+  display: none;
+}
+
+/* Animation der får pilene (op + ned) til at zoome ind og ud */
+@keyframes pil-pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.12);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Puls-animation og størrelse (samme til begge pile) */
+.scroll-ned-knap img,
+.scroll-op-knap img {
+  width: 500px;
+  display: block;
+  pointer-events: none; /* sikrer at klik rammer knappen og ikke billedet */
+  animation: pil-pulse 1.6s infinite ease-in-out;
+  transition: transform 0.2s;
+}
+
+.scroll-ned-knap:active img,
+.scroll-op-knap:active img {
+  transform: scale(1.1);
+}
