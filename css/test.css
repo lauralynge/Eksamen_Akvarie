@@ -18,6 +18,7 @@
   --secondary-color: #1a4d6b; /* Skift */
   --primary-blue: #077789; /* Skift */
   --secondary-blue: #0099cc; /* Skift */
+  --primary-text: #121312; /* Skift */
 
   /* Backgrounds */
   --bg: #fafafa; /* Skift */
@@ -102,7 +103,7 @@ h1 {
   font-family: "DynaPuff";
   font-weight: 500;
   font-size: 56px;
-  color: var(--primary-color);
+  color: var(--secondary-color);
 }
 
 h2 {
@@ -123,7 +124,7 @@ h4 {
   font-family: "Poppins";
   font-weight: 400;
   font-size: 32px;
-  color: var(--secondary-color);
+  color: var(--primary-text);
 }
 
 
@@ -265,6 +266,9 @@ h4 {
   top: 45%; /* Flyttet lidt op fra 50% */
 }
 
+.hjem-knap:hover {
+  transform: scale(1.1); /* Gør boblen lidt større når man hover */
+}
 
 /* ========================
     FISKE KARRUSEL STYLING
@@ -382,15 +386,16 @@ h4 {
     DIALOG STYLING FOR FISK
    ======================== */
 
-/* Dialog element */
+/* Dialog styling */
 #fish-dialog {
   border: none;
   border-radius: var(--radius);
   box-shadow: var(--shadow-lg);
   padding: 0;
-  width: 1000px; /* Fast bredde */
-  height: 650px; /* Fast højde */
+  width: 1200px; /* Fast bredde */
+  height: 700px; /* Fast højde */
   background: transparent;
+  overflow: hidden;
 }
 
 #fish-dialog::backdrop {
@@ -398,132 +403,186 @@ h4 {
 }
 
 #fish-dialog form {
-  background: white;
+  position: relative;
+  background: rgb(255, 255, 255);
   border-radius: var(--radius);
   padding: 20px;
   position: relative;
-  margin: 0;
+  margin: 10;
   width: 100%; /* Fylder hele dialog bredde */
   height: 100%; /* Fylder hele dialog højde */
   box-sizing: border-box;
-  overflow-y: auto; /* Scroll hvis indhold er for stort */
-}
-
-/* Luk knap i dialog */
-#close-dialog {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: none;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-  color: #666;
-  width: 30px;
-  height: 30px;
+  overflow-y: hidden;
   display: flex;
   align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  transition: background-color 0.3s ease;
-}
-
-#close-dialog:hover {
-  background: rgba(0, 0, 0, 0.1);
-}
-
-#dialog-content {
-  padding-top: 40px; /* Plads til luk-knappen */
 }
 
 /* Dialog indhold styling */
-.fish-dialog-container {
-  text-align: center;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+/* Luk-knap */
+#luk-knap-dialog {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  outline: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 80px;
+  height: 80px;
 }
 
-.fish-dialog-image {
+#fish-dialog #luk-knap-dialog img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1; /* Ligger nederst */
+  width: 80px;
+  height: 80px;
+}   
+
+.luk-knap-tekst-dialog {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--primary-color);
+  text-align: center;
+  margin: 0;
+  z-index: 2; /* Ligger øverst */
+  font-family: "DynaPuff";
+  font-size: 32px;  
+  color: var(--primary-color);
+  pointer-events: none; /* Gør teksten ikke klikbar */
+}
+
+#luk-knap-dialog:hover {
+  transform: scale(1.1); /* Gør boblen lidt større når man hover */
+}
+
+/* Dialog kolonne-layout med præcis styling fra JS */
+.fish-dialog-columns {
+  display: flex;
+  gap: 48px;
+  align-items: center; /* Centrer vertikalt */
+  padding: 20px;
+}
+.fish-dialog-left {
+  flex: 0.5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  max-width: 400px;
+  width: 100%;
+}
+.fish-dialog-right {
+  flex: 1;
+
+}
+
+#fish-dialog img {
+  position: relative;
+  z-index: 100;
   max-width: 100%;
   max-height: 200px; /* Begrænset højde så der er plads til tekst */
   height: auto;
   border-radius: var(--radius);
   margin-bottom: 15px;
   object-fit: contain; /* Bevarer billedeforhold */
+  align-items: center;
+
 }
 
-.fish-dialog-title {
+#fish-dialog h2 {
+  font-family: "DynaPuff";
+  font-weight: 500;
+  font-size: 48px;
   color: var(--secondary-color);
+}
+
+#fish-dialog h3 {
+  font-family: "DynaPuff";
+  font-weight: 400;
+  font-size: 36px;
+}
+
+#fish-dialog h4 {
+  font-family: "Poppins";
+  font-weight: 400;
+  font-size: 32px;
+
+
+}
+.fish-dialog-title {
+  color: var(--primary-text);
   margin-bottom: 10px;
 }
 
-.fish-dialog-latin {
-  font-style: italic;
-  color: #666;
-  margin-bottom: 20px;
+.fish-dialog-description {
+  color: var(--primary-text);
+  line-height: 1.5;
 }
 
-.fish-dialog-info {
-  text-align: left;
-  max-width: 400px;
-  margin: 0 auto;
+/* ===========================
+    BUND BILLEDE ITEMS STYLING
+   =========================== */
+   .slides.bund {
+  position: relative; /* så absolute virker */
 }
 
-.fish-dialog-paragraph {
-  margin-bottom: 15px;
+#skib-bund {
+  position: absolute;
+  left: 5%;
+  bottom: 300px;
+  width: 700px;
+  height: auto;
+  z-index: 2;
 }
 
-.fish-color-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  justify-content: center;
-  margin-top: 10px;
+#skib-bund:hover {
+  transform: scale(1.05);
 }
 
-.fish-dialog-color-tag {
-  display: inline-block;
-  color: white;
-  padding: 5px 10px;
-  border-radius: var(--radius);
-  font-size: 14px;
-  font-weight: 500;
-  text-transform: capitalize;
-  border: 2px solid rgba(255, 255, 255, 0.3);
+/* Konkylie bund styling */
+#konkylie-bund {
+  position: absolute;
+  left: 70%;
+  bottom: 500px;
+  width: 220px;
+  height: auto;
+  z-index: 2;
 }
 
-/* Farve-specifikke styles */ /* DROP DETTE */
-.fish-dialog-color-tag[data-color="orange"] {
-  background: #ff6b35;
+#konkylie-bund:hover {
+  transform: scale(1.05);
 }
-.fish-dialog-color-tag[data-color="hvid"] {
-  background: #f8f8f8;
-  color: #333;
+
+/* Tang bund styling */
+#tang-bund {
+  position: absolute;
+  left: 80%;
+  bottom: 28px;
+  width: 250px;
+  height: auto;
+  z-index: 2;
 }
-.fish-dialog-color-tag[data-color="sort"] {
-  background: #2c2c2c;
+
+#tang-bund:hover {
+  transform: scale(1.05);
 }
-.fish-dialog-color-tag[data-color="blue"] {
-  background: #4a90e2;
+
+/* Koral bund styling */
+#koral-bund {
+  position: absolute;
+  left: 15%;
+  bottom: 28px;
+  width: 250px;
+  height: auto;
+  z-index: 2;
 }
-.fish-dialog-color-tag[data-color="yellow"] {
-  background: #f5d347;
-  color: #333;
+
+#koral-bund:hover {
+  transform: scale(1.05);
 }
-.fish-dialog-color-tag[data-color="brown"] {
-  background: #8b4513;
-}
-.fish-dialog-color-tag[data-color="green"] {
-  background: #4caf50;
-}
-.fish-dialog-color-tag[data-color="red"] {
-  background: #f44336;
-}
-.fish-dialog-color-tag[data-color="pink"] {
-  background: #e91e63;
-}
-.fish-dialog-color-tag[data-color="purple"] {
-  background: #9c27b0;
-}
+

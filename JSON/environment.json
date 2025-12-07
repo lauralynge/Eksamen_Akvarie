@@ -1,0 +1,39 @@
+{ 
+  "Environment": [
+  {
+    "id": 1,
+    "name": "Skibsvrag",
+    "image": "images/skib-bund.png",
+    "type": "environment",
+    "description": "Et gammelt skib, der ligger helt stille på havbunden.",
+    "funFact": "Fisk elsker at gemme sig i hullerne i skibet, som var det et lille legehus!"
+  },
+
+  {
+    "id": 2,
+    "name": "Konkylie",
+    "image": "images/konkylie-bund.png",
+    "type": "environment",
+    "description": "En stor, flot skal, der engang var hjem for et dyr.",
+    "funFact": "Hvis du lytter tæt, kan du næsten høre havets susen i konkylien!"
+  },
+
+  {
+    "id": 3,
+    "name": "Tang",
+    "image": "images/tang-bund.png",
+    "type": "environment",
+    "description": "Bløde, grønne planter der svajer i vandet.",
+    "funFact": "Mange små fisk gemmer sig i tangen, når de bliver forskrækkede!"
+  },
+
+  {
+    "id": 4,
+    "name": "Koraller",
+    "image": "images/koral-bund.png",
+    "type": "environment",
+    "description": "Farverige koraller, som ligner små undervandsblomster.",
+    "funFact": "Koraller er ikke planter – de er små dyr, der bor helt tæt sammen!"
+  }
+]
+}

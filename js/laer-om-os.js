@@ -141,31 +141,12 @@ function openModal(fishId) {
   content.innerHTML = `
     <div class="fish-dialog-container">
       <img src="${fish.image}" alt="${fish.name}" class="fish-dialog-image">
-
-      <h2 class="fish-dialog-title">
-        ${fish.name}
-      </h2>
-      
-      <h3 class="fish-dialog-latin">
-        ${fish.latinName}
-      </h3>
-      
+      <h2 class="fish-dialog-title">${fish.name}</h2>
+      <h3 class="fish-dialog-latin">${fish.latinName}</h3>
       <div class="fish-dialog-info">
-        <h4 class="fish-dialog-paragraph">
-          <strong>Beskrivelse:</strong><br>
-          ${fish.description}
-        </h4>
-        
-        <h4 class="fish-dialog-paragraph">
-          <strong>Lever i:</strong><br>
-          ${fish.livesIn}
-        </h4>
-        
-        <h4 class="fish-dialog-paragraph">
-          <strong>Sjov fakta:</strong><br>
-          ${fish.funFact}
-        </h4>
-        
+      <h4 class="fish-dialog-paragraph"><strong>Beskrivelse:</strong><br>${fish.description}</h4>
+        <h4 class="fish-dialog-paragraph"><strong>Lever i:</strong><br>${fish.livesIn}</h4>
+        <h4 class="fish-dialog-paragraph"><strong>Sjov fakta:</strong><br>${fish.funFact}</h4>
         <div class="fish-color-tags">
           ${
             Array.isArray(fish.color)

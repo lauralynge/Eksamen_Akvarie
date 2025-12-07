@@ -18,6 +18,7 @@
   --secondary-color: #1a4d6b; /* Skift */
   --primary-blue: #077789; /* Skift */
   --secondary-blue: #0099cc; /* Skift */
+  --primary-text: #121312; /* Skift */
 
   /* Backgrounds */
   --bg: #fafafa; /* Skift */
@@ -105,7 +106,7 @@ h1 {
   font-family: "DynaPuff";
   font-weight: 500;
   font-size: 56px;
-  color: var(--primary-color);
+  color: var(--secondary-color);
 }
 
 h2 {
@@ -370,20 +371,6 @@ h4 {
 
 .krabbe-spil img {
   width: 700px;
-  height: auto;
-  display: block;
-}
-
-/* Taleboble er ikke tilføjet endnu i images */
-.talebobble-spil {
-  position: absolute;
-  bottom: 300px;
-  left: 60px;
-  z-index: 10;
-}
-
-.talebobble-spil img {
-  width: 270px;
   height: auto;
   display: block;
 }
@@ -675,59 +662,6 @@ transform: translateY(100vh); /* flyt en hel skærmhøjde ned */
   margin-bottom: 15px;
 }
 
-.fish-color-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  justify-content: center;
-  margin-top: 10px;
-}
-
-.fish-dialog-color-tag {
-  display: inline-block;
-  color: white;
-  padding: 5px 10px;
-  border-radius: var(--radius);
-  font-size: 14px;
-  font-weight: 500;
-  text-transform: capitalize;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-}
-
-/* Farve-specifikke styles */ /* DROP DETTE */
-.fish-dialog-color-tag[data-color="orange"] {
-  background: #ff6b35;
-}
-.fish-dialog-color-tag[data-color="hvid"] {
-  background: #f8f8f8;
-  color: #333;
-}
-.fish-dialog-color-tag[data-color="sort"] {
-  background: #2c2c2c;
-}
-.fish-dialog-color-tag[data-color="blue"] {
-  background: #4a90e2;
-}
-.fish-dialog-color-tag[data-color="yellow"] {
-  background: #f5d347;
-  color: #333;
-}
-.fish-dialog-color-tag[data-color="brown"] {
-  background: #8b4513;
-}
-.fish-dialog-color-tag[data-color="green"] {
-  background: #4caf50;
-}
-.fish-dialog-color-tag[data-color="red"] {
-  background: #f44336;
-}
-.fish-dialog-color-tag[data-color="pink"] {
-  background: #e91e63;
-}
-.fish-dialog-color-tag[data-color="purple"] {
-  background: #9c27b0;
-}
-
 /* Modal baggrund */
 .modal {
   display: none;
@@ -777,14 +711,6 @@ transform: translateY(100vh); /* flyt en hel skærmhøjde ned */
   height: 30px;
 }
 
-/* VDVM logo i modal */
-.vdvm-logo {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  width: 60px;
-  height: auto;
-}
 
 /* Højtaler knap */
 .speaker-btn {
@@ -1099,6 +1025,10 @@ h2 {
   top: 45%; /* Flyttet lidt op fra 50% */
 }
 
+.hjem-knap:hover {
+  transform: scale(1.1); /* Gør boblen lidt større når man hover */
+}
+
 /***** LUK-KNAPPER *****/
 .luk-knap {
   position: fixed;
@@ -1153,6 +1083,10 @@ h2 {
   align-items: center;
   gap: 30px;
   text-align: center;
+}
+
+.puslespil-wrapper h2 {
+  color: var(--secondary-color);
 }
 
 /* Layout */

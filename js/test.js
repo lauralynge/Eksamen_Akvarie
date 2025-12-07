@@ -1,4 +1,5 @@
-// SCROLL KNAPPER FUNKTIONER
+
+// ======== SCROLL KNAPPER FUNKTIONER =======
 
 // Lineær easing-funktion
 function linear(t) { return t; }
@@ -54,6 +55,7 @@ function displayFishCarousel(fishes) {
     fishCard.innerHTML = `
         <img src="${fish.image}" alt="${fish.name}" onclick="openModal(${fish.id})">
       `;
+      
     container.appendChild(fishCard);
   });
 
@@ -149,7 +151,11 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-// ======== DIALOG FUNKTIONER ========
+
+
+
+
+// ======== DIALOG FUNKTIONER FISKEKARRUSEL ========
 
 // #5: Åbn dialog med fisk-information
 function openModal(fishId) {
@@ -164,46 +170,20 @@ function openModal(fishId) {
     return;
   }
 
+
   // Opdater dialog indhold med komplet fisk-information            // SKAL RETTES I SÅ KUN RELEVANT INFO VISES
   content.innerHTML = `
-    <div class="fish-dialog-container">
-      <img src="${fish.image}" alt="${fish.name}" class="fish-dialog-image">
-
-      <h2 class="fish-dialog-title">
-        ${fish.name}
-      </h2>
-      
-      <h3 class="fish-dialog-latin">
-        ${fish.latinName}
-      </h3>
-      
-      <div class="fish-dialog-info">
-        <h4 class="fish-dialog-paragraph">
-          <strong>Beskrivelse:</strong><br>
-          ${fish.description}
-        </h4>
-        
-        <h4 class="fish-dialog-paragraph">
-          <strong>Lever i:</strong><br>
-          ${fish.livesIn}
-        </h4>
-        
-        <h4 class="fish-dialog-paragraph">
-          <strong>Sjov fakta:</strong><br>
-          ${fish.funFact}
-        </h4>
-        
-        <div class="fish-color-tags">
-          ${
-            Array.isArray(fish.color)
-              ? fish.color
-                  .map(
-                    (color) =>
-                      `<span class="fish-dialog-color-tag" data-color="${color}">${color}</span>`
-                  )
-                  .join("")
-              : `<span class="fish-dialog-color-tag" data-color="${fish.color}">${fish.color}</span>`
-          }
+    <div class="fish-dialog-columns">
+      <div class="fish-dialog-left">
+        <img src="${fish.image}" alt="${fish.name}" class="fish-dialog-image">
+        <h2 class="fish-dialog-title">${fish.name}</h2>
+        <h3 class="fish-dialog-nickname">${fish.nickname || ''}</h3>
+      </div>
+  <div class="fish-dialog-right">
+        <div class="fish-dialog-info">
+          <h4 class="fish-dialog-paragraph"><strong>Beskrivelse:</strong><br>${fish.description}</h4>
+          <h4 class="fish-dialog-paragraph"><strong>Lever i:</strong><br>${fish.livesIn}</h4>
+          <h4 class="fish-dialog-paragraph"><strong>Sjov fakta:</strong><br>${fish.funFact}</h4>
         </div>
       </div>
     </div>
@@ -221,7 +201,7 @@ function closeModal() {
 
 // Tilføj event listener til luk-knappen
 document.addEventListener("DOMContentLoaded", function () {
-  const closeButton = document.getElementById("close-dialog");
+  const closeButton = document.getElementById("luk-knap-dialog");
   if (closeButton) {
     closeButton.addEventListener("click", closeModal);
   }
@@ -236,3 +216,101 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 });
+
+
+
+// ======== DIALOG FUNKTIONER BUNDEN ========
+
+// Henter environment data fra JSON
+let allEnvironments = [];
+async function getEnvironment() {
+  const response = await fetch("./JSON/environment.json");
+  const data = await response.json();
+  allEnvironments = data.Environment;
+}
+getEnvironment();
+
+
+// Åbner dialog ved klik på bund-elementer
+document.addEventListener("DOMContentLoaded", function () {
+  const skib = document.getElementById("skib-bund");
+  const konkylie = document.getElementById("konkylie-bund");
+  const tang = document.getElementById("tang-bund");
+  const koral = document.getElementById("koral-bund");
+
+  if (skib) {
+    skib.addEventListener("click", function() { openBottomModal(1); });
+  }
+  if (konkylie) {
+    konkylie.addEventListener("click", function() { openBottomModal(2); });
+  }
+  if (tang) {
+    tang.addEventListener("click", function() { openBottomModal(3); });
+  }
+  if (koral) {
+    koral.addEventListener("click", function() { openBottomModal(4); });
+    }
+});
+
+
+// Åbn dialog med miljø-information
+function openBottomModal(environmentId) {
+  if (allEnvironments.length === 0) {console.warn("Data ikke indlæst endnu");
+  return;
+  }
+
+  const dialog = document.getElementById("info-dialog-bottom");
+  const content = document.getElementById("dialog-content-bottom");
+
+  // Find det specifikke environment baseret på ID
+  const environment = allEnvironments.find((e) => e.id === environmentId);
+  if (!environment) {
+    console.error("Environment ikke fundet med ID:", environmentId);
+    return;
+  }
+
+  // Opdater dialog indhold med environment-information
+  content.innerHTML = `
+  <div class="bund-dialog-container">
+    <div class="bund-dialog-left">
+      <img src="${environment.image}" alt="${environment.name}" class="fish-dialog-image">
+    </div>
+    <div class="bund-dialog-right">
+      <h2 class="fish-dialog-title">${environment.name}</h2>
+      <div class="fish-dialog-info">
+        <h4 class="fish-dialog-paragraph"><strong>Beskrivelse:</strong><br>${environment.description}</h4>
+        <h4 class="fish-dialog-paragraph"><strong>Sjov fakta:</strong><br>${environment.funFact}</h4>
+      </div>
+    </div>
+    </div>
+  `;
+
+  // Åbn dialog
+  dialog.showModal();
+}
+
+// #6: Luk dialog
+function closeBottomModal() {
+  const dialog = document.getElementById("info-dialog-bottom");
+  dialog.close();
+}
+
+// Tilføj event listener til luk-knappen
+document.addEventListener("DOMContentLoaded", function () {
+  const closeButton = document.getElementById("close-bottom-dialog");
+  if (closeButton) {
+    closeButton.addEventListener("click", closeBottomModal);
+  }
+
+  // Luk dialog hvis man klikker udenfor
+  const dialog = document.getElementById("info-dialog-bottom");
+  if (dialog) {
+    dialog.addEventListener("click", function (e) {
+      if (e.target === dialog) {
+        closeBottomModal();
+      }
+    });
+  }
+});
+
+

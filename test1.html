@@ -32,6 +32,19 @@
           <img src="images/pil-højre.png" alt="Pil højre" />
         </button>
         </div>
+
+      <!----- INFO DIALOG MODAL ----->
+    <dialog id="fish-dialog">
+      <form method="dialog">
+        <button id ="luk-knap-dialog">
+            <img src="images/bobble.svg" class="luk-knap-dialog" alt="Bobble-luk"/>
+            <h3 class="luk-knap-tekst-dialog">X</h3>
+        </button>
+        <div id="dialog-content">
+          <!-- Fiske detaljer indsættes her via JavaScript -->
+        </div>
+      </form>
+    </dialog>
             
             <!-- NY PIL, DER SCROLLER NED TIL BUNDEN -->
             <div class="scroll-ned-container">
@@ -44,6 +57,18 @@
     <section id="bund" class="container-">
         <div class="slides bund">
             <img src="images/baggrund-bund.svg" alt="">
+            <div>
+                <img src="images/skib-bund.png" id="skib-bund" alt="skib på bunden">
+            </div>
+            <div>
+                <img src="images/konkylie-bund.png" id="konkylie-bund" alt="konkylie på bunden">
+            </div>
+            <div>
+                <img src="images/tang-bund.png" id="tang-bund" alt="tang på bunden">
+            </div>
+            <div>
+                <img src="images/koral-bund.png" id="koral-bund" alt="koral på bunden">
+            </div>
 
             <!-- NY PIL, DER SCROLLER OP TIL TOPPEN -->
             <div class="scroll-up-container">
@@ -53,6 +78,21 @@
             </div>
         </div>
     </section>
+
+ <!----- INFO DIALOG MODAL BUNDEN ----->
+    <dialog id="info-dialog-bottom">
+  <form method="dialog">
+    <button id="close-bottom-dialog">
+      <img src="images/bobble.svg" class="close-bottom-dialog" alt="Luk"/>
+      <h3 class="close-bottom-dialog-text">X</h3>
+    </button>
+    <div id="dialog-content-bottom">
+      <!-- Indhold skiftes via JS -->
+    </div>
+  </form>
+</dialog>
+
+
 
     <script src="js/js.js" defer></script>
     <script src="js/test.js" defer></script>
