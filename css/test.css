@@ -452,7 +452,6 @@ h4 {
   z-index: 2; /* Ligger øverst */
   font-family: "DynaPuff";
   font-size: 32px;  
-  color: var(--primary-color);
   pointer-events: none; /* Gør teksten ikke klikbar */
 }
 
@@ -511,7 +510,6 @@ h4 {
   font-family: "Poppins";
   font-weight: 400;
   font-size: 32px;
-
 
 }
 .fish-dialog-title {
@@ -584,5 +582,140 @@ h4 {
 
 #koral-bund:hover {
   transform: scale(1.05);
+}
+
+/* ===================================
+    DIALOG STYLING FOR BUND-ELEMENTER 
+   =================================== */
+
+/* Dialog styling */
+#info-dialog-bottom {
+  border: none;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  padding: 0;
+  width: 1200px; /* Fast bredde */
+  height: 700px; /* Fast højde */
+  background: transparent;
+  overflow: hidden;
+}
+
+#info-dialog-bottom::backdrop {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+#info-dialog-bottom form {
+  position: relative;
+  background: rgb(255, 255, 255);
+  border-radius: var(--radius);
+  padding: 20px;
+  position: relative;
+  margin: 10;
+  width: 100%; /* Fylder hele dialog bredde */
+  height: 100%; /* Fylder hele dialog højde */
+  box-sizing: border-box;
+  overflow-y: hidden;
+  display: flex;
+  align-items: center;
+}
+
+/* Dialog indhold styling */
+/* Luk-knap */
+#close-bottom-dialog {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  outline: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 80px;
+  height: 80px;
+}
+
+#info-dialog-bottom #close-bottom-dialog img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1; /* Ligger nederst */
+  width: 80px;
+  height: 80px;
+}   
+
+.close-bottom-dialog-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--primary-color);
+  text-align: center;
+  margin: 0;
+  z-index: 2; /* Ligger øverst */
+  font-family: "DynaPuff";
+  font-size: 32px;  
+  color: var(--primary-color);
+  pointer-events: none; /* Gør teksten ikke klikbar */
+}
+
+#close-bottom-dialog:hover {
+  transform: scale(1.1); /* Gør boblen lidt større når man hover */
+}
+
+/* Dialog kolonne-layout med præcis styling fra JS */
+.bottom-dialog-container {
+  display: flex;
+  gap: 48px;
+  align-items: center; /* Centrer vertikalt */
+  padding: 20px;
+}
+.bottom-dialog-left {
+  flex: 0.9;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  max-width: 400px;
+  width: 100%;
+}
+.bottom-dialog-right {
+  flex: 1;
+
+}
+
+#info-dialog-bottom img {
+  position: relative;
+  z-index: 100;
+  max-width: 100%;
+  max-height: 450px; /* Begrænset højde så der er plads til tekst */
+  height: auto;
+  border-radius: var(--radius);
+  margin-bottom: 15px;
+  object-fit: contain; /* Bevarer billedeforhold */
+  align-items: center;
+
+}
+
+#info-dialog-bottom h2 {
+  font-family: "DynaPuff";
+  font-weight: 500;
+  font-size: 48px;
+  color: var(--secondary-color);
+}
+
+#info-dialog-bottom h4 {
+  font-family: "Poppins";
+  font-weight: 400;
+  font-size: 32px;
+
+}
+.environment-dialog-title {
+  color: var(--primary-text);
+  margin-bottom: 10px;
+}
+
+.environment-dialog-info {
+  color: var(--primary-text);
+  line-height: 1.5;
 }
 

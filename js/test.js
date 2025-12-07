@@ -271,15 +271,15 @@ function openBottomModal(environmentId) {
 
   // Opdater dialog indhold med environment-information
   content.innerHTML = `
-  <div class="bund-dialog-container">
-    <div class="bund-dialog-left">
-      <img src="${environment.image}" alt="${environment.name}" class="fish-dialog-image">
+  <div class="bottom-dialog-container">
+    <div class="bottom-dialog-left">
+      <img src="${environment.image}" alt="${environment.name}" class="environment-dialog-image">
     </div>
-    <div class="bund-dialog-right">
-      <h2 class="fish-dialog-title">${environment.name}</h2>
-      <div class="fish-dialog-info">
-        <h4 class="fish-dialog-paragraph"><strong>Beskrivelse:</strong><br>${environment.description}</h4>
-        <h4 class="fish-dialog-paragraph"><strong>Sjov fakta:</strong><br>${environment.funFact}</h4>
+    <div class="bottom-dialog-right">
+      <h2 class="environment-dialog-title">${environment.name}</h2>
+      <div class="environment-dialog-info">
+        <h4 class="environment-dialog-paragraph"><strong>Beskrivelse:</strong><br>${environment.description}</h4>
+        <h4 class="environment-dialog-paragraph"><strong>Sjov fakta:</strong><br>${environment.funFact}</h4>
       </div>
     </div>
     </div>

@@ -45,7 +45,7 @@
       "imageShadow": "images/pindsvinefisk-fyldt.png",
       "livesIn": "Koralrev i tropiske have",
       "funFact": "Når den puster sig op, stritter piggene ud som et pindsvin.",
-      "vendespil": false,
+      "vendespil": true,
       "card": {
         "forside": "images/testbrik-forside.png",
         "bagside": "images/testbrik-bagside.png"
