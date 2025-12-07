@@ -151,10 +151,6 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-
-
-
-
 // ======== DIALOG FUNKTIONER FISKEKARRUSEL ========
 
 // #5: Åbn dialog med fisk-information
@@ -170,8 +166,7 @@ function openModal(fishId) {
     return;
   }
 
-
-  // Opdater dialog indhold med komplet fisk-information            // SKAL RETTES I SÅ KUN RELEVANT INFO VISES
+  // Opdater dialog indhold med komplet fisk-information
   content.innerHTML = `
     <div class="fish-dialog-columns">
       <div class="fish-dialog-left">

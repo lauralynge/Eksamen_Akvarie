@@ -10,6 +10,8 @@ function initApp() {
   console.log("initApp: app.js kører 🎉");
   getFish(); // Henter fiskene
   getEnvironments(); // Henter miljøerne
+  setupBubbleSound(); // Sæt boble-lyd på links
+  primeBubbleSound(); // Forudindlæs lyd på første tryk
 }
 
 // #2: Hent fisk fra JSON og vis dem
@@ -41,3 +43,49 @@ async function getEnvironments() {
     console.error("Fejl ved hentning:", error);
   }
 }
+
+// Setup boble-lyde
+function setupBubbleSound() {
+  const links = document.querySelectorAll(".bobble-link");
+  const popSound = document.getElementById("popSound");
+
+  if (!popSound) {
+    console.warn("Lydfil ikke fundet");
+    return;
+  }
+
+  links.forEach(link => {
+    link.addEventListener("pointerdown", (e) => {
+      // Afspil lyd
+      popSound.currentTime = 0;
+      popSound.play().catch(err => console.error("Lyd kunne ikke afspilles:", err));
+
+      // Stop browseren fra at hoppe med det samme
+      e.preventDefault();
+      const href = link.getAttribute("href");
+
+      // Vent fx 200 ms og hop så videre
+      setTimeout(() => {
+        window.location.href = href;
+      }, 200);
+    });
+  });
+}
+
+// #5: Prime lyd på første tryk
+function primeBubbleSound() {
+  const popSound = document.getElementById("popSound");
+  if (!popSound) return;
+
+   // Første gang man trykker på skærmen, primes lyden
+  document.body.addEventListener("pointerdown", () => {
+  popSound.play().then(() => {
+    popSound.pause();
+    popSound.currentTime = 0;
+    console.log("Pop-lyd er forudindlæst ✅");
+  }).catch(() => {
+    console.warn("Kunne ikke forudindlæse automatisk (browser blokerer autoplay)");
+  });
+  }, { once: true }); // sker kun første gang man trykker
+}
+

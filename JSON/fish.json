@@ -13,8 +13,8 @@
       "funFact": "Den bor sammen med sine venner og kan være meget nysgerrig.",
       "vendespil": true,
       "card": {
-        "forside": "images/testbrik-forside.png",
-        "bagside": "images/testbrik-bagside.png"
+        "forside": "images/klovn-brik-forside.png",
+        "bagside": "images/klovn-brik-bagside.png"
       }
     },
     {
@@ -30,8 +30,8 @@
       "funFact": "Den har giftige pigge, men den er meget fredelig.",
       "vendespil": true,
       "card": {
-        "forside": "images/testbrik-forside.png",
-        "bagside": "images/testbrik-bagside.png"
+        "forside": "images/rævefjæs-brik-forside.png",
+        "bagside": "images/rævefjæs-brik-bagside.png"
       }
     },
     {
@@ -47,8 +47,8 @@
       "funFact": "Når den puster sig op, stritter piggene ud som et pindsvin.",
       "vendespil": true,
       "card": {
-        "forside": "images/testbrik-forside.png",
-        "bagside": "images/testbrik-bagside.png"
+        "forside": "images/pindsvin-brik-forside.png",
+        "bagside": "images/pindsvin-brik-bagside.png"
       }
     },
     {
@@ -64,8 +64,8 @@
       "funFact": "Den kaldes kirurgfisk, fordi den har små, skarpe 'knive' ved halen – men den bruger dem kun til at forsvare sig.",
       "vendespil": true,
       "card": {
-        "forside": "images/testbrik-forside.png",
-        "bagside": "images/testbrik-bagside.png"
+        "forside": "images/palet-brik-forside.png",
+        "bagside": "images/palet-brik-bagside.png"
       }
     }
   ]
