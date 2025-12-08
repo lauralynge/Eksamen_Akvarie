@@ -1,7 +1,83 @@
 
+// HENTER AUDIO ELEMENTER TIL SPEAK FUNKTIONER
+// Alle audio-elementer hentes på én gang
+const fiskAudio = document.getElementById("fiskAudio"); // toppen
+const envAudio = document.getElementById("envAudio");   // bunden
+let currentAudio = null; // bruges til både fisk og environment JSON-lyde
+
+// ======== SCROLL KNAPPER FUNKTIONER =======
+
+// Lineær easing-funktion
+function linear(t) { return t; }
+
+// Smooth scroll funktion
+function smoothScrollTo(targetY, duration = 800) {
+  const startY = window.scrollY;
+  const distance = targetY - startY;
+  const startTime = performance.now();
+
+  function scrollStep(currentTime) {
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+  const ease = linear(progress);   // Lineær easing for helt jævn scroll
+    window.scrollTo(0, startY + distance * ease);
+
+    if (progress < 1) {
+      requestAnimationFrame(scrollStep);
+    }
+  }
+
+  requestAnimationFrame(scrollStep);
+}
+
+// Brug sådan her ved scroll til bund:
+document.getElementById("scrollDownButton").addEventListener("click", function () {
+  const bottom = document.getElementById("bund");
+  smoothScrollTo(bottom.offsetTop);
+});
+
+// Brug sådan her ved scroll til toppen:
+document.getElementById("scrollUpButton").addEventListener("click", function () {
+  const top = document.getElementById("top");
+  smoothScrollTo(top.offsetTop);
+});
+
+// ======== SPEAK TIL SCROLL OP/NED KNAPPER  ========
+
+// Scroll ned-knap
+document.getElementById("scrollDownButton").addEventListener("click", function () {
+  const bottom = document.getElementById("bund");
+  smoothScrollTo(bottom.offsetTop);
+
+  // Stop evt. lyd fra toppen
+  fiskAudio.pause();
+  fiskAudio.currentTime = 0;
+
+  // Start lyd til bunden
+  envAudio.play().catch(err => {
+    console.log("Autoplay blokeret:", err);
+  });
+});
+
+// Scroll op-knap
+document.getElementById("scrollUpButton").addEventListener("click", function () {
+  const top = document.getElementById("top");
+  smoothScrollTo(top.offsetTop);
+
+  // Stop evt. lyd fra bunden
+  envAudio.pause();
+  envAudio.currentTime = 0;
+
+  // Start lyd til toppen
+  fiskAudio.play().catch(err => {
+    console.log("Autoplay blokeret:", err);
+  });
+});
+
+
 // ======== FISKE KARRUSEL ========
 
-// #3: Vis fisk i karrusellen
+// Vis fisk i karrusellen
 function displayFishCarousel(fishes) {
   const container = document.getElementById("fiskekarrusel-items");
   if (!container) return; // Stop hvis elementet ikke findes
@@ -16,6 +92,7 @@ function displayFishCarousel(fishes) {
     fishCard.innerHTML = `
         <img src="${fish.image}" alt="${fish.name}" onclick="openModal(${fish.id})">
       `;
+      
     container.appendChild(fishCard);
   });
 
@@ -110,21 +187,15 @@ document.addEventListener("DOMContentLoaded", function () {
   }, 500); // Vent lidt på at JSON data er loaded
 });
 
-// Funktion til hjørne-knappen
-function cornerButtonClick() {
-  // Tilføj en sjov animation før navigation
-  const button = document.querySelector(".corner-button");
-  button.style.transform = "scale(1.3) rotate(360deg)";
+// ======== DIALOG FUNKTIONER FISKEKARRUSEL M. SPEAK ========
+// Start "alle fisk"-speak når siden loader
+window.addEventListener("load", () => {
+  fiskAudio.play().catch(err => {
+    console.log("Autoplay blokeret:", err);
+  });
+});
 
-  // Naviger til fiskhjem.html efter animation
-  setTimeout(() => {
-    window.location.href = "fiskhjem.html";
-  }, 600);
-}
-
-// ======== DIALOG FUNKTIONER ========
-
-// #5: Åbn dialog med fisk-information
+// #5: Åbn dialog med fisk-information + lyd
 function openModal(fishId) {
   const dialog = document.getElementById("fish-dialog");
   const content = document.getElementById("dialog-content");
@@ -137,27 +208,19 @@ function openModal(fishId) {
     return;
   }
 
-  // Opdater dialog indhold med komplet fisk-information            // SKAL RETTES I SÅ KUN RELEVANT INFO VISES
+  // Opdater dialog indhold med komplet fisk-information
   content.innerHTML = `
-    <div class="fish-dialog-container">
-      <img src="${fish.image}" alt="${fish.name}" class="fish-dialog-image">
-      <h2 class="fish-dialog-title">${fish.name}</h2>
-      <h3 class="fish-dialog-latin">${fish.latinName}</h3>
-      <div class="fish-dialog-info">
-      <h4 class="fish-dialog-paragraph"><strong>Beskrivelse:</strong><br>${fish.description}</h4>
-        <h4 class="fish-dialog-paragraph"><strong>Lever i:</strong><br>${fish.livesIn}</h4>
-        <h4 class="fish-dialog-paragraph"><strong>Sjov fakta:</strong><br>${fish.funFact}</h4>
-        <div class="fish-color-tags">
-          ${
-            Array.isArray(fish.color)
-              ? fish.color
-                  .map(
-                    (color) =>
-                      `<span class="fish-dialog-color-tag" data-color="${color}">${color}</span>`
-                  )
-                  .join("")
-              : `<span class="fish-dialog-color-tag" data-color="${fish.color}">${fish.color}</span>`
-          }
+    <div class="fish-dialog-columns">
+      <div class="fish-dialog-left">
+        <img src="${fish.image}" alt="${fish.name}" class="fish-dialog-image">
+        <h2 class="fish-dialog-title">${fish.name}</h2>
+        <h3 class="fish-dialog-nickname">${fish.nickname || ''}</h3>
+      </div>
+  <div class="fish-dialog-right">
+        <div class="fish-dialog-info">
+          <h4 class="fish-dialog-paragraph"><strong>Beskrivelse:</strong><br>${fish.description}</h4>
+          <h4 class="fish-dialog-paragraph"><strong>Lever i:</strong><br>${fish.livesIn}</h4>
+          <h4 class="fish-dialog-paragraph"><strong>Sjov fakta:</strong><br>${fish.funFact}</h4>
         </div>
       </div>
     </div>
@@ -165,17 +228,37 @@ function openModal(fishId) {
 
   // Åbn dialog
   dialog.showModal();
+
+ // Stop "alle fisk"-lyden
+  fiskAudio.pause();
+  fiskAudio.currentTime = 0;
+
+  // Stop evt. tidligere fiskelyd
+  if (currentAudio) {
+    currentAudio.pause();
+    currentAudio.currentTime = 0;
+  }
+
+  // Start ny fiskelyd fra JSON
+  currentAudio = new Audio(fish.audio);
+  currentAudio.play();
 }
 
-// #6: Luk dialog
+// Luk dialog + stop lyd 
 function closeModal() {
   const dialog = document.getElementById("fish-dialog");
   dialog.close();
+
+  if (currentAudio) {
+    currentAudio.pause();
+    currentAudio.currentTime = 0;
+    currentAudio = null;
+  }
 }
 
 // Tilføj event listener til luk-knappen
 document.addEventListener("DOMContentLoaded", function () {
-  const closeButton = document.getElementById("close-dialog");
+  const closeButton = document.getElementById("luk-knap-dialog");
   if (closeButton) {
     closeButton.addEventListener("click", closeModal);
   }
@@ -191,28 +274,114 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-// ======== LÆR-OM-OS SCROLL FUNKTIONALITET ========
-
-const scrollDownBtn = document.getElementById("scrollDownButton");
-const scrollUpBtn = document.getElementById("scrollUpButton");
-const img = document.getElementById("laer-om-os-img");
-
-if (scrollDownBtn && scrollUpBtn && img) {
-  scrollDownBtn.addEventListener("click", () => {
-    document.getElementById("bottom").scrollIntoView({ behavior: "smooth" });
-    img.classList.remove("laer-om-os-img-top");
-    img.classList.add("laer-om-os-img-bottom");
-
-    scrollDownBtn.style.display = "none";   // skjul ned-knap
-    scrollUpBtn.style.display = "block";    // vis op-knap
-  });
-
-  scrollUpBtn.addEventListener("click", () => {
-    document.getElementById("top").scrollIntoView({ behavior: "smooth" });
-    img.classList.remove("laer-om-os-img-bottom");
-    img.classList.add("laer-om-os-img-top");
-
-    scrollUpBtn.style.display = "none";     // skjul op-knap
-    scrollDownBtn.style.display = "block";  // vis ned-knap
-  });
+// ======== DIALOG FUNKTIONER BUNDEN M. SPEAK ========
+// Hent miljø-data fra JSON
+async function getEnvironment() {
+  const response = await fetch("./JSON/environment.json");
+  const data = await response.json();
+  allEnvironments = data.Environment;
 }
+getEnvironment();
+
+// Åbner dialog ved klik på bund-elementer
+document.addEventListener("DOMContentLoaded", function () {
+  const skib = document.getElementById("skib-bund");
+  const konkylie = document.getElementById("konkylie-bund");
+  const tang = document.getElementById("tang-bund");
+  const koral = document.getElementById("koral-bund");
+
+  if (skib) {
+    skib.addEventListener("click", function() { openBottomModal(1); });
+  }
+  if (konkylie) {
+    konkylie.addEventListener("click", function() { openBottomModal(2); });
+  }
+  if (tang) {
+    tang.addEventListener("click", function() { openBottomModal(3); });
+  }
+  if (koral) {
+    koral.addEventListener("click", function() { openBottomModal(4); });
+    }
+});
+
+// Åbn dialog med miljø-information
+function openBottomModal(environmentId) {
+  if (allEnvironments.length === 0) {console.warn("Data ikke indlæst endnu");
+  return;
+  }
+
+  const dialog = document.getElementById("info-dialog-bottom");
+  const content = document.getElementById("dialog-content-bottom");
+
+  // Find det specifikke environment baseret på ID
+  const environment = allEnvironments.find((e) => e.id === environmentId);
+  if (!environment) {
+    console.error("Environment ikke fundet med ID:", environmentId);
+    return;
+  }
+
+  // Opdater dialog indhold med environment-information
+  content.innerHTML = `
+  <div class="bottom-dialog-container">
+    <div class="bottom-dialog-left">
+      <img src="${environment.image}" alt="${environment.name}" class="environment-dialog-image">
+    </div>
+    <div class="bottom-dialog-right">
+      <h2 class="environment-dialog-title">${environment.name}</h2>
+      <div class="environment-dialog-info">
+        <h4 class="environment-dialog-paragraph"><strong>Beskrivelse:</strong><br>${environment.description}</h4>
+        <h4 class="environment-dialog-paragraph"><strong>Sjov fakta:</strong><br>${environment.funFact}</h4>
+      </div>
+    </div>
+    </div>
+  `;
+
+  // Åbn dialog
+  dialog.showModal();
+
+  // Stop "alle fisk"-lyden
+  envAudio.pause();
+  envAudio.currentTime = 0;
+
+  // Stop evt. tidligere environment-lyd
+  if (currentAudio) {
+    currentAudio.pause();
+    currentAudio.currentTime = 0;
+  }
+
+  // Start ny environment-lyd fra JSON
+  currentAudio = new Audio(environment.audio);
+  currentAudio.play();
+}
+
+// #6: Luk dialog
+function closeBottomModal() {
+  const dialog = document.getElementById("info-dialog-bottom");
+  dialog.close();
+
+    if (currentAudio) {
+    currentAudio.pause();
+    currentAudio.currentTime = 0;
+    currentAudio = null;
+  }
+}
+
+// Tilføj event listener til luk-knappen
+document.addEventListener("DOMContentLoaded", function () {
+  const closeButton = document.getElementById("close-bottom-dialog");
+  if (closeButton) {
+    closeButton.addEventListener("click", closeBottomModal);
+  }
+
+  // Luk dialog hvis man klikker udenfor
+  const dialog = document.getElementById("info-dialog-bottom");
+  if (dialog) {
+    dialog.addEventListener("click", function (e) {
+      if (e.target === dialog) {
+        closeBottomModal();
+      }
+    });
+  }
+});
+
+

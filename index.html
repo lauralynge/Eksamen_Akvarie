@@ -6,8 +6,8 @@
     <title>Forside</title>
     <link rel="stylesheet" href="css/css.css" />
   </head>
-  <body onclick="window.location.href='intro.html'" style="cursor: pointer">
-    <h1 class="velkomst">
+  <body style="cursor: pointer">
+    <h1 class="velkomst" id="index-content">
       Hej med dig!<br />Tryk for at dykke ned i akvariets dyb
     </h1>
 
@@ -16,8 +16,16 @@
     
     <!------ Tryk her knap ------>
     <button class="tryk-her">
-      <img src="images/tryk.svg" alt="tryk her" />
+      <img src="images/tryk.svg" id= "nextBtn" alt="tryk her" />
     </button>
 
+    <!------ JAVASCRIPT TIL SLEEP MODE ------>
+    <!-- Overlay til slumretilstand -->
+    <div id="sleepOverlay"></div>
+
+   <!------ SPEAK ------>
+    <audio id="indexAudio" src="audio/index.mp3"></audio>
+
+    <script src="js/js.js" defer></script>
   </body>
 </html>

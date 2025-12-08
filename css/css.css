@@ -225,6 +225,38 @@ h4 {
   }
 }
 
+
+/* Slumre tilstand stling */
+
+/* Slumre-overlay */
+#sleepOverlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    transition: opacity 0.8s ease;
+    pointer-events: none; /* Så tryk går igennem */
+    z-index: 10;
+}
+
+/* Indhold dæmpet i slumretilstand */
+#content {
+    opacity: 0.5;
+    transition: opacity 0.8s ease;
+    text-align: center;
+    margin-top: 30%;
+    font-size: 1.8rem;
+}
+
+/* Aktiv tilstand (tilføjes via JS) */
+.awake #sleepOverlay {
+    opacity: 0;
+}
+
+.awake #content {
+    opacity: 1;
+}
+
+
 /* ========================
     INTRO-SIDE STYLING
    ======================== */
@@ -287,6 +319,16 @@ h4 {
   50% {
     transform: translateY(-15px) rotate(-5deg);
   }
+}
+
+/* Krabbe-styling i intro */
+#krabbe-intro {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 500px;
+  height: auto;
 }
 
 /* ========================
@@ -861,8 +903,8 @@ h2 {
 
 #dialogImage {
   background: none;
-  width: 500px;
-  height: auto;
+  max-width: 500px;
+  max-height: 280px;
   border-radius: var(--radius);
   margin-bottom: 1rem;
 }

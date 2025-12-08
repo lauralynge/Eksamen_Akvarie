@@ -44,7 +44,7 @@ async function getEnvironments() {
   }
 }
 
-// Setup boble-lyde
+// ======== SETUP BOBLE-LYDEFFEKTER ========
 function setupBubbleSound() {
   const links = document.querySelectorAll(".bobble-link");
   const popSound = document.getElementById("popSound");
@@ -55,37 +55,105 @@ function setupBubbleSound() {
   }
 
   links.forEach(link => {
-    link.addEventListener("pointerdown", (e) => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault(); // stop normal navigation
+
       // Afspil lyd
       popSound.currentTime = 0;
       popSound.play().catch(err => console.error("Lyd kunne ikke afspilles:", err));
 
-      // Stop browseren fra at hoppe med det samme
-      e.preventDefault();
       const href = link.getAttribute("href");
 
-      // Vent fx 200 ms og hop så videre
+      // Vent 300 ms så lyden kan høres
       setTimeout(() => {
         window.location.href = href;
-      }, 200);
+      }, 300);
     });
   });
 }
 
-// #5: Prime lyd på første tryk
+// Prime lyd på første tryk (for at undgå autoplay-blokering)
 function primeBubbleSound() {
   const popSound = document.getElementById("popSound");
   if (!popSound) return;
 
-   // Første gang man trykker på skærmen, primes lyden
   document.body.addEventListener("pointerdown", () => {
-  popSound.play().then(() => {
-    popSound.pause();
-    popSound.currentTime = 0;
-    console.log("Pop-lyd er forudindlæst ✅");
-  }).catch(() => {
-    console.warn("Kunne ikke forudindlæse automatisk (browser blokerer autoplay)");
-  });
-  }, { once: true }); // sker kun første gang man trykker
+    popSound.play().then(() => {
+      popSound.pause();
+      popSound.currentTime = 0;
+      console.log("Pop-lyd er forudindlæst ✅");
+    }).catch(() => {
+      console.warn("Kunne ikke forudindlæse automatisk (browser blokerer autoplay)");
+    });
+  }, { once: true });
 }
+
+// Kald begge funktioner når siden er klar
+document.addEventListener("DOMContentLoaded", () => {
+  primeBubbleSound();
+  setupBubbleSound();
+});
+
+// ======== SLUMRE TILSTAND FUNKTIONER INDEX ========
+
+console.log("SCRIPT KØRER");
+
+let awakened = false;
+let firstTapDone = false;
+
+const overlay = document.getElementById("sleepOverlay");
+const audio = document.getElementById("indexAudio");
+
+function wakeScreen() {
+   console.log("wakeScreen kaldt");  // debug
+    document.body.classList.add("awake");
+
+    audio.play().catch(() => {});
+    awakened = true;
+}
+
+// GLOBALT tryk på skærmen
+window.addEventListener("click", function () {
+
+    // Første tryk → vækker skærmen
+    if (!awakened) {
+        wakeScreen();
+        return;
+    }
+
+    // Andet tryk → gå til næste side
+    window.location.href = "intro.html";
+});
+
+window.addEventListener("touchstart", function () {
+
+    // Første tryk → vækker skærmen
+    if (!awakened) {
+        wakeScreen();
+        return;
+    }
+
+    // Andet tryk → gå til næste side
+    window.location.href = "intro.html";
+});
+
+
+// ======== SPEAK INTRO ========
+// Hent audio-elementet fra HTML
+const introAudio = document.getElementById("introAudio");
+
+// Start lyd når siden loader
+window.addEventListener("load", () => {
+  introAudio.play().catch(err => {
+    console.log("Autoplay blev blokeret, kræver klik:", err);
+  });
+});
+
+// Stop lyd når man klikker videre
+document.getElementById("nextBtn").addEventListener("click", () => {
+  introAudio.pause();
+  introAudio.currentTime = 0; // nulstil til start
+  // evt. naviger til næste side:
+  // window.location.href = "nextpage.html";
+});
 
