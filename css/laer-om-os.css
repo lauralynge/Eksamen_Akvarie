@@ -545,7 +545,7 @@ h4 {
 #konkylie-bund {
   position: absolute;
   left: 70%;
-  bottom: 500px;
+  bottom: 550px;
   width: 220px;
   height: auto;
   z-index: 2;
@@ -558,9 +558,9 @@ h4 {
 /* Tang bund styling */
 #tang-bund {
   position: absolute;
-  left: 80%;
+  left: 75%;
   bottom: 28px;
-  width: 250px;
+  width: 300px;
   height: auto;
   z-index: 2;
 }

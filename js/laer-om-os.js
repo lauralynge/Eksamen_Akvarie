@@ -10,8 +10,8 @@ let currentAudio = null; // bruges til både fisk og environment JSON-lyde
 // Lineær easing-funktion
 function linear(t) { return t; }
 
-// Smooth scroll funktion
-function smoothScrollTo(targetY, duration = 800) {
+// Smooth scroll funktion med callback og lineær easing
+function smoothScrollTo(targetY, duration = 800, callback) {
   const startY = window.scrollY;
   const distance = targetY - startY;
   const startTime = performance.now();
@@ -24,9 +24,13 @@ function smoothScrollTo(targetY, duration = 800) {
 
     if (progress < 1) {
       requestAnimationFrame(scrollStep);
-    }
+    } else {
+      // Når scroll er færdig → kør callback
+      if (typeof callback === "function") {
+        callback();
+      }
   }
-
+}
   requestAnimationFrame(scrollStep);
 }
 
@@ -47,8 +51,9 @@ document.getElementById("scrollUpButton").addEventListener("click", function () 
 // Scroll ned-knap
 document.getElementById("scrollDownButton").addEventListener("click", function () {
   const bottom = document.getElementById("bund");
-  smoothScrollTo(bottom.offsetTop);
-
+  smoothScrollTo(bottom.offsetTop, 800, () => {
+    // Callback når scroll er færdig
+ 
   // Stop evt. lyd fra toppen
   fiskAudio.pause();
   fiskAudio.currentTime = 0;
@@ -57,12 +62,14 @@ document.getElementById("scrollDownButton").addEventListener("click", function (
   envAudio.play().catch(err => {
     console.log("Autoplay blokeret:", err);
   });
+ });
 });
 
 // Scroll op-knap
 document.getElementById("scrollUpButton").addEventListener("click", function () {
   const top = document.getElementById("top");
-  smoothScrollTo(top.offsetTop);
+  smoothScrollTo(top.offsetTop, 800, () => {
+    // Callback når scroll er færdig
 
   // Stop evt. lyd fra bunden
   envAudio.pause();
@@ -73,7 +80,7 @@ document.getElementById("scrollUpButton").addEventListener("click", function () 
     console.log("Autoplay blokeret:", err);
   });
 });
-
+});
 
 // ======== FISKE KARRUSEL ========
 
