@@ -14,18 +14,18 @@
 
 :root {
   /* Colors */
-  --primary-color: #f7f7f7; /* Skift */
-  --secondary-color: #1a4d6b; /* Skift */
-  --primary-blue: #077789; /* Skift */
-  --secondary-blue: #0099cc; /* Skift */
-  --primary-text: #121312; /* Skift */
+  --primary-color: #f7f7f7; 
+  --secondary-color: #1a4d6b; 
+  --primary-blue: #077789; 
+  --secondary-blue: #0099cc;
+  --primary-text: #121312; 
 
   /* Backgrounds */
-  --bg: #fafafa; /* Skift */
+  --bg: #fafafa;
   --bg-dialog: #f7f7f7;
   --bg-dialog-end: rgba(247, 247, 247, 0.5);
-  --bg-image-main: url("../images/baggrund-top.svg"); /* Skift? */
-  --bg-image-bottom: url("../images/baggrund-bund.svg"); /* Skift? */
+  --bg-image-main: url("../images/baggrund-top.svg");
+  --bg-image-bottom: url("../images/baggrund-bund.svg");
   --bgimage-samlet: url("../images/baggrund-samlet.svg");
 
   /* Bobler */ /* BRUGER JEG OVERHOEVET DISSE? */
@@ -73,14 +73,12 @@
 /* Til brødtekst og mindre tekster / brødtekst */
 .poppins-regular {
   font-family: "Poppins", sans-serif;
-  font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
 }
 
 .poppins-medium {
   font-family: "Poppins", sans-serif;
-  font-optical-sizing: auto;
   font-weight: 500;
   font-style: normal;
 }
@@ -128,6 +126,13 @@ h4 {
   font-weight: 400;
   font-size: 32px;
   color: var(--secondary-color);
+}
+
+span {
+  font-family: "DynaPuff";
+  font-weight: 500;
+  font-size: 36px;
+  color: var(--primary-color);
 }
 
 /* ========================
@@ -1047,8 +1052,8 @@ h2 {
   text-decoration: none;
   border-radius: 25px;
   transition: transform 0.3s ease;
-  width: 80px;
-  height: 80px;
+  width: 120px;
+  height: 120px;
   z-index: 100; /* Højere z-index så den ligger over alt andet */
 }
 
@@ -1061,13 +1066,13 @@ h2 {
 
 .hjem-knap img[alt="Bobble-hjem"] {
   z-index: 1; /* Ligger nederst */
-  width: 80px;
+  width: 120px;
   height: auto;
 }
 
 .hjem-knap img[alt="Hjem-knap"] {
   z-index: 2; /* Ligger øverst */
-  width: 50px;
+  width: 80px;
   height: auto;
   top: 45%; /* Flyttet lidt op fra 50% */
 }
@@ -1086,8 +1091,8 @@ h2 {
   text-decoration: none;
   border-radius: 25px;
   transition: transform 0.3s ease;
-  width: 80px;
-  height: 80px;
+  width: 120px;
+  height: 120px;
   z-index: 2;
 }
 
@@ -1097,7 +1102,7 @@ h2 {
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1; /* Ligger nederst */
-  width: 80px;
+  width: 120px;
   height: auto;
 }
 
@@ -1111,7 +1116,7 @@ h2 {
   margin: 0;
   z-index: 2; /* Ligger øverst */
   font-family: "DynaPuff", cursive;
-  font-size: 32px;
+  font-size: 56px;
   color: var(--primary-color);
   pointer-events: none; /* Gør teksten ikke klikbar */
 }

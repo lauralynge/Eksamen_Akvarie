@@ -73,14 +73,12 @@
 /* Til brødtekst og mindre tekster / brødtekst */
 .poppins-regular {
   font-family: "Poppins", sans-serif;
-  font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
 }
 
 .poppins-medium {
   font-family: "Poppins", sans-serif;
-  font-optical-sizing: auto;
   font-weight: 500;
   font-style: normal;
 }
@@ -127,6 +125,12 @@ h4 {
   color: var(--primary-text);
 }
 
+span {
+  font-family: "DynaPuff";
+  font-weight: 500;
+  font-size: 36px;
+  color: var(--primary-color);
+}
 
 /* ========================
     FULLPAGE SCROLL STYLING
@@ -136,7 +140,7 @@ h4 {
     position: relative;
     width: 100%;
     height: 100vh;
-    overflow-y: scroll linear;
+    overflow-y: scroll;
 }
 
 .slides {
@@ -241,8 +245,8 @@ h4 {
   text-decoration: none;
   border-radius: 25px;
   transition: transform 0.3s ease;
-  width: 80px;
-  height: 80px;
+  width: 120px;
+  height: 120px;
   z-index: 100; /* Højere z-index så den ligger over alt andet */
 }
 
@@ -255,13 +259,13 @@ h4 {
 
 .hjem-knap img[alt="Bobble-hjem"] {
   z-index: 1; /* Ligger nederst */
-  width: 80px;
+  width: 120px;
   height: auto;
 }
 
 .hjem-knap img[alt="Hjem-knap"] {
   z-index: 2; /* Ligger øverst */
-  width: 50px;
+  width: 80px;
   height: auto;
   top: 45%; /* Flyttet lidt op fra 50% */
 }
@@ -408,7 +412,6 @@ h4 {
   border-radius: var(--radius);
   padding: 20px;
   position: relative;
-  margin: 10;
   width: 100%; /* Fylder hele dialog bredde */
   height: 100%; /* Fylder hele dialog højde */
   box-sizing: border-box;
@@ -609,7 +612,6 @@ h4 {
   border-radius: var(--radius);
   padding: 20px;
   position: relative;
-  margin: 10;
   width: 100%; /* Fylder hele dialog bredde */
   height: 100%; /* Fylder hele dialog højde */
   box-sizing: border-box;

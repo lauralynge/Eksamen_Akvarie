@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Spil med os</title>
-
+    <link rel="icon" type="image/svg" href="images/bobble.svg" />
     <link rel="stylesheet" href="css/css.css" />
   </head>
   <body>
@@ -47,9 +47,6 @@
       </a>
     </div>
 
-     <!------ LYD TIL BOBLER ------>
-    <audio id="popSound" src="audio/bubble-pop.mp3" preload="auto"></audio>
-
     <!------ KRABBE ------>
     <div class="krabbe-spil">
       <img src="images/krabbe.png" alt="Krabbe" />
@@ -57,9 +54,11 @@
 
     <!------ SPEAK ------>
     <!-- Speak til valgmuligheder -->
-    <audio id="fiskAudio" src="audio/spil-muligheder.mp3"></audio>
-    
-    
+    <audio id="spilAudio" src="audio/spil-muligheder.mp3"></audio>
+   
+    <!-- Lyd til boble -->
+    <audio id="popSound" src="audio/Boble-pop.mp3" preload="auto"></audio>
+
     <script src="js/js.js" defer></script>
   </body>
 </html>

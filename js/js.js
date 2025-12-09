@@ -4,6 +4,7 @@
 window.addEventListener("load", initApp);
 
 let allFish = []; // Globalt array til at holde alle fisk
+let allEnvironments = []; // Globalt array til at holde alle miljøer
 
 // #1: Initialiser appen
 function initApp() {
@@ -12,6 +13,12 @@ function initApp() {
   getEnvironments(); // Henter miljøerne
   setupBubbleSound(); // Sæt boble-lyd på links
   primeBubbleSound(); // Forudindlæs lyd på første tryk
+
+  // Kun kør boble-lyd hvis elementet findes
+  if (document.getElementById("popSound")) {
+    setupBubbleSound();
+    primeBubbleSound();
+  }
 }
 
 // #2: Hent fisk fra JSON og vis dem
@@ -23,7 +30,11 @@ async function getFish() {
 
     allFish = data.fish; // Hent fisk-arrayet fra JSON
     console.log(`📊 JSON data modtaget: ${allFish.length} fisk`);
-    displayFishCarousel(allFish); // Vis fiskene i karrusellen
+
+    // Kun kald displayFishCarousel hvis funktionen findes
+    if (typeof displayFishCarousel === "function") {
+      displayFishCarousel(allFish); //Vis fiskene i karrusellen
+    }
   } catch (error) {
     console.error("Fejl ved hentning:", error);
   }
@@ -33,12 +44,14 @@ async function getFish() {
 async function getEnvironments() {
   console.log("🌐 Henter alle miljøer fra JSON...");
   try {
-    const response = await fetch("./JSON/enviroment.json");
+    const response = await fetch("./JSON/environment.json");
     const data = await response.json();
 
-    allEnvironments = data.Environments; // Hent miljø-arrayet fra JSON
+    allEnvironments = data.Environment; // Hent miljø-arrayet fra JSON
     console.log(`📊 JSON data modtaget: ${allEnvironments.length} miljøer`);
-    displayEnvironmentCarousel(allEnvironments); // Vis miljøerne i karrusellen
+    if (typeof displayEnvironment === "function") {
+      displayEnvironment(allEnvironments); //Vis miljøerne i karrusellen
+    }
   } catch (error) {
     console.error("Fejl ved hentning:", error);
   }
@@ -46,6 +59,8 @@ async function getEnvironments() {
 
 // ======== SETUP BOBLE-LYDEFFEKTER ========
 function setupBubbleSound() {
+   console.log("setupBubbleSound kaldes"); // 👈 Debug-log
+
   const links = document.querySelectorAll(".bobble-link");
   const popSound = document.getElementById("popSound");
 
@@ -88,18 +103,11 @@ function primeBubbleSound() {
   }, { once: true });
 }
 
-// Kald begge funktioner når siden er klar
-document.addEventListener("DOMContentLoaded", () => {
-  primeBubbleSound();
-  setupBubbleSound();
-});
-
 // ======== SLUMRE TILSTAND FUNKTIONER INDEX ========
 
 console.log("SCRIPT KØRER");
 
 let awakened = false;
-let firstTapDone = false;
 
 const overlay = document.getElementById("sleepOverlay");
 const audio = document.getElementById("indexAudio");
@@ -108,7 +116,9 @@ function wakeScreen() {
    console.log("wakeScreen kaldt");  // debug
     document.body.classList.add("awake");
 
-    audio.play().catch(() => {});
+    if (audio) { 
+        audio.play().catch(() => {}); // kun på sider hvor indexAudio findes
+    }
     awakened = true;
 }
 
@@ -143,6 +153,7 @@ window.addEventListener("touchstart", function () {
 const introAudio = document.getElementById("introAudio");
 
 // Start lyd når siden loader
+if (introAudio) {
 window.addEventListener("load", () => {
   introAudio.play().catch(err => {
     console.log("Autoplay blev blokeret, kræver klik:", err);
@@ -150,10 +161,33 @@ window.addEventListener("load", () => {
 });
 
 // Stop lyd når man klikker videre
-document.getElementById("nextBtn").addEventListener("click", () => {
-  introAudio.pause();
-  introAudio.currentTime = 0; // nulstil til start
-  // evt. naviger til næste side:
-  // window.location.href = "nextpage.html";
+const nextBtn = document.getElementById("nextBtn");
+if (nextBtn) {
+  nextBtn.addEventListener("click", () => {
+    introAudio.pause();
+    introAudio.currentTime = 0; // nulstil til start
+  });
+}
+}
+
+// ======== SPEAK SPIL-MED-OS ========
+// Hent audio-elementet fra HTML
+const spilAudio = document.getElementById("spilAudio");
+
+// Start lyd når siden loader
+if (spilAudio) {
+window.addEventListener("load", () => {
+  spilAudio.play().catch(err => {
+    console.log("Autoplay blev blokeret, kræver klik:", err);
+  });
 });
 
+// Stop lyd når man klikker videre
+const nextBtn = document.getElementById("nextBtn");
+  if (nextBtn) {
+    nextBtn.addEventListener("click", () => {
+      spilAudio.pause();
+      spilAudio.currentTime = 0; // nulstil til start
+});
+  }
+}

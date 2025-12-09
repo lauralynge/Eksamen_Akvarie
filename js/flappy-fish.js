@@ -138,7 +138,7 @@ function rand(min, max) {
   return Math.random() * (max - min) + min;
 }
 
-function spawnPipe(startVisible = false, customX = null) {
+function spawnPipe(startVisible = false) {
   const gap = rand(GAP_MIN, GAP_MAX);
   const topH = rand(40, H() - SEA_FLOOR_H - 40 - gap);
   const bottomY = topH + gap;
@@ -161,7 +161,6 @@ function rectsOverlap(ax, ay, aw, ah, bx, by, bw, bh) {
 function addVisibleStartPipes() {
   const antal = 4; // hvor mange pipes du vil have synlige
   const start = W() / 2;
-  const slut = W();
   const afstand = PIPE_SPEED * SPAWN_EVERY;
   for (let i = 0; i < antal; i++) {
     const x = start + afstand * i;
