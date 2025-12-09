@@ -107,46 +107,32 @@ function primeBubbleSound() {
 
 console.log("SCRIPT KØRER");
 
-let awakened = false;
+if (window.location.pathname.endsWith("index.html")) {
+  let awakened = false;
 
-const overlay = document.getElementById("sleepOverlay");
-const audio = document.getElementById("indexAudio");
+  const overlay = document.getElementById("sleepOverlay");
+  const audio = document.getElementById("indexAudio");
 
-function wakeScreen() {
-   console.log("wakeScreen kaldt");  // debug
+  function wakeScreen() {
     document.body.classList.add("awake");
-
     if (audio) { 
-        audio.play().catch(() => {}); // kun på sider hvor indexAudio findes
+      audio.play().catch(() => {});
     }
     awakened = true;
+  }
+
+  // Håndter både klik og touchstart
+  function handleWakeOrRedirect() {
+    if (!awakened) {
+      wakeScreen();
+    } else {
+      window.location.href = "intro.html";
+    }
+  }
+
+  window.addEventListener("click", handleWakeOrRedirect);
+  window.addEventListener("touchstart", handleWakeOrRedirect);
 }
-
-// GLOBALT tryk på skærmen
-window.addEventListener("click", function () {
-
-    // Første tryk → vækker skærmen
-    if (!awakened) {
-        wakeScreen();
-        return;
-    }
-
-    // Andet tryk → gå til næste side
-    window.location.href = "intro.html";
-});
-
-window.addEventListener("touchstart", function () {
-
-    // Første tryk → vækker skærmen
-    if (!awakened) {
-        wakeScreen();
-        return;
-    }
-
-    // Andet tryk → gå til næste side
-    window.location.href = "intro.html";
-});
-
 
 // ======== SPEAK INTRO ========
 // Hent audio-elementet fra HTML

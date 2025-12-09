@@ -469,6 +469,7 @@ span {
   align-items: center; /* Centrer vertikalt */
   padding: 20px;
 }
+
 .fish-dialog-left {
   flex: 0.5;
   display: flex;
@@ -478,9 +479,9 @@ span {
   max-width: 400px;
   width: 100%;
 }
+
 .fish-dialog-right {
   flex: 1;
-
 }
 
 #fish-dialog img {
@@ -720,31 +721,87 @@ span {
   line-height: 1.5;
 }
 
-
-
 /* ==================
    RESPONSIVT DESIGN
    ================== */
 
-  /* 1) Store laptops og 13" skærme – 1440px */
+/* 1) Store laptops og 13" skærme – 1440px */
 @media (max-width: 1440px) {
 
   h1 { font-size: 48px; }
-  h2 { font-size: 40px; }
+  h2 { font-size: 24px; }
   h3 { font-size: 32px; }
   h4 { font-size: 20px; }
 
 /**** LÆR OM OS ****/
-  .scroll-ned-knap img,
+/*  .scroll-ned-knap img,
   .scroll-op-knap img {
-  width: 400px;
-}
+  width: 480px;
+}*/
 
   #fish-dialog,
   #info-dialog-bottom {
   width: 900px; /* Fast bredde */
   height: 600px; /* Fast højde */
-  }
+}
+
+.scroll-ned-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;   /* centrerer både vandret og lodret */
+  max-height: 200px;
+  max-width: 450px;
+  margin: 0 auto;        /* centrer containeren på siden */
+}
+
+.scroll-ned-knap {
+  width: 100%;           /* fylder containerens bredde */
+  max-width: 450px;      /* men aldrig større end billedet */
+  height: auto;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.scroll-ned-knap img {
+  width: 100%;           /* gør billedet responsivt */
+  height: auto;
+}
+
+.scroll-op-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;   /* centrerer både vandret og lodret */
+  max-height: 200px;
+  max-width: 450px;
+  margin: 0 auto;        /* centrer containeren på siden */
+}
+
+.scroll-op-knap {
+  width: 100%;           /* fylder containerens bredde */
+  max-width: 450px;      /* men aldrig større end billedet */
+  height: auto;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.scroll-op-knap img {
+  width: 100%;           /* gør billedet responsivt */
+  height: auto;
+}
+
+/* Dialog kolonne-layout med præcis styling fra JS */
+
+.fish-dialog-left {
+  flex: 0.7;
+}
+
+#fish-dialog h4 {
+  font-family: "Poppins";
+  font-weight: 400;
+  font-size: 24px;
+}
 
   /* Bunden */
   #skib-bund {
@@ -770,6 +827,16 @@ span {
     height: auto;
     left: 15%;
     bottom: 28px;
+}
+
+.bottom-dialog-left {
+  flex: 0.7;
+}
+
+#info-dialog-bottom h4 {
+  font-family: "Poppins";
+  font-weight: 400;
+  font-size: 24px;
 }
 
   }

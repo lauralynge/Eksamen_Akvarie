@@ -49,7 +49,8 @@ document.getElementById("scrollUpButton").addEventListener("click", function () 
 // ======== SPEAK TIL SCROLL OP/NED KNAPPER  ========
 
 // Scroll ned-knap
-document.getElementById("scrollDownButton").addEventListener("click", function () {
+document.getElementById("scrollDownButton").addEventListener("click", function (e) {
+  e.stopPropagation(); // Forhindrer event
   const bottom = document.getElementById("bund");
   smoothScrollTo(bottom.offsetTop, 800, () => {
     // Callback når scroll er færdig
@@ -66,7 +67,8 @@ document.getElementById("scrollDownButton").addEventListener("click", function (
 });
 
 // Scroll op-knap
-document.getElementById("scrollUpButton").addEventListener("click", function () {
+document.getElementById("scrollUpButton").addEventListener("click", function (e) {
+  e.stopPropagation(); // Forhindrer event
   const top = document.getElementById("top");
   smoothScrollTo(top.offsetTop, 800, () => {
     // Callback når scroll er færdig
@@ -192,6 +194,25 @@ document.addEventListener("DOMContentLoaded", function () {
       container.addEventListener("scroll", handleMouseScroll);
     }
   }, 500); // Vent lidt på at JSON data er loaded
+
+  // Karrusel-knapper
+  const venstreKnap = document.querySelector('.karrusel-knap.venstre');
+  const hoejreKnap = document.querySelector('.karrusel-knap.højre');
+
+  if (venstreKnap) {
+    venstreKnap.addEventListener('click', function(e) {
+      e.stopPropagation(); // Stopper global event
+      scrollKarrusel('venstre');
+    });
+  }
+
+  if (hoejreKnap) {
+    hoejreKnap.addEventListener('click', function(e) {
+      e.stopPropagation(); // Stopper global event
+      scrollKarrusel('højre');
+    });
+  }
+
 });
 
 // ======== DIALOG FUNKTIONER FISKEKARRUSEL M. SPEAK ========
@@ -267,7 +288,10 @@ function closeModal() {
 document.addEventListener("DOMContentLoaded", function () {
   const closeButton = document.getElementById("luk-knap-dialog");
   if (closeButton) {
-    closeButton.addEventListener("click", closeModal);
+    closeButton.addEventListener("click", function (e) {
+      e.stopPropagation(); // Stop event
+      closeModal();
+    });
   }
 
   // Luk dialog hvis man klikker udenfor
@@ -275,6 +299,7 @@ document.addEventListener("DOMContentLoaded", function () {
   if (dialog) {
     dialog.addEventListener("click", function (e) {
       if (e.target === dialog) {
+        e.stopPropagation(); // Stop event
         closeModal();
       }
     });
@@ -298,18 +323,31 @@ document.addEventListener("DOMContentLoaded", function () {
   const koral = document.getElementById("koral-bund");
 
   if (skib) {
-    skib.addEventListener("click", function() { openBottomModal(1); });
+    skib.addEventListener("click", function(e) {
+      e.stopPropagation(); // Stop event
+      openBottomModal(1);
+    });
   }
   if (konkylie) {
-    konkylie.addEventListener("click", function() { openBottomModal(2); });
+    konkylie.addEventListener("click", function(e) {
+      e.stopPropagation(); // Stop event
+      openBottomModal(2);
+    });
   }
   if (tang) {
-    tang.addEventListener("click", function() { openBottomModal(3); });
+    tang.addEventListener("click", function(e) {
+      e.stopPropagation(); // Stop event
+      openBottomModal(3);
+    });
   }
   if (koral) {
-    koral.addEventListener("click", function() { openBottomModal(4); });
-    }
+    koral.addEventListener("click", function(e) {
+      e.stopPropagation(); // Stop event
+      openBottomModal(4);
+    });
+  }
 });
+
 
 // Åbn dialog med miljø-information
 function openBottomModal(environmentId) {
@@ -377,7 +415,10 @@ function closeBottomModal() {
 document.addEventListener("DOMContentLoaded", function () {
   const closeButton = document.getElementById("close-bottom-dialog");
   if (closeButton) {
-    closeButton.addEventListener("click", closeBottomModal);
+    closeButton.addEventListener("click", function(e) {
+      e.stopPropagation(); // Stop event
+      closeBottomModal();
+    });
   }
 
   // Luk dialog hvis man klikker udenfor
@@ -385,6 +426,7 @@ document.addEventListener("DOMContentLoaded", function () {
   if (dialog) {
     dialog.addEventListener("click", function (e) {
       if (e.target === dialog) {
+        e.stopPropagation(); // Stop event
         closeBottomModal();
       }
     });
