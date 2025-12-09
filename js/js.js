@@ -57,57 +57,15 @@ async function getEnvironments() {
   }
 }
 
-// ======== SETUP BOBLE-LYDEFFEKTER ========
-function setupBubbleSound() {
-   console.log("setupBubbleSound kaldes"); // 👈 Debug-log
-
-  const links = document.querySelectorAll(".bobble-link");
-  const popSound = document.getElementById("popSound");
-
-  if (!popSound) {
-    console.warn("Lydfil ikke fundet");
-    return;
-  }
-
-  links.forEach(link => {
-    link.addEventListener("click", (e) => {
-      e.preventDefault(); // stop normal navigation
-
-      // Afspil lyd
-      popSound.currentTime = 0;
-      popSound.play().catch(err => console.error("Lyd kunne ikke afspilles:", err));
-
-      const href = link.getAttribute("href");
-
-      // Vent 300 ms så lyden kan høres
-      setTimeout(() => {
-        window.location.href = href;
-      }, 300);
-    });
-  });
-}
-
-// Prime lyd på første tryk (for at undgå autoplay-blokering)
-function primeBubbleSound() {
-  const popSound = document.getElementById("popSound");
-  if (!popSound) return;
-
-  document.body.addEventListener("pointerdown", () => {
-    popSound.play().then(() => {
-      popSound.pause();
-      popSound.currentTime = 0;
-      console.log("Pop-lyd er forudindlæst ✅");
-    }).catch(() => {
-      console.warn("Kunne ikke forudindlæse automatisk (browser blokerer autoplay)");
-    });
-  }, { once: true });
-}
-
 // ======== SLUMRE TILSTAND FUNKTIONER INDEX ========
 
 console.log("SCRIPT KØRER");
 
-if (window.location.pathname.endsWith("index.html")) {
+if (
+  window.location.pathname.endsWith("index.html") ||
+  window.location.pathname === "/" ||
+  window.location.pathname === "/Eksamen_Akvarie/" // repo-navn!
+) {
   let awakened = false;
 
   const overlay = document.getElementById("sleepOverlay");
@@ -154,6 +112,52 @@ if (nextBtn) {
     introAudio.currentTime = 0; // nulstil til start
   });
 }
+}
+
+// ======== SETUP BOBLE-LYDEFFEKTER ========
+function setupBubbleSound() {
+   console.log("setupBubbleSound kaldes"); // 👈 Debug-log
+
+  const links = document.querySelectorAll(".bobble-link");
+  const popSound = document.getElementById("popSound");
+
+  if (!popSound) {
+    console.warn("Lydfil ikke fundet");
+    return;
+  }
+
+  links.forEach(link => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault(); // stop normal navigation
+
+      // Afspil lyd
+      popSound.currentTime = 0;
+      popSound.play().catch(err => console.error("Lyd kunne ikke afspilles:", err));
+
+      const href = link.getAttribute("href");
+
+      // Vent 300 ms så lyden kan høres
+      setTimeout(() => {
+        window.location.href = href;
+      }, 300);
+    });
+  });
+}
+
+// Prime lyd på første tryk (for at undgå autoplay-blokering)
+function primeBubbleSound() {
+  const popSound = document.getElementById("popSound");
+  if (!popSound) return;
+
+  document.body.addEventListener("pointerdown", () => {
+    popSound.play().then(() => {
+      popSound.pause();
+      popSound.currentTime = 0;
+      console.log("Pop-lyd er forudindlæst ✅");
+    }).catch(() => {
+      console.warn("Kunne ikke forudindlæse automatisk (browser blokerer autoplay)");
+    });
+  }, { once: true });
 }
 
 // ======== SPEAK SPIL-MED-OS ========
