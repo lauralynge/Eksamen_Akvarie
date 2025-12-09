@@ -2,7 +2,7 @@
 
 window.addEventListener("DOMContentLoaded", () => {
   const PUZZLE_SIZE = 3;
-  const PIECE_SIZE = 200;
+  const PIECE_SIZE = getPieceSize(); // <-- Bruger CSS-variabel
   const TOTAL = PUZZLE_SIZE * PUZZLE_SIZE;
 
   const puzzle = document.getElementById("puzzle");
@@ -37,22 +37,24 @@ window.addEventListener("DOMContentLoaded", () => {
   // --------------------------
   //   Opret brikker
   // --------------------------
+
+  function getPieceSize() {
+  return parseInt(getComputedStyle(document.documentElement).getPropertyValue('--piece-size')); // Henter værdi fra CSS-variabel
+}
+
   function createPieces() {
     const arr = [];
 
     for (let i = 0; i < TOTAL; i++) {
       const div = document.createElement("div");
       div.className = "piece";
-
       div.draggable = true;
       div.dataset.correct = i;
 
       const col = i % PUZZLE_SIZE;
       const row = Math.floor(i / PUZZLE_SIZE);
 
-      div.style.backgroundPosition = `-${col * PIECE_SIZE}px -${
-        row * PIECE_SIZE
-      }px`;
+      div.style.backgroundPosition = `-${col * PIECE_SIZE}px -${row * PIECE_SIZE}px`;
 
       // HJØRNEBRIKKER
       if (i === 0) div.classList.add("corner-top-left");

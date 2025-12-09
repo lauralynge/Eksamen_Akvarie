@@ -857,13 +857,6 @@ transform: translateY(100vh); /* flyt en hel skærmhøjde ned */
   opacity: 0.9;
 }
 
-/* respekt for brugere der ikke ønsker animationer */ /* SLET ???? */
-@media (prefers-reduced-motion: reduce) {
-  .brik .kort {
-    transition: none;
-  }
-}
-
 /***** VENDESPIL DIALOG STYLING *****/
 
 /* indholdet og layout i dialogen */
@@ -1181,7 +1174,7 @@ h2 {
   height: var(--piece-size);
   border-radius: 4px;
   background-image: url("../images/puslespil.jpg");
-  background-size: var(--puzzle-size) var(--puzzle-size);
+  background-size: var(--puzzle-size) ;
   border: 1px solid var(--primary-puzzle);
   box-shadow: var(--shadow-puzzle);
   cursor: grab;
@@ -1302,7 +1295,7 @@ body.dialog-open .puslespil-wrapper {
 }
 
 /* ===================
-    FLAPPY-FISH STYLING         IKKE RETTET I
+    FLAPPY-FISH STYLING 
    =================== */
 
 /* Fyld siden og vis din PNG som baggrund */
@@ -1339,7 +1332,7 @@ canvas#game {
 }
 
 /* ===================
-    FARVELÆGSNINGSPIL       IKKE LAVET ENDNU
+    FARVELÆGSNINGSPIL 
    =================== */
 /* Content Container til de nye sider */
 .content-container {
@@ -1367,3 +1360,113 @@ canvas#game {
   color: #666;
   margin-bottom: 30px;
 }
+
+/* ==================
+   RESPONSIVT DESIGN
+   ================== */
+
+/* 1) Store laptops og 13" skærme – 1440px */
+@media (max-width: 1440px) {
+
+  /**** INDEX ****/
+  .velkomst {
+  margin: 80px auto;
+  }
+  .krabbe-index {
+    max-width: 750px;
+    left: 50%;
+    bottom: 20px
+  }
+
+  .krabbe-arm {
+    max-width: 250px;
+    left: 63%;
+    bottom: 140px;
+  }
+
+  .tryk-her img {
+    max-width: 90px;
+  }
+  .bobble-item img {
+    width: 420px;
+  }
+
+/**** INTRO ****/
+  .bobble-container {
+    gap: 200px;
+  }
+
+/**** SPIL MED OS ****/
+
+/* Spil bobler + krabbe */
+.bobble-container-top .bobble-item-top img {
+  width: 280px;
+  height: auto;
+}
+
+.bobble-container-bund .bobble-item-bund img {
+  width: 280px;
+  height: auto;
+}
+
+.krabbe-spil img {
+  width: 600px;
+  height: auto;
+  display: block;
+}
+
+/* Spil dialoger */
+  #matchDialog,
+  #endGameDialog,
+  #endPuzzleGameDialog {
+    width: 900px;
+    height: 600px;
+  }
+
+/* Vendespil */
+#vendespilsbrikker {
+  grid-template-columns: repeat(4, 180px);
+}
+
+/* Wrapper til vertikal og horisontal centrering af vendespillet */
+.vendespil-wrapper {
+  max-height: 100vh;
+  margin-top: 70px;
+}
+
+/* stil for hver brik */
+.brik img {
+  width: 180px;
+  height: 230px;
+}
+
+/* container for brikken */
+.brik {
+  width: 180px;
+  height: 230px;
+}
+
+
+/* Puslespil */
+  :root {
+    --piece-size: 150px;
+    --puzzle-size: calc(var(--piece-size) * 3);
+  }
+
+.piece {
+  width: var(--piece-size);
+  height: var(--piece-size);
+  background-image: url("../images/puslespil.jpg");
+  background-size: var(--puzzle-size);
+  background-position: center;
+}
+
+/* Puslespil dialog */
+.puzzle-end-image img {
+  max-width: 250px;
+  height: 250px;
+}
+}
+
+
+

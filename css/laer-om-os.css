@@ -720,3 +720,58 @@ span {
   line-height: 1.5;
 }
 
+
+
+/* ==================
+   RESPONSIVT DESIGN
+   ================== */
+
+  /* 1) Store laptops og 13" skærme – 1440px */
+@media (max-width: 1440px) {
+
+  h1 { font-size: 48px; }
+  h2 { font-size: 40px; }
+  h3 { font-size: 32px; }
+  h4 { font-size: 20px; }
+
+/**** LÆR OM OS ****/
+  .scroll-ned-knap img,
+  .scroll-op-knap img {
+  width: 400px;
+}
+
+  #fish-dialog,
+  #info-dialog-bottom {
+  width: 900px; /* Fast bredde */
+  height: 600px; /* Fast højde */
+  }
+
+  /* Bunden */
+  #skib-bund {
+    width: 590px;
+    height: auto;
+    left: 10%;
+    bottom: 300px;
+}
+#konkylie-bund {
+    width: 200px;
+    height: auto;
+    left: 70%;
+    bottom: 500px;
+}
+#tang-bund {
+    width: 280px;
+    height: auto;
+    left: 75%;
+    bottom: 28px;
+}
+#koral-bund {
+    width: 230px;
+    height: auto;
+    left: 15%;
+    bottom: 28px;
+}
+
+  }
+
+  
