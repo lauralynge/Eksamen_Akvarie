@@ -1118,6 +1118,40 @@ h2 {
   transform: scale(1.1); /* Gør boblen lidt større når man hover */
 }
 
+
+/***** TILBAGE-KNAPPER *****/
+.tilbage-knap {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  display: inline-block;
+  margin: 0;
+  text-decoration: none;
+  border-radius: 25px;
+  transition: transform 0.3s ease;
+  width: 120px;
+  height: 120px;
+  z-index: 2;
+}
+
+.tilbage-knap img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1; /* Ligger nederst */
+  width: 120px;
+  height: auto;
+}
+#tilbage-knap-ikon {
+  z-index: 3;
+   width: 70px;
+}
+
+.tilbage-knap:hover {
+  transform: scale(1.1); /* Gør boblen lidt større når man hover */
+}
+
 /* ===================
    PUSLESPIL STYLING
    =================== */
@@ -1335,7 +1369,7 @@ canvas#game {
     FARVELÆGSNINGSPIL 
    =================== */
 /* Content Container til de nye sider */
-.content-container {
+/* .content-container {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -1360,6 +1394,199 @@ canvas#game {
   color: #666;
   margin-bottom: 30px;
 }
+*/
+
+/* Palette */
+.palette {
+  position: absolute;
+  top: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 20px;
+  z-index: 10;
+}
+
+.palet {
+  width: 8vw;
+  cursor: pointer;
+  transition: transform 0.25s;
+}
+
+.palet:hover {
+  transform: scale(1.1);
+}
+
+/* Aktiv swatch markering */
+.color-swatch.active,
+.palette[data-color].active {
+  outline: 4px solid var(--secondary-color);
+  border-radius: 10px;
+  transform: scale(1.05);
+}
+
+/* Kort visuel feedback når en del farves */
+.color-feedback {
+  position: fixed;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: scale(0.6);
+  opacity: 0.95;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+  z-index: 9999;
+  animation: feedback-pop 0.65s cubic-bezier(.2,.8,.2,1) forwards;
+}
+
+@keyframes feedback-pop {
+  0% { transform: scale(0.6); opacity: 0.9; }
+  60% { transform: scale(1.35); opacity: 0.95; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
+
+
+/* Karussel til farvelægningsfisk */
+
+.fish-carousel-wrapper {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 20px;
+  box-sizing: border-box;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 800px;
+  max-width: 800px;
+}
+
+.fish-carousel {
+  display: flex;
+  overflow-x: auto;
+  gap: 12px;
+  padding: 8px 0;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+  width: 100%;
+}
+
+.carousel-item {
+  min-width: 100%; /* én item ad gangen */
+  box-sizing: border-box;
+  border-radius: 8px;
+  padding: 6px;
+  background: rgba(255,255,255,0.02);
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  scroll-snap-align: center;
+}
+
+.carousel-item img, .carousel-item svg { width: 500px; height: auto; display: block; }
+
+.carousel-item.selected {
+  transform: translateY(-4px) scale(1.01);
+}
+
+/* FARVELÆG KNAPPER */
+.done-wrap {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-flex;
+  justify-content: center;
+  z-index: 60;
+  bottom: 10%;
+  gap: 8px; /* Tilføj dette for mellemrum mellem knapperne */
+}
+
+/* Færdig-knap farvelægning */
+.done-button {
+  display: inline-block;
+  background: #4CAF50;
+  padding: 16px 8px;
+  text-decoration: none;
+  border-radius: 25px;
+  border: none;
+  width: 200px;
+  height: 100px;
+}
+
+.done-text {
+  color: var(--primary-color);
+}
+
+.done-button:hover {
+  /*transform: var(--transform);*/
+  background: #45a049;
+}
+
+
+/* Ryd-knap farvelægning */
+.clear-button {
+  display: inline-block;
+  background: transparent;
+  padding: 16px 8px;
+  text-decoration: none;
+  border-radius: 25px;
+  border: none;
+  width: 200px;
+  height: 100px;
+}
+
+.clear-button img {
+  width: 60px;
+  height: auto;
+}
+
+.clear-button img:hover {
+  transform: scale(1.05);
+}
+
+
+/* Bobler */
+
+/* Bobler til venstre */
+.bobbel {
+    position: absolute;
+    bottom: 10%;
+    left: 20%;
+    z-index: 4;
+    width: 8vw;
+}
+.bobbel4 {
+    position: absolute;
+    bottom: 35%;
+    left: 10%;
+    z-index: 4;
+    width: 5vw;
+}
+
+/* Bobler til højre */
+.bobbel3 {
+    position: absolute;
+    bottom: 43%;
+    right: 35%;
+    z-index: 4;
+    width: 5vw;
+}
+
+.bobbel2 {
+    position: absolute;
+    bottom: 10%;
+    right: 25%;
+    z-index: 4;
+    width: 8vw;
+}
+
+
 
 /* ==================
    RESPONSIVT DESIGN
@@ -1465,7 +1692,59 @@ canvas#game {
   max-width: 250px;
   height: 250px;
 }
-}
 
+
+/**** FARVELAEG ****/
+/* karrusel wrapper */
+  .fish-carousel-wrapper {
+    width: 600px;
+    max-width: 90vw;
+    padding: 10px;
+  }
+
+  .fish-carousel {
+    gap: 8px;
+    padding: 4px 0;
+  }
+
+  .carousel-item img,
+  .carousel-item svg {
+    width: 340px;
+    max-width: 80vw;
+    height: auto;
+  }
+
+  /* Færdig- og ryd-knapper */
+  .done-wrap {
+    gap: 6px;
+    bottom: 6%;
+  }
+
+  .done-button,
+  .clear-button {
+    width: 120px;
+    height: 60px;
+    padding: 10px 4px;
+    font-size: 1rem;
+  }
+  .done-text {
+    font-size: 1.1rem;
+  }
+  .clear-button img {
+    width: 36px;
+  }
+
+  /* Palette */
+  .palette {
+    top: 60px;
+    gap: 10px;
+  }
+  .palet {
+    width: 5vw;
+    min-width: 36px;
+    max-width: 60px;
+  }
+
+}
 
 

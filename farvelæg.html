@@ -14,16 +14,54 @@
       <h3 class="luk-knap-tekst">X</h3>
     </a>
     
-<!--Indhold-->
-<div class="content-container">
-    <h1>Farvelæg fisken!</h1>
-    <p>Hjælp fisken med at finde sin farve!</p>
 
-    <div class="spil-container">
-        <p>Her kommer spillet snart...</p>
-        <!-- Her kan du senere tilføje funktionalitet -->
+   <!-- Fisk (karussel: én fisk ad gangen) -->
+<div class="fish-area">
+    <div class="fish-carousel-wrapper">
+       <button class="karrusel-knap venstre">
+          <img src="images/pil-venstre.png" alt="Pil venstre" />
+        </button>
+        <div class="fish-carousel" id="fishCarousel">
+            <div class="carousel-item" data-src="images/farvelæg/palet-uden-farve.svg" role="button" tabindex="0" aria-label="Fisk uden farve">
+                <img src="images/farvelæg/palet-uden-farve.svg" alt="Paletkirurg uden farve">
+            </div>
+        </div>
+        <button class="karrusel-knap højre">
+          <img src="images/pil-højre.png" alt="Pil højre" />
+        </button>
     </div>
 </div>
 
+
+ <!-- Palette -->
+<div class="palette">
+    <img src="images/farvelæg/paletpink.png"   class="palet color-swatch" data-color="#ff8acb" alt="pink farve">
+    <img src="images/farvelæg/paletgreen.png"  class="palet color-swatch" data-color="#8eff89" alt="grøn farve">
+    <img src="images/farvelæg/paletyellow.png" class="palet color-swatch" data-color="#ffe86b" alt="gul farve">
+    <img src="images/farvelæg/paletorange.png" class="palet color-swatch" data-color="#ffb05c" alt="orange farve">
+    <img src="images/farvelæg/paletblue.png"   class="palet color-swatch" data-color="#6ac6ff" alt="blå farve">
+</div>
+
+    <!-- FARVEPALETTER -->
+    <div class="palette-container">
+        <div class="palette" data-color="#ff6aa6" style="background:#ff6aa6;"></div>
+        <div class="palette" data-color="#4bc0ff" style="background:#4bc0ff;"></div>
+        <div class="palette" data-color="#ffd300" style="background:#ffd300;"></div>
+        <div class="palette" data-color="#6eff9f" style="background:#6eff9f;"></div>
+    </div>
+
+    <!-- Færdig-knap: går videre til farvelæg-2.html -->
+    <div class="done-wrap">
+        <button id="doneButton" class="done-button" type="button">
+            <span class="done-text">Færdig</span>
+        </button>
+        <button id="clearButton" class="clear-button" type="button">
+            <img src="images/start-igen.png" alt="">
+        </button>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/farvelaeg.js" defer></script>
+    <script src="js/js.js" defer></script>
 </body>
 </html>

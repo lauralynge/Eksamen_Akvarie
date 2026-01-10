@@ -71,7 +71,7 @@ const PIPE_W = 70;
 const GAP_MIN = 300,
   GAP_MAX = 330;
 const PIPE_SPEED = 220; // px/s 
-const SPAWN_EVERY = 1.5; // s
+const SPAWN_EVERY = 2; // s
 const SEA_FLOOR_H = 0; // bund-kollision
 
 
@@ -159,7 +159,7 @@ function rectsOverlap(ax, ay, aw, ah, bx, by, bw, bh) {
 
 // --- Synlige pipes ----
 function addVisibleStartPipes() {
-  const antal = 4; // hvor mange pipes du vil have synlige
+  const antal = 3; // hvor mange pipes du vil have synlige
   const start = W() / 2;
   const afstand = PIPE_SPEED * SPAWN_EVERY;
   for (let i = 0; i < antal; i++) {
